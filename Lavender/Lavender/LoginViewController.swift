@@ -30,17 +30,73 @@ class LoginViewController: UIViewController {
         let enteredEmail = emailTextField.text ?? ""
         let enteredPassword = passwordTextField.text ?? ""
 
-            let savedEmail = UserDefaults.standard.string(forKey: "RegisteredEmail") ?? ""
-            let savedPassword = UserDefaults.standard.string(forKey: "RegisteredPassword") ?? ""
+        let savedEmail = UserDefaults.standard.string(forKey: "RegisteredEmail") ?? ""
+        let savedPassword = UserDefaults.standard.string(forKey: "RegisteredPassword") ?? ""
 
-            if enteredEmail == savedEmail && enteredPassword == savedPassword {
-                showAlert(title: "Login Successful", message: "Welcome back!") {
-                    self.performSegue(withIdentifier: "goToHomePage", sender: self)
-                }
-            } else {
-                showAlert(title: "Login Failed", message: "Invalid email or password. Please try again.")
+        if enteredEmail == savedEmail && enteredPassword == savedPassword {
+            failedLoginAttempts = 0
+            showAlert(title: "Login Successful", message: "Welcome back!") {
+                self.performSegue(withIdentifier: "goToHomePage", sender: self)
             }
+        } else {
+            failedLoginAttempts += 1
+
+            if failedLoginAttempts >= 5 {
+                showCaptcha()
+            } else {
+                showAlert(title: "Login Failed", message: "Invalid email or password. Attempt \(failedLoginAttempts) of 5.")
+            }
+        }
     }
+
+    var captchaAnswer: Int = 0
+
+    func showCaptcha() {
+        let num1 = Int.random(in: 1...10)
+        let num2 = Int.random(in: 1...10)
+        captchaAnswer = num1 + num2
+        print("Generated numbers: \(num1), \(num2), Answer: \(captchaAnswer)")
+        captchaQuestionLabel.text = "What is \(num1) + \(num2)?"
+        captchaQuestionLabel.isHidden = false
+        captchaAnswerTextField.isHidden = false
+        captchaSubmitButton.isHidden = false
+        captchaAnswerTextField.text = ""
+    }
+
+
+
+
+    @IBAction func captchaSubmitTapped(_ sender: UIButton) {
+        print("Correct Answer: \(captchaAnswer)")
+        guard let userAnswer = captchaAnswerTextField.text, let answer = Int(userAnswer) else {
+            showAlert(title: "Invalid Input", message: "Please enter a valid number.")
+            return
+        }
+        print("User Answer: \(answer)")
+        if answer == captchaAnswer {
+            failedLoginAttempts = 0
+            captchaQuestionLabel.isHidden = true
+            captchaAnswerTextField.isHidden = true
+            captchaSubmitButton.isHidden = true
+            showAlert(title: "CAPTCHA Solved", message: "You can now try logging in again.")
+        } else {
+            showAlert(title: "Incorrect CAPTCHA", message: "Please try again.") {
+                self.showCaptcha()
+            }
+        }
+    }
+
+
+
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        captchaQuestionLabel.isHidden = true
+        captchaAnswerTextField.isHidden = true
+        captchaSubmitButton.isHidden = true
+    }
+
+
     
     
     @IBAction func signUpButtonTapped(_ sender: UIButton) {
@@ -50,11 +106,20 @@ class LoginViewController: UIViewController {
     
     @IBAction func changePasswordButtonTapped(_ sender: UIButton) {
     }
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+    
+    var failedLoginAttempts: Int {
+        get {
+            return UserDefaults.standard.integer(forKey: "FailedLoginAttempts")
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "FailedLoginAttempts")
+        }
     }
+    @IBOutlet weak var captchaQuestionLabel: UILabel!
+    @IBOutlet weak var captchaAnswerTextField: UITextField!
+    @IBOutlet weak var captchaSubmitButton: UIButton!
+
+    
     
 
     /*

@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0E1A6BAA2D05F40C009D0EB1 /* AUTH.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0E1A6BA92D05F40C009D0EB1 /* AUTH.storyboard */; };
+		0E6A2E0A2D0B276C00C35552 /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E6A2E092D0B276C00C35552 /* ChangePasswordViewController.swift */; };
+		0EAF42AD2D08B95A005F04CC /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EAF42AC2D08B95A005F04CC /* SignUpViewController.swift */; };
+		0EE088852D07044700E430DA /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE088842D07044700E430DA /* LoginViewController.swift */; };
 		D4C8E4452D00799C00B254E2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C8E4442D00799C00B254E2 /* AppDelegate.swift */; };
 		D4C8E4472D00799C00B254E2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C8E4462D00799C00B254E2 /* SceneDelegate.swift */; };
 		D4C8E4492D00799C00B254E2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C8E4482D00799C00B254E2 /* ViewController.swift */; };
@@ -36,6 +40,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0E1A6BA92D05F40C009D0EB1 /* AUTH.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AUTH.storyboard; sourceTree = "<group>"; };
+		0E6A2E092D0B276C00C35552 /* ChangePasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewController.swift; sourceTree = "<group>"; };
+		0EAF42AC2D08B95A005F04CC /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		0EE088842D07044700E430DA /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		D4C8E4412D00799C00B254E2 /* Lavender.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lavender.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4C8E4442D00799C00B254E2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D4C8E4462D00799C00B254E2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -106,6 +114,10 @@
 				D4C8E44D2D00799E00B254E2 /* Assets.xcassets */,
 				D4C8E44F2D00799E00B254E2 /* LaunchScreen.storyboard */,
 				D4C8E4522D00799E00B254E2 /* Info.plist */,
+				0E1A6BA92D05F40C009D0EB1 /* AUTH.storyboard */,
+				0EE088842D07044700E430DA /* LoginViewController.swift */,
+				0EAF42AC2D08B95A005F04CC /* SignUpViewController.swift */,
+				0E6A2E092D0B276C00C35552 /* ChangePasswordViewController.swift */,
 			);
 			path = Lavender;
 			sourceTree = "<group>";
@@ -231,6 +243,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0E1A6BAA2D05F40C009D0EB1 /* AUTH.storyboard in Resources */,
 				D4C8E4512D00799E00B254E2 /* LaunchScreen.storyboard in Resources */,
 				D4C8E44E2D00799E00B254E2 /* Assets.xcassets in Resources */,
 				D4C8E44C2D00799C00B254E2 /* Main.storyboard in Resources */,
@@ -258,9 +271,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0EE088852D07044700E430DA /* LoginViewController.swift in Sources */,
 				D4C8E4492D00799C00B254E2 /* ViewController.swift in Sources */,
 				D4C8E4452D00799C00B254E2 /* AppDelegate.swift in Sources */,
+				0E6A2E0A2D0B276C00C35552 /* ChangePasswordViewController.swift in Sources */,
 				D4C8E4472D00799C00B254E2 /* SceneDelegate.swift in Sources */,
+				0EAF42AD2D08B95A005F04CC /* SignUpViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
