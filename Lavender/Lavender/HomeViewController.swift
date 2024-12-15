@@ -34,13 +34,13 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 
 enum Category{
     case bodycare
+    case cleaning
     case stationary
-    case electronics
     case gardening
-    case clothing
     case supplements
     case accessories
     case food
+    case hygiene
 }
 
 struct product {

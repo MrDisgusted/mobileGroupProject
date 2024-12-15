@@ -12,9 +12,7 @@ class HomeTableViewCell: UITableViewCell {
     @IBOutlet weak var ProductImage: UIImageView!
     @IBOutlet weak var ProductName: UILabel!
     @IBOutlet weak var ProductDescription: UILabel!
-    @IBOutlet weak var ProductBuy: UIButton!
-    @IBOutlet weak var ProductPrice: UILabel!
-    
+    @IBOutlet weak var ProductPrice: UIButton!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -25,7 +23,6 @@ class HomeTableViewCell: UITableViewCell {
         ProductImage.image = photo
         ProductName.text = name
         ProductDescription.text = description
-        ProductPrice.text = "$\(price)"
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
