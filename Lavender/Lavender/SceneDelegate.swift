@@ -13,28 +13,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        guard let windowScene = (scene as? UIWindowScene) else { return }
-
-        // Create a new UIWindow using the windowScene
-        let window = UIWindow(windowScene: windowScene)
-
-        // Load the AUTH storyboard (name must match exactly)
-        let storyboard = UIStoryboard(name: "AUTH", bundle: nil)
-
-        // Instantiate the initial ViewController from the storyboard
-        let initialViewController = storyboard.instantiateInitialViewController()
-
-        // Set the rootViewController to the initial ViewController
-        window.rootViewController = initialViewController
-
-        // Assign the created window to the SceneDelegate's window property
-        self.window = window
-
-        // Make the window visible
-        window.makeKeyAndVisible()
+        // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
+        // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
+        // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
+        guard let _ = (scene as? UIWindowScene) else { return }
     }
-
-
 
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.
@@ -66,4 +49,3 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
 }
-
