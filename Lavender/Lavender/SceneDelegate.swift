@@ -19,7 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let window = UIWindow(windowScene: windowScene)
 
         // Load the AUTH storyboard (name must match exactly)
-        let storyboard = UIStoryboard(name: "AUTH", bundle: nil)
+        let storyboard = UIStoryboard(name: "AddProduct", bundle: nil)
 
         // Instantiate the initial ViewController from the storyboard
         let initialViewController = storyboard.instantiateInitialViewController()
