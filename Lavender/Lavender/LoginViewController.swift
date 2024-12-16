@@ -23,7 +23,23 @@ class LoginViewController: UIViewController {
     
     @IBOutlet weak var passwordTextField: UITextField!
     
-    
+  
+    @IBAction func passwordToggleButtonTapped(_ sender: UIButton) {
+        passwordTextField.isSecureTextEntry.toggle()
+        let currentText = passwordTextField.text
+        passwordTextField.text = nil
+        passwordTextField.text = currentText
+        updatePasswordToggleIcon()
+    }
+
+
+    func updatePasswordToggleIcon() {
+        let imageName = passwordTextField.isSecureTextEntry ? "eye.slash" : "eye"
+        passwordToggleButton.setImage(UIImage(systemName: imageName), for: .normal)
+    }
+
+
+    @IBOutlet weak var passwordToggleButton: UIButton!
     @IBOutlet weak var rememberMeSwitch: UISwitch!
     
     @IBAction func loginButtonTapped(_ sender: UIButton) {
@@ -55,7 +71,7 @@ class LoginViewController: UIViewController {
         let num1 = Int.random(in: 1...10)
         let num2 = Int.random(in: 1...10)
         captchaAnswer = num1 + num2
-        print("Generated numbers: \(num1), \(num2), Answer: \(captchaAnswer)")
+        print(" numbers: \(num1), \(num2), Answer: \(captchaAnswer)")
         captchaQuestionLabel.text = "What is \(num1) + \(num2)?"
         captchaQuestionLabel.isHidden = false
         captchaAnswerTextField.isHidden = false
@@ -94,6 +110,16 @@ class LoginViewController: UIViewController {
         captchaQuestionLabel.isHidden = true
         captchaAnswerTextField.isHidden = true
         captchaSubmitButton.isHidden = true
+        passwordTextField.isSecureTextEntry = true
+        updatePasswordToggleIcon()
+        
+        emailTextField.attributedPlaceholder = NSAttributedString(
+                string: "example@example.com",
+                attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        passwordTextField.attributedPlaceholder = NSAttributedString(
+               string: "Password",
+               attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray]
+           )
     }
 
 

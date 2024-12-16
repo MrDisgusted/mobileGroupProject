@@ -15,7 +15,20 @@ class SignUpViewController: UIViewController {
         present(alert, animated: true, completion: nil)
     }
 
-    
+    //eye toggle
+    @IBOutlet weak var passwordToggleButton: UIButton!
+    @IBAction func passwordToggleButtonTapped(_ sender: Any) {
+        passwordTextField.isSecureTextEntry.toggle()
+            let currentText = passwordTextField.text
+            passwordTextField.text = nil
+            passwordTextField.text = currentText
+            updatePasswordToggleIcon()
+    }
+    func updatePasswordToggleIcon() {
+        let imageName = passwordTextField.isSecureTextEntry ? "eye.slash" : "eye"
+        passwordToggleButton.setImage(UIImage(systemName: imageName), for: .normal)
+    }
+
     @IBOutlet weak var usernameTextField: UITextField!
     
     
@@ -59,8 +72,21 @@ class SignUpViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        emailTextField.attributedPlaceholder = NSAttributedString(
+            string: "example@example.com",
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        passwordTextField.attributedPlaceholder = NSAttributedString(
+            string: "Password",
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray]
+        )
+        usernameTextField.attributedPlaceholder = NSAttributedString(
+            string: "Username",
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray]
+        )
+        passwordTextField.isSecureTextEntry = true
+            updatePasswordToggleIcon()
+        
     }
     
 

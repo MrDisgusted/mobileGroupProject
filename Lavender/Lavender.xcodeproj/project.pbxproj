@@ -7,9 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0E0091442D0F9DAC0017A672 /* AddProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E0091432D0F9DAC0017A672 /* AddProductViewController.swift */; };
+		0E19A51C2D0C9C05002102F7 /* AdminLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E19A51B2D0C9C05002102F7 /* AdminLoginViewController.swift */; };
+		0E19A51E2D0CABA6002102F7 /* StoreLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E19A51D2D0CABA6002102F7 /* StoreLoginViewController.swift */; };
 		0E1A6BAA2D05F40C009D0EB1 /* AUTH.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0E1A6BA92D05F40C009D0EB1 /* AUTH.storyboard */; };
+		0E4E67E52D0B596700CC72C1 /* AuthenticationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4E67E42D0B596600CC72C1 /* AuthenticationViewController.swift */; };
 		0E6A2E0A2D0B276C00C35552 /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E6A2E092D0B276C00C35552 /* ChangePasswordViewController.swift */; };
 		0EAF42AD2D08B95A005F04CC /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EAF42AC2D08B95A005F04CC /* SignUpViewController.swift */; };
+		0ECD755C2D0F652D00DA963F /* AddProduct.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0ECD755B2D0F652D00DA963F /* AddProduct.storyboard */; };
 		0EE088852D07044700E430DA /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE088842D07044700E430DA /* LoginViewController.swift */; };
 		D4C8E4452D00799C00B254E2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C8E4442D00799C00B254E2 /* AppDelegate.swift */; };
 		D4C8E4472D00799C00B254E2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C8E4462D00799C00B254E2 /* SceneDelegate.swift */; };
@@ -40,9 +45,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0E0091432D0F9DAC0017A672 /* AddProductViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProductViewController.swift; sourceTree = "<group>"; };
+		0E19A51B2D0C9C05002102F7 /* AdminLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminLoginViewController.swift; sourceTree = "<group>"; };
+		0E19A51D2D0CABA6002102F7 /* StoreLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreLoginViewController.swift; sourceTree = "<group>"; };
 		0E1A6BA92D05F40C009D0EB1 /* AUTH.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AUTH.storyboard; sourceTree = "<group>"; };
+		0E4E67E42D0B596600CC72C1 /* AuthenticationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewController.swift; sourceTree = "<group>"; };
 		0E6A2E092D0B276C00C35552 /* ChangePasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewController.swift; sourceTree = "<group>"; };
 		0EAF42AC2D08B95A005F04CC /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		0ECD755B2D0F652D00DA963F /* AddProduct.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AddProduct.storyboard; sourceTree = "<group>"; };
 		0EE088842D07044700E430DA /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		D4C8E4412D00799C00B254E2 /* Lavender.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lavender.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4C8E4442D00799C00B254E2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -118,6 +128,11 @@
 				0EE088842D07044700E430DA /* LoginViewController.swift */,
 				0EAF42AC2D08B95A005F04CC /* SignUpViewController.swift */,
 				0E6A2E092D0B276C00C35552 /* ChangePasswordViewController.swift */,
+				0E4E67E42D0B596600CC72C1 /* AuthenticationViewController.swift */,
+				0E19A51B2D0C9C05002102F7 /* AdminLoginViewController.swift */,
+				0E19A51D2D0CABA6002102F7 /* StoreLoginViewController.swift */,
+				0ECD755B2D0F652D00DA963F /* AddProduct.storyboard */,
+				0E0091432D0F9DAC0017A672 /* AddProductViewController.swift */,
 			);
 			path = Lavender;
 			sourceTree = "<group>";
@@ -243,6 +258,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0ECD755C2D0F652D00DA963F /* AddProduct.storyboard in Resources */,
 				0E1A6BAA2D05F40C009D0EB1 /* AUTH.storyboard in Resources */,
 				D4C8E4512D00799E00B254E2 /* LaunchScreen.storyboard in Resources */,
 				D4C8E44E2D00799E00B254E2 /* Assets.xcassets in Resources */,
@@ -273,7 +289,11 @@
 			files = (
 				0EE088852D07044700E430DA /* LoginViewController.swift in Sources */,
 				D4C8E4492D00799C00B254E2 /* ViewController.swift in Sources */,
+				0E0091442D0F9DAC0017A672 /* AddProductViewController.swift in Sources */,
+				0E19A51E2D0CABA6002102F7 /* StoreLoginViewController.swift in Sources */,
+				0E19A51C2D0C9C05002102F7 /* AdminLoginViewController.swift in Sources */,
 				D4C8E4452D00799C00B254E2 /* AppDelegate.swift in Sources */,
+				0E4E67E52D0B596700CC72C1 /* AuthenticationViewController.swift in Sources */,
 				0E6A2E0A2D0B276C00C35552 /* ChangePasswordViewController.swift in Sources */,
 				D4C8E4472D00799C00B254E2 /* SceneDelegate.swift in Sources */,
 				0EAF42AD2D08B95A005F04CC /* SignUpViewController.swift in Sources */,
@@ -366,6 +386,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 15.2;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -429,6 +450,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 15.2;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
