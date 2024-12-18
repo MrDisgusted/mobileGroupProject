@@ -10,15 +10,35 @@ import UIKit
 class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var TableView: UITableView!
-    var productArray = [product]()
+    
+    var productArray: [Product] = []
+    var tableView: UITableView!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         TableView.delegate = self
         TableView.dataSource = self
         
+//        if let loadedProducts = loadProducts() {
+//            Product = loadedProducts
+//        }
+        
+        tableViewSetup()
     }
     
+    func tableViewSetup(){
+        tableView = UITableView(frame: self.view.bounds, style: .plain)
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "ProductCell")
+        self.view.addSubview(tableView)
+        
+        //for Ebrahim to make the Add product feature for the store owner
+        //let addButton = UIBarButtonItem(title: "Add Product", style: .plain, target: self, action: #selector(addProduct))
+    }
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 0
     }
@@ -30,28 +50,4 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         return cell
     }
 
-}
-
-enum Category{
-    case bodycare
-    case cleaning
-    case stationary
-    case gardening
-    case supplements
-    case accessories
-    case food
-    case hygiene
-}
-
-struct product {
-    let ID : Int
-    let name : String
-    let image : UIImage
-    let category : Category
-    let description : String
-    let price : Double
-    let isAvailable : Bool
-    let arrivalDay : Int
-    
-    
 }
