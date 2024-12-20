@@ -8,24 +8,24 @@
 import Foundation
 import UIKit
 
-func saveProducts(products: [Product]) {
-    let encoder = JSONEncoder()
-    if let encoded = try? encoder.encode(products) {
-        UserDefaults.standard.set(encoded, forKey: "SavedProducts")
-    }
-}
+//func saveProducts(products: [Product]) {
+//    let encoder = JSONEncoder()
+//    if let encoded = try? encoder.encode(products) {
+//        UserDefaults.standard.set(encoded, forKey: "SavedProducts")
+//    }
+//}
 
-func loadProducts() -> [Product]? {
-    if let savedData = UserDefaults.standard.data(forKey: "SavedProducts") {
-        let decoder = JSONDecoder()
-        if let loadedProducts = try? decoder.decode([Product].self, from: savedData) {
-            return loadedProducts
-        }
-    }
-    return nil
-}
+//func loadProducts() -> [Product]? {
+//    if let savedData = UserDefaults.standard.data(forKey: "SavedProducts") {
+//        let decoder = JSONDecoder()
+//        if let loadedProducts = try? decoder.decode([Product].self, from: savedData) {
+//            return loadedProducts
+//        }
+//    }
+//    return nil
+//}
 
-enum Category{
+enum Category {
     case bodycare
     case cleaning
     case stationary
@@ -36,7 +36,7 @@ enum Category{
     case hygiene
 }
 
-struct Product: Codable {
+struct Product {
     let ID : Int
     let name : String
     let image : Data

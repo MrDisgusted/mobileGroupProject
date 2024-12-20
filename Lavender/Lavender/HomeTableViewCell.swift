@@ -18,6 +18,10 @@ class HomeTableViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
     }
+
+    @IBAction func buttonPurchase(_ sender: Any) {
+        
+    }
     
     func setupCell(photo: UIImage, name: String, price: Double, description: String) {
         ProductImage.image = photo
