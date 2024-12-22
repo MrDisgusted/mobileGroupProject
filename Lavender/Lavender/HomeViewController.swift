@@ -31,8 +31,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func tableViewSetup(){
         tableView = UITableView(frame: self.view.bounds, style: .plain)
-        tableView.dataSource = self
-        tableView.delegate = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "ProductCell")
         self.view.addSubview(tableView)
         
