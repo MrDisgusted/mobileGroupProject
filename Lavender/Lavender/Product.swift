@@ -36,6 +36,17 @@ enum Category {
     case hygiene
 }
 
+struct Ecobar {
+    let emission: Double
+    let impact: Double
+    let sustainability: Double
+    let recyclability: Double
+    let longjevity: Double
+    
+    // salem add the equation here so that it calculates the lavender rating
+    let lavenderRating = 0
+}
+
 struct Product {
     let ID : Int
     let name : String
@@ -44,6 +55,7 @@ struct Product {
     let description : String
     let price : Double
     let quantity : Int
+    let lavender : Ecobar
     let isAvailable : Bool
     let arrivalDay : Int
 }

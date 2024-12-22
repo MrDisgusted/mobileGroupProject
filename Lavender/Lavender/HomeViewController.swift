@@ -10,6 +10,7 @@ import UIKit
 class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var TableView: UITableView!
+    @IBOutlet weak var CategorieView: UITableView!
     
     var productArray: [Product] = []
     var tableView: UITableView!
