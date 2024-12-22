@@ -10,6 +10,7 @@
 		3FA291942D070A5C00644F16 /* StorePage.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3FA291932D070A5C00644F16 /* StorePage.storyboard */; };
 		CCA0534A2D184954000E70B8 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = CCA053492D184954000E70B8 /* FirebaseAuth */; };
 		CCA0534C2D184954000E70B8 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = CCA0534B2D184954000E70B8 /* FirebaseDatabase */; };
+		CCA053522D184F0C000E70B8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CCA053512D184F0C000E70B8 /* GoogleService-Info.plist */; };
 		CCE2FF692D157B0F00A4698E /* Cart.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CCE2FF682D157B0F00A4698E /* Cart.storyboard */; };
 		D492F7562D09AD5700D5AF44 /* HomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D492F7552D09AD5700D5AF44 /* HomeTableViewCell.swift */; };
 		D492F7582D09B18100D5AF44 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D492F7572D09B18100D5AF44 /* HomeViewController.swift */; };
@@ -46,6 +47,7 @@
 
 /* Begin PBXFileReference section */
 		3FA291932D070A5C00644F16 /* StorePage.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = StorePage.storyboard; sourceTree = "<group>"; };
+		CCA053512D184F0C000E70B8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		CCE2FF682D157B0F00A4698E /* Cart.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Cart.storyboard; sourceTree = "<group>"; };
 		D492F7552D09AD5700D5AF44 /* HomeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewCell.swift; sourceTree = "<group>"; };
 		D492F7572D09B18100D5AF44 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -117,6 +119,7 @@
 		D4C8E4432D00799C00B254E2 /* Lavender */ = {
 			isa = PBXGroup;
 			children = (
+				CCA053512D184F0C000E70B8 /* GoogleService-Info.plist */,
 				D4C8E4442D00799C00B254E2 /* AppDelegate.swift */,
 				D4C8E4462D00799C00B254E2 /* SceneDelegate.swift */,
 				D4C8E4482D00799C00B254E2 /* ViewController.swift */,
@@ -269,6 +272,7 @@
 				D4C8E44E2D00799E00B254E2 /* Assets.xcassets in Resources */,
 				CCE2FF692D157B0F00A4698E /* Cart.storyboard in Resources */,
 				D4C8E44C2D00799C00B254E2 /* Main.storyboard in Resources */,
+				CCA053522D184F0C000E70B8 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
