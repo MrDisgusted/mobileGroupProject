@@ -6,24 +6,60 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class LoginViewController: UIViewController {
     func showAlert(title: String, message: String, completion: (() -> Void)? = nil) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
-            completion?() 
+            completion?()
         }))
         present(alert, animated: true, completion: nil)
     }
 
-
-
+    
+    @IBAction func forgotPasswordButtonTapped(_ sender: UIButton) {
+        print("Forgot Password button tapped")
+    }
+    
     @IBOutlet weak var emailTextField: UITextField!
-    
-    
     @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var passwordToggleButton: UIButton!
+    @IBOutlet weak var rememberMeSwitch: UISwitch!
     
-  
+    @IBOutlet weak var captchaQuestionLabel: UILabel!
+    @IBOutlet weak var captchaAnswerTextField: UITextField!
+    @IBOutlet weak var captchaSubmitButton: UIButton!
+
+    var captchaAnswer: Int = 0
+    
+    var failedLoginAttempts: Int {
+        get {
+            return UserDefaults.standard.integer(forKey: "FailedLoginAttempts")
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "FailedLoginAttempts")
+        }
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        captchaQuestionLabel.isHidden = true
+        captchaAnswerTextField.isHidden = true
+        captchaSubmitButton.isHidden = true
+        passwordTextField.isSecureTextEntry = true
+        updatePasswordToggleIcon()
+        
+        emailTextField.attributedPlaceholder = NSAttributedString(
+            string: "example@example.com",
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray]
+        )
+        passwordTextField.attributedPlaceholder = NSAttributedString(
+            string: "Password",
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray]
+        )
+    }
+
     @IBAction func passwordToggleButtonTapped(_ sender: UIButton) {
         passwordTextField.isSecureTextEntry.toggle()
         let currentText = passwordTextField.text
@@ -32,63 +68,45 @@ class LoginViewController: UIViewController {
         updatePasswordToggleIcon()
     }
 
-
     func updatePasswordToggleIcon() {
         let imageName = passwordTextField.isSecureTextEntry ? "eye.slash" : "eye"
         passwordToggleButton.setImage(UIImage(systemName: imageName), for: .normal)
     }
 
-
-    @IBOutlet weak var passwordToggleButton: UIButton!
-    @IBOutlet weak var rememberMeSwitch: UISwitch!
-    
     @IBAction func loginButtonTapped(_ sender: UIButton) {
         let enteredEmail = emailTextField.text ?? ""
         let enteredPassword = passwordTextField.text ?? ""
 
-        let savedEmail = UserDefaults.standard.string(forKey: "RegisteredEmail") ?? ""
-        let savedPassword = UserDefaults.standard.string(forKey: "RegisteredPassword") ?? ""
+        if enteredEmail.isEmpty || enteredPassword.isEmpty {
+            showAlert(title: "Login Failed", message: "Please enter both email and password.")
+            return
+        }
 
-        if enteredEmail == savedEmail && enteredPassword == savedPassword {
-            failedLoginAttempts = 0
-            showAlert(title: "Login Successful", message: "Welcome back!") {
-                self.performSegue(withIdentifier: "goToHomePage", sender: self)
+        // Firebase Login
+        Auth.auth().signIn(withEmail: enteredEmail, password: enteredPassword) { authResult, error in
+            if let error = error {
+                self.failedLoginAttempts += 1
+                if self.failedLoginAttempts >= 5 {
+                    self.showCaptcha()
+                } else {
+                    self.showAlert(title: "Login Failed", message: "\(error.localizedDescription) Attempt \(self.failedLoginAttempts) of 5.")
+                }
+                return
             }
-        } else {
-            failedLoginAttempts += 1
 
-            if failedLoginAttempts >= 5 {
-                showCaptcha()
-            } else {
-                showAlert(title: "Login Failed", message: "Invalid email or password. Attempt \(failedLoginAttempts) of 5.")
+            // Login successful
+            self.failedLoginAttempts = 0
+            self.showAlert(title: "Login Successful", message: "Welcome back!") {
+                self.performSegue(withIdentifier: "goToHomePage", sender: self)
             }
         }
     }
 
-    var captchaAnswer: Int = 0
-
-    func showCaptcha() {
-        let num1 = Int.random(in: 1...10)
-        let num2 = Int.random(in: 1...10)
-        captchaAnswer = num1 + num2
-        print(" numbers: \(num1), \(num2), Answer: \(captchaAnswer)")
-        captchaQuestionLabel.text = "What is \(num1) + \(num2)?"
-        captchaQuestionLabel.isHidden = false
-        captchaAnswerTextField.isHidden = false
-        captchaSubmitButton.isHidden = false
-        captchaAnswerTextField.text = ""
-    }
-
-
-
-
     @IBAction func captchaSubmitTapped(_ sender: UIButton) {
-        print("Correct Answer: \(captchaAnswer)")
         guard let userAnswer = captchaAnswerTextField.text, let answer = Int(userAnswer) else {
             showAlert(title: "Invalid Input", message: "Please enter a valid number.")
             return
         }
-        print("User Answer: \(answer)")
         if answer == captchaAnswer {
             failedLoginAttempts = 0
             captchaQuestionLabel.isHidden = true
@@ -102,48 +120,22 @@ class LoginViewController: UIViewController {
         }
     }
 
-
-
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        captchaQuestionLabel.isHidden = true
-        captchaAnswerTextField.isHidden = true
-        captchaSubmitButton.isHidden = true
-        passwordTextField.isSecureTextEntry = true
-        updatePasswordToggleIcon()
-        
-        emailTextField.attributedPlaceholder = NSAttributedString(
-                string: "example@example.com",
-                attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
-        passwordTextField.attributedPlaceholder = NSAttributedString(
-               string: "Password",
-               attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray]
-           )
+    func showCaptcha() {
+        let num1 = Int.random(in: 1...10)
+        let num2 = Int.random(in: 1...10)
+        captchaAnswer = num1 + num2
+        captchaQuestionLabel.text = "What is \(num1) + \(num2)?"
+        captchaQuestionLabel.isHidden = false
+        captchaAnswerTextField.isHidden = false
+        captchaSubmitButton.isHidden = false
+        captchaAnswerTextField.text = ""
     }
 
-
-    
-    
     @IBAction func signUpButtonTapped(_ sender: UIButton) {
         performSegue(withIdentifier: "goToSignUp", sender: self)
     }
-    
-    
-    @IBAction func changePasswordButtonTapped(_ sender: UIButton) {
-    }
-    
-    var failedLoginAttempts: Int {
-        get {
-            return UserDefaults.standard.integer(forKey: "FailedLoginAttempts")
-        }
-        set {
-            UserDefaults.standard.set(newValue, forKey: "FailedLoginAttempts")
-        }
-    }
-    @IBOutlet weak var captchaQuestionLabel: UILabel!
-    @IBOutlet weak var captchaAnswerTextField: UITextField!
-    @IBOutlet weak var captchaSubmitButton: UIButton!
+
+
 
     
     

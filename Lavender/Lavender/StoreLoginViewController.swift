@@ -59,12 +59,17 @@ class StoreLoginViewController: UIViewController {
         
         if enteredEmail == correctEmail && enteredPassword == correctPassword && enteredStoreID == correctStoreID {
             showAlert(title: "Success", message: "Welcome, Store Owner!") {
-                self.performSegue(withIdentifier: "goToStoreDashboard", sender: self)
+                let storyboard = UIStoryboard(name: "AddProduct", bundle: nil)
+                if let addProductVC = storyboard.instantiateInitialViewController() {
+                    addProductVC.modalPresentationStyle = .fullScreen 
+                    self.present(addProductVC, animated: true, completion: nil)
+                }
             }
         } else {
             showAlert(title: "Error", message: "Invalid credentials. Please try again.")
         }
     }
+
     
     func showAlert(title: String, message: String, completion: (() -> Void)? = nil) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
