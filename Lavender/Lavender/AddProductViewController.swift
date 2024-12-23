@@ -41,9 +41,9 @@ class AddProductViewController: UIViewController, UIImagePickerControllerDelegat
             return
         }
         
-        let newProduct = Product(imageUrl: imageUrl, title: name, category: description, price: price)
+        //let newProduct = Product(imageUrl: imageUrl, title: name, category: description, price: price)
         
-        delegate?.didAddProduct(newProduct)
+        //delegate?.didAddProduct(newProduct)
         
         dismiss(animated: true, completion: nil)
     }
@@ -108,16 +108,16 @@ class AddProductViewController: UIViewController, UIImagePickerControllerDelegat
 
         var body = Data()
 
-        body.append("--\(boundary)\r\n".data(using: .utf8)!)
-        body.append("Content-Disposition: form-data; name=\"upload_preset\"\r\n\r\n".data(using: .utf8)!)
-        body.append("\(uploadPreset)\r\n".data(using: .utf8)!)
-
-=        body.append("--\(boundary)\r\n".data(using: .utf8)!)
-        body.append("Content-Disposition: form-data; name=\"file\"; filename=\"image.jpg\"\r\n".data(using: .utf8)!)
-        body.append("Content-Type: image/jpeg\r\n\r\n".data(using: .utf8)!)
-        body.append(imageData)
-        body.append("\r\n".data(using: .utf8)!)
-        body.append("--\(boundary)--\r\n".data(using: .utf8)!)
+//        body.append("--\(boundary)\r\n".data(using: .utf8)!)
+//        body.append("Content-Disposition: form-data; name=\"upload_preset\"\r\n\r\n".data(using: .utf8)!)
+//        body.append("\(uploadPreset)\r\n".data(using: .utf8)!)
+//
+//=        body.append("--\(boundary)\r\n".data(using: .utf8)!)
+//        body.append("Content-Disposition: form-data; name=\"file\"; filename=\"image.jpg\"\r\n".data(using: .utf8)!)
+//        body.append("Content-Type: image/jpeg\r\n\r\n".data(using: .utf8)!)
+//        body.append(imageData)
+//        body.append("\r\n".data(using: .utf8)!)
+//        body.append("--\(boundary)--\r\n".data(using: .utf8)!)
 
         request.httpBody = body
 

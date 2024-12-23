@@ -11,7 +11,6 @@
 		0E19A51C2D0C9C05002102F7 /* AdminLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E19A51B2D0C9C05002102F7 /* AdminLoginViewController.swift */; };
 		0E19A51E2D0CABA6002102F7 /* StoreLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E19A51D2D0CABA6002102F7 /* StoreLoginViewController.swift */; };
 		0E1A6BAA2D05F40C009D0EB1 /* AUTH.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0E1A6BA92D05F40C009D0EB1 /* AUTH.storyboard */; };
-		0E3BBF292D1234DA003E4522 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E3BBF282D1234DA003E4522 /* Product.swift */; };
 		0E4E67E52D0B596700CC72C1 /* AuthenticationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4E67E42D0B596600CC72C1 /* AuthenticationViewController.swift */; };
 		0E6A2E0A2D0B276C00C35552 /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E6A2E092D0B276C00C35552 /* ChangePasswordViewController.swift */; };
 		0E6C59BB2D10AAAF002E0333 /* ProductListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E6C59BA2D10AAAF002E0333 /* ProductListViewController.swift */; };
@@ -26,6 +25,13 @@
 		0ECD755C2D0F652D00DA963F /* AddProduct.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0ECD755B2D0F652D00DA963F /* AddProduct.storyboard */; };
 		0EDE91A62D18025500130FED /* RefundPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDE91A52D18025500130FED /* RefundPageViewController.swift */; };
 		0EE088852D07044700E430DA /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE088842D07044700E430DA /* LoginViewController.swift */; };
+		CCCBDE202D198472009586E2 /* ProductPage.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CCCBDE1F2D198472009586E2 /* ProductPage.storyboard */; };
+		CCCBDE222D1984C0009586E2 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCBDE212D1984BF009586E2 /* Product.swift */; };
+		CCCBDE242D1984D2009586E2 /* ProductTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCBDE232D1984D2009586E2 /* ProductTableView.swift */; };
+		CCCBDE262D1984D8009586E2 /* StorePage.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CCCBDE252D1984D8009586E2 /* StorePage.storyboard */; };
+		CCCBDE282D1984DD009586E2 /* Cart.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CCCBDE272D1984DD009586E2 /* Cart.storyboard */; };
+		CCCBDE2A2D1984E1009586E2 /* HomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCBDE292D1984E1009586E2 /* HomeTableViewCell.swift */; };
+		CCCBDE2C2D198506009586E2 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCBDE2B2D198506009586E2 /* HomeViewController.swift */; };
 		D4C8E4452D00799C00B254E2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C8E4442D00799C00B254E2 /* AppDelegate.swift */; };
 		D4C8E4472D00799C00B254E2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C8E4462D00799C00B254E2 /* SceneDelegate.swift */; };
 		D4C8E4492D00799C00B254E2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C8E4482D00799C00B254E2 /* ViewController.swift */; };
@@ -59,7 +65,6 @@
 		0E19A51B2D0C9C05002102F7 /* AdminLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminLoginViewController.swift; sourceTree = "<group>"; };
 		0E19A51D2D0CABA6002102F7 /* StoreLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreLoginViewController.swift; sourceTree = "<group>"; };
 		0E1A6BA92D05F40C009D0EB1 /* AUTH.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AUTH.storyboard; sourceTree = "<group>"; };
-		0E3BBF282D1234DA003E4522 /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
 		0E4E67E42D0B596600CC72C1 /* AuthenticationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewController.swift; sourceTree = "<group>"; };
 		0E6A2E092D0B276C00C35552 /* ChangePasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewController.swift; sourceTree = "<group>"; };
 		0E6C59BA2D10AAAF002E0333 /* ProductListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductListViewController.swift; sourceTree = "<group>"; };
@@ -71,6 +76,13 @@
 		0ECD755B2D0F652D00DA963F /* AddProduct.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AddProduct.storyboard; sourceTree = "<group>"; };
 		0EDE91A52D18025500130FED /* RefundPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefundPageViewController.swift; sourceTree = "<group>"; };
 		0EE088842D07044700E430DA /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		CCCBDE1F2D198472009586E2 /* ProductPage.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ProductPage.storyboard; sourceTree = "<group>"; };
+		CCCBDE212D1984BF009586E2 /* Product.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
+		CCCBDE232D1984D2009586E2 /* ProductTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductTableView.swift; sourceTree = "<group>"; };
+		CCCBDE252D1984D8009586E2 /* StorePage.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = StorePage.storyboard; sourceTree = "<group>"; };
+		CCCBDE272D1984DD009586E2 /* Cart.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Cart.storyboard; sourceTree = "<group>"; };
+		CCCBDE292D1984E1009586E2 /* HomeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeTableViewCell.swift; sourceTree = "<group>"; };
+		CCCBDE2B2D198506009586E2 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		D4C8E4412D00799C00B254E2 /* Lavender.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lavender.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4C8E4442D00799C00B254E2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D4C8E4462D00799C00B254E2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -138,6 +150,13 @@
 			isa = PBXGroup;
 			children = (
 				0E863A2B2D18DDDF00A0FA3C /* GoogleService-Info.plist */,
+				CCCBDE1F2D198472009586E2 /* ProductPage.storyboard */,
+				CCCBDE212D1984BF009586E2 /* Product.swift */,
+				CCCBDE232D1984D2009586E2 /* ProductTableView.swift */,
+				CCCBDE252D1984D8009586E2 /* StorePage.storyboard */,
+				CCCBDE272D1984DD009586E2 /* Cart.storyboard */,
+				CCCBDE292D1984E1009586E2 /* HomeTableViewCell.swift */,
+				CCCBDE2B2D198506009586E2 /* HomeViewController.swift */,
 				D4C8E4442D00799C00B254E2 /* AppDelegate.swift */,
 				D4C8E4462D00799C00B254E2 /* SceneDelegate.swift */,
 				D4C8E4482D00799C00B254E2 /* ViewController.swift */,
@@ -156,7 +175,6 @@
 				0E0091432D0F9DAC0017A672 /* AddProductViewController.swift */,
 				0E6C59BA2D10AAAF002E0333 /* ProductListViewController.swift */,
 				0E9907212D122C96001A42C2 /* ProductTableViewCell.swift */,
-				0E3BBF282D1234DA003E4522 /* Product.swift */,
 				0EDE91A52D18025500130FED /* RefundPageViewController.swift */,
 				0EA600252D17475800FA2AF0 /* RefundRequestsViewController.swift */,
 				0EA600272D174A7F00FA2AF0 /* RefundRequestCell.swift */,
@@ -294,11 +312,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				0ECD755C2D0F652D00DA963F /* AddProduct.storyboard in Resources */,
+				CCCBDE282D1984DD009586E2 /* Cart.storyboard in Resources */,
 				0E1A6BAA2D05F40C009D0EB1 /* AUTH.storyboard in Resources */,
 				D4C8E4512D00799E00B254E2 /* LaunchScreen.storyboard in Resources */,
 				D4C8E44E2D00799E00B254E2 /* Assets.xcassets in Resources */,
 				D4C8E44C2D00799C00B254E2 /* Main.storyboard in Resources */,
+				CCCBDE262D1984D8009586E2 /* StorePage.storyboard in Resources */,
 				0E863A2C2D18DDDF00A0FA3C /* GoogleService-Info.plist in Resources */,
+				CCCBDE202D198472009586E2 /* ProductPage.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -325,20 +346,23 @@
 			files = (
 				0EE088852D07044700E430DA /* LoginViewController.swift in Sources */,
 				D4C8E4492D00799C00B254E2 /* ViewController.swift in Sources */,
+				CCCBDE2C2D198506009586E2 /* HomeViewController.swift in Sources */,
 				0E0091442D0F9DAC0017A672 /* AddProductViewController.swift in Sources */,
 				0E19A51E2D0CABA6002102F7 /* StoreLoginViewController.swift in Sources */,
 				0EA600262D17475800FA2AF0 /* RefundRequestsViewController.swift in Sources */,
 				0E19A51C2D0C9C05002102F7 /* AdminLoginViewController.swift in Sources */,
+				CCCBDE2A2D1984E1009586E2 /* HomeTableViewCell.swift in Sources */,
 				0E9907222D122C96001A42C2 /* ProductTableViewCell.swift in Sources */,
 				D4C8E4452D00799C00B254E2 /* AppDelegate.swift in Sources */,
 				0E4E67E52D0B596700CC72C1 /* AuthenticationViewController.swift in Sources */,
+				CCCBDE222D1984C0009586E2 /* Product.swift in Sources */,
 				0EDE91A62D18025500130FED /* RefundPageViewController.swift in Sources */,
 				0E6A2E0A2D0B276C00C35552 /* ChangePasswordViewController.swift in Sources */,
 				D4C8E4472D00799C00B254E2 /* SceneDelegate.swift in Sources */,
 				0E6C59BB2D10AAAF002E0333 /* ProductListViewController.swift in Sources */,
 				0EAF42AD2D08B95A005F04CC /* SignUpViewController.swift in Sources */,
-				0E3BBF292D1234DA003E4522 /* Product.swift in Sources */,
 				0EA600282D174A7F00FA2AF0 /* RefundRequestCell.swift in Sources */,
+				CCCBDE242D1984D2009586E2 /* ProductTableView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
