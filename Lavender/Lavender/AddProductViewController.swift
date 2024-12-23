@@ -1,33 +1,28 @@
 import UIKit
 
-// Delegate Protocol to Pass Product Back
 protocol AddProductDelegate: AnyObject {
     func didAddProduct(_ product: Product)
 }
 
 class AddProductViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate {
 
-    // MARK: - Outlets
     @IBOutlet weak var productImageView: UIImageView!
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var descriptionTextView: UITextView!
     @IBOutlet weak var priceTextField: UITextField!
     @IBOutlet weak var stockTextField: UITextField!
     
-    // Delegate to pass data back
     weak var delegate: AddProductDelegate?
-    var uploadedImageUrl: String? // Store the Cloudinary image URL
+    var uploadedImageUrl: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Set up the placeholder for the description text view
         descriptionTextView.text = "Product Description"
         descriptionTextView.textColor = .gray
         descriptionTextView.delegate = self
     }
     
-    // MARK: - Add Photo Action
     @IBAction func addPhotoButtonTapped(_ sender: UIButton) {
         let picker = UIImagePickerController()
         picker.sourceType = .photoLibrary
@@ -36,9 +31,7 @@ class AddProductViewController: UIViewController, UIImagePickerControllerDelegat
         present(picker, animated: true)
     }
     
-    // MARK: - Confirm Button Action
     @IBAction func confirmButtonTapped(_ sender: UIButton) {
-        // Validate input fields
         guard let name = nameTextField.text, !name.isEmpty,
               let description = descriptionTextView.text, description != "Product Description",
               let price = priceTextField.text, !price.isEmpty,
@@ -48,17 +41,13 @@ class AddProductViewController: UIViewController, UIImagePickerControllerDelegat
             return
         }
         
-        // Create a new product with the Cloudinary image URL
         let newProduct = Product(imageUrl: imageUrl, title: name, category: description, price: price)
         
-        // Pass data back using the delegate
         delegate?.didAddProduct(newProduct)
         
-        // Dismiss Add Product Page
         dismiss(animated: true, completion: nil)
     }
     
-    // MARK: - UITextView Delegate (for Placeholder)
     func textViewDidBeginEditing(_ textView: UITextView) {
         if textView.text == "Product Description" {
             textView.text = ""
@@ -73,12 +62,10 @@ class AddProductViewController: UIViewController, UIImagePickerControllerDelegat
         }
     }
     
-    // MARK: - UIImagePickerController Delegate
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let selectedImage = info[.editedImage] as? UIImage ?? info[.originalImage] as? UIImage {
             productImageView.image = selectedImage
             
-            // Upload the selected image to Cloudinary
             uploadImageToCloudinary(selectedImage) { [weak self] imageUrl in
                 DispatchQueue.main.async {
                     if let imageUrl = imageUrl {
@@ -97,10 +84,9 @@ class AddProductViewController: UIViewController, UIImagePickerControllerDelegat
         dismiss(animated: true, completion: nil)
     }
     
-    // MARK: - Upload Image to Cloudinary
     func uploadImageToCloudinary(_ image: UIImage, completion: @escaping (String?) -> Void) {
-        let cloudName = "dya8ndfhj" // Your Cloudinary Cloud Name
-        let uploadPreset = "ml_default" // Your Upload Preset Name
+        let cloudName = "dya8ndfhj"
+        let uploadPreset = "ml_default"
 
         guard let url = URL(string: "https://api.cloudinary.com/v1_1/\(cloudName)/image/upload") else {
             print("Invalid URL")
@@ -122,13 +108,11 @@ class AddProductViewController: UIViewController, UIImagePickerControllerDelegat
 
         var body = Data()
 
-        // Add upload_preset
         body.append("--\(boundary)\r\n".data(using: .utf8)!)
         body.append("Content-Disposition: form-data; name=\"upload_preset\"\r\n\r\n".data(using: .utf8)!)
         body.append("\(uploadPreset)\r\n".data(using: .utf8)!)
 
-        // Add image file
-        body.append("--\(boundary)\r\n".data(using: .utf8)!)
+=        body.append("--\(boundary)\r\n".data(using: .utf8)!)
         body.append("Content-Disposition: form-data; name=\"file\"; filename=\"image.jpg\"\r\n".data(using: .utf8)!)
         body.append("Content-Type: image/jpeg\r\n\r\n".data(using: .utf8)!)
         body.append(imageData)
@@ -171,7 +155,6 @@ class AddProductViewController: UIViewController, UIImagePickerControllerDelegat
     }
 
     
-    // MARK: - Helper Method
     func showErrorAlert(_ message: String) {
         let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default))

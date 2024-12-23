@@ -50,7 +50,6 @@ class ProductListViewController: UIViewController, AddProductDelegate {
     }
 }
 
-// MARK: - UITableViewDataSource and UITableViewDelegate
 extension ProductListViewController: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
