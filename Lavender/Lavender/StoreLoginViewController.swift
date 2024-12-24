@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class StoreLoginViewController: UIViewController {
     
@@ -30,54 +31,60 @@ class StoreLoginViewController: UIViewController {
     @IBOutlet weak var loginButton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
-        storeEmailTextField.attributedPlaceholder = NSAttributedString(
-            string: "example@example.com",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
-        storePasswordTextField.attributedPlaceholder = NSAttributedString(
-            string: "Password",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
-        storeIDTextField.attributedPlaceholder = NSAttributedString(
-            string: "123",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
-        storePasswordTextField.isSecureTextEntry = true
-        updatePasswordToggleIcon()
+               storeEmailTextField.attributedPlaceholder = NSAttributedString(
+                   string: "example@example.com",
+                   attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+               storePasswordTextField.attributedPlaceholder = NSAttributedString(
+                   string: "Password",
+                   attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+               storeIDTextField.attributedPlaceholder = NSAttributedString(
+                   string: "123",
+                   attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+               storePasswordTextField.isSecureTextEntry = true
+               updatePasswordToggleIcon()
     }
     
     @IBAction func storeLoginButtonTapped(_ sender: UIButton) {
-        let correctEmail = "store@lavendar.com"
-        let correctPassword = "storelavender123"
-        let correctStoreID = "456"
-        
         let enteredEmail = storeEmailTextField.text ?? ""
-        let enteredPassword = storePasswordTextField.text ?? ""
-        let enteredStoreID = storeIDTextField.text ?? ""
-        
-        if enteredEmail.isEmpty || enteredPassword.isEmpty || enteredStoreID.isEmpty {
-            showAlert(title: "Error", message: "All fields are required.")
-            return
-        }
-        
-        if enteredEmail == correctEmail && enteredPassword == correctPassword && enteredStoreID == correctStoreID {
-            showAlert(title: "Success", message: "Welcome, Store Owner!") {
-                let storyboard = UIStoryboard(name: "AddProduct", bundle: nil)
-                if let addProductVC = storyboard.instantiateInitialViewController() {
-                    addProductVC.modalPresentationStyle = .fullScreen 
-                    self.present(addProductVC, animated: true, completion: nil)
+                let enteredPassword = storePasswordTextField.text ?? ""
+                let enteredStoreID = storeIDTextField.text ?? ""
+                let correctStoreID = "456"
+
+                if enteredEmail.isEmpty || enteredPassword.isEmpty || enteredStoreID.isEmpty {
+                    showAlert(title: "Error", message: "All fields are required.")
+                    return
                 }
-            }
-        } else {
-            showAlert(title: "Error", message: "Invalid credentials. Please try again.")
-        }
+
+                if enteredStoreID != correctStoreID {
+                    showAlert(title: "Error", message: "Invalid Store ID.")
+                    return
+                }
+
+                Auth.auth().signIn(withEmail: enteredEmail, password: enteredPassword) { authResult, error in
+                    if let error = error {
+                        self.showAlert(title: "Error", message: "Authentication failed: \(error.localizedDescription)")
+                        return
+                    }
+
+                    self.showAlert(title: "Success", message: "Welcome, Store Owner!") {
+                        let storyboard = UIStoryboard(name: "AddProduct", bundle: nil)
+                        if let addProductVC = storyboard.instantiateInitialViewController() {
+                            addProductVC.modalPresentationStyle = .fullScreen
+                            self.present(addProductVC, animated: true, completion: nil)
+                        }
+                    }
+                }
     }
 
     
     func showAlert(title: String, message: String, completion: (() -> Void)? = nil) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
-            completion?()
-        }))
-        present(alert, animated: true, completion: nil)
-    }
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
+                    completion?()
+                }))
+                present(alert, animated: true, completion: nil)
+            }
+    
     
     
     

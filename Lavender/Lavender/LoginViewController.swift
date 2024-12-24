@@ -19,8 +19,7 @@ class LoginViewController: UIViewController {
 
     
     @IBAction func forgotPasswordButtonTapped(_ sender: UIButton) {
-        print("Forgot Password button tapped")
-    }
+        performSegue(withIdentifier: "goToVerificationPage", sender: self)    }
     
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!

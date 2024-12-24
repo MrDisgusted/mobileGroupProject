@@ -121,7 +121,6 @@
                                     <color key="baseForegroundColor" systemColor="systemGray2Color"/>
                                 </buttonConfiguration>
                                 <connections>
-                                    <action selector="changePasswordButtonTapped:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="o8S-tJ-nR0"/>
                                     <segue destination="oWs-0f-k7a" kind="show" id="2xt-aS-buc"/>
                                 </connections>
                             </button>
@@ -259,12 +258,13 @@
                         <outlet property="adminEmailTextField" destination="nr1-kf-7BH" id="8Tu-VP-JRq"/>
                         <outlet property="adminIDTextField" destination="v33-VY-N33" id="1E8-ga-8DE"/>
                         <outlet property="adminPasswordTextField" destination="kvc-Up-QOO" id="ElK-5a-aIn"/>
+                        <outlet property="loginButton" destination="HEo-t8-v07" id="jBq-ne-eDn"/>
                         <outlet property="passwordToggleButton" destination="pgs-eJ-O7g" id="dpw-uX-Bsg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rns-Cc-C51" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="20.610687022900763" y="681.69014084507046"/>
+            <point key="canvasLocation" x="-221" y="519"/>
         </scene>
         <!--SignUpView-->
         <scene sceneID="Whq-0v-wcU">
@@ -372,6 +372,7 @@
         <!--ChangePassView-->
         <scene sceneID="3Fa-C6-dPA">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gA2-LU-oHr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <viewController title="ChangePassView" id="Rg0-Um-iJw" customClass="ChangePasswordViewController" customModule="Lavender" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="jfI-Ww-ZG1" customClass="ChangePassViewController">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
@@ -425,9 +426,6 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Back"/>
-                                <connections>
-                                    <segue destination="Y6W-OH-hqX" kind="show" id="rO9-f2-Sah"/>
-                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gGj-BT-jd5">
                                 <rect key="frame" x="305" y="408" width="58" height="35"/>
@@ -448,7 +446,6 @@
                         <outlet property="passwordToggleButton" destination="gGj-BT-jd5" id="LaR-Do-icH"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="gA2-LU-oHr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2529" y="-227"/>
         </scene>
@@ -640,10 +637,10 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray2Color">
-            <color red="0.68235294117647061" green="0.68235294117647061" blue="0.69803921568627447" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.68235294120000001" green="0.68235294120000001" blue="0.69803921570000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGrayColor">
-            <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

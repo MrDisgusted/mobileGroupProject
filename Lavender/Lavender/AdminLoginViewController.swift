@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class AdminLoginViewController: UIViewController {
     
@@ -33,40 +34,52 @@ class AdminLoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        adminEmailTextField.attributedPlaceholder = NSAttributedString(
-                string: "example@example.com",
-                attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
-        adminPasswordTextField.attributedPlaceholder = NSAttributedString(
-               string: "Password",
-               attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
-        adminIDTextField.attributedPlaceholder = NSAttributedString(
-                string: "123",
-                attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
-        adminPasswordTextField.isSecureTextEntry = true
-            updatePasswordToggleIcon()
+                adminEmailTextField.attributedPlaceholder = NSAttributedString(
+                    string: "example@example.com",
+                    attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray]
+                )
+                adminPasswordTextField.attributedPlaceholder = NSAttributedString(
+                    string: "Password",
+                    attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray]
+                )
+                adminIDTextField.attributedPlaceholder = NSAttributedString(
+                    string: "123",
+                    attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray]
+                )
+                adminPasswordTextField.isSecureTextEntry = true
+                updatePasswordToggleIcon()
     }
     
     @IBAction func adminLoginButtonTapped(_ sender: UIButton) {
-        let correctEmail = "admin@lavendar.com"
-        let correctPassword = "adminlavendar123"
-        let correctAdminID = "765"
-        
         let enteredEmail = adminEmailTextField.text ?? ""
-        let enteredPassword = adminPasswordTextField.text ?? ""
-        let enteredAdminID = adminIDTextField.text ?? ""
-        
-        if enteredEmail.isEmpty || enteredPassword.isEmpty || enteredAdminID.isEmpty {
-            showAlert(title: "Error", message: "All fields are required.")
-            return
-        }
-        
-        if enteredEmail == correctEmail && enteredPassword == correctPassword && enteredAdminID == correctAdminID {
-            showAlert(title: "Success", message: "Welcome, Admin!") {
-                self.performSegue(withIdentifier: "goToAdminDashboard", sender: self)
-            }
-        } else {
-            showAlert(title: "Error", message: "Invalid credentials. Please try again.")
-        }
+           let enteredPassword = adminPasswordTextField.text ?? ""
+           let enteredAdminID = adminIDTextField.text ?? ""
+
+           let correctAdminID = "765"
+
+           if enteredEmail.isEmpty || enteredPassword.isEmpty || enteredAdminID.isEmpty {
+               showAlert(title: "Error", message: "All fields are required.")
+               return
+           }
+
+           if enteredAdminID != correctAdminID {
+               showAlert(title: "Error", message: "Invalid Admin ID.")
+               return
+           }
+
+           if enteredEmail == "admin@lavendar.com" && enteredPassword == "adminlavendar123" {
+               Auth.auth().signIn(withEmail: enteredEmail, password: enteredPassword) { authResult, error in
+                   if let error = error {
+                       self.showAlert(title: "Error", message: "Authentication failed: \(error.localizedDescription)")
+                       return
+                   }
+                   self.showAlert(title: "Success", message: "Welcome, Admin!") {
+                       self.performSegue(withIdentifier: "goToAdminDashboard", sender: self)
+                   }
+               }
+           } else {
+               showAlert(title: "Error", message: "Invalid email or password.")
+           }
     }
     
     func showAlert(title: String, message: String, completion: (() -> Void)? = nil) {
