@@ -1,78 +1,67 @@
 import UIKit
 
 class ProductTableViewCell: UITableViewCell {
-
     
-    let productImageView = UIImageView()
-    let titleLabel = UILabel()
-    let categoryLabel = UILabel()
-    let priceLabel = UILabel()
+    @IBOutlet weak var productImageView: UIImageView!
+        @IBOutlet weak var titleLabel: UILabel!
+        @IBOutlet weak var categoryLabel: UILabel!
+        @IBOutlet weak var priceLabel: UILabel!
 
+        override func awakeFromNib() {
+            super.awakeFromNib()
+                
+                guard productImageView != nil else {
+                    print("Error: productImageView not connected!")
+                    return
+                }
+                guard titleLabel != nil else {
+                    print("Error: titleLabel not connected!")
+                    return
+                }
+                guard categoryLabel != nil else {
+                    print("Error: categoryLabel not connected!")
+                    return
+                }
+                guard priceLabel != nil else {
+                    print("Error: priceLabel not connected!")
+                    return
+                }
+                
+                setupViews()
+        }
+
+        private func setupViews() {
+            productImageView.contentMode = .scaleAspectFit
+            titleLabel.font = UIFont.boldSystemFont(ofSize: 16)
+            titleLabel.textColor = .white
+            categoryLabel.font = UIFont.systemFont(ofSize: 12)
+            categoryLabel.textColor = .lightGray
+            priceLabel.font = UIFont.systemFont(ofSize: 14)
+            priceLabel.textColor = .systemBlue
+        }
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setupViews()
-        setupConstraints()
-    }
-
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        setupViews()
-        setupConstraints()
-    }
-
-
-   
-    private func setupViews() {
-        contentView.backgroundColor = .black
-        titleLabel.textColor = .white
-        categoryLabel.textColor = .lightGray
-        priceLabel.textColor = .systemBlue
-
-        productImageView.contentMode = .scaleAspectFit
-        productImageView.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(productImageView)
-
-        titleLabel.font = UIFont.boldSystemFont(ofSize: 16)
-        titleLabel.textColor = .white
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(titleLabel)
-
-        categoryLabel.font = UIFont.systemFont(ofSize: 12)
-        categoryLabel.textColor = .lightGray
-        categoryLabel.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(categoryLabel)
-
-        priceLabel.font = UIFont.systemFont(ofSize: 14)
-        priceLabel.textColor = .systemBlue
-        priceLabel.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(priceLabel)
-    }
-
-
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            productImageView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 8),
-            productImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            productImageView.widthAnchor.constraint(equalToConstant: 60),
-            productImageView.heightAnchor.constraint(equalToConstant: 60)
-        ])
+            productImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
+            productImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
+            productImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
+            productImageView.widthAnchor.constraint(equalToConstant: 80),
 
-        NSLayoutConstraint.activate([
-            priceLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -8),
-            priceLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8)
-        ])
+            titleLabel.leadingAnchor.constraint(equalTo: productImageView.trailingAnchor, constant: 12),
+            titleLabel.trailingAnchor.constraint(equalTo: priceLabel.leadingAnchor, constant: -12),
+            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
 
-        NSLayoutConstraint.activate([
-            titleLabel.leftAnchor.constraint(equalTo: productImageView.rightAnchor, constant: 8),
-            titleLabel.rightAnchor.constraint(lessThanOrEqualTo: priceLabel.leftAnchor, constant: -8),
-            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8)
-        ])
-
-        NSLayoutConstraint.activate([
-            categoryLabel.leftAnchor.constraint(equalTo: titleLabel.leftAnchor),
+            categoryLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+            categoryLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
             categoryLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
-            categoryLabel.rightAnchor.constraint(equalTo: titleLabel.rightAnchor)
+
+            priceLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
+            priceLabel.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor)
         ])
     }
+
+
+
+
+
 }
