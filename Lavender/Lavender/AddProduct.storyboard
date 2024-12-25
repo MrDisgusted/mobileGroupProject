@@ -199,6 +199,15 @@
                                     <outlet property="delegate" destination="DlR-jp-ZhO" id="RTb-hD-dXw"/>
                                 </connections>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wa9-QU-Qtz">
+                                <rect key="frame" x="320" y="56" width="72" height="39"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Select"/>
+                                <connections>
+                                    <action selector="selectButtonTapped:" destination="DlR-jp-ZhO" eventType="touchUpInside" id="zlp-4I-SZr"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="aXi-9g-sjl"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -770,7 +779,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="SY6-wc-PfJ"/>
         <segue reference="ZMd-bH-0fS"/>
     </inferredMetricsTieBreakers>
     <resources>

@@ -6,6 +6,12 @@ class ProductListViewController: UIViewController, AddProductDelegate {
     
     
     
+    @IBAction func selectButtonTapped(_ sender: Any) {
+        if let button = sender as? UIButton {
+                tableView.setEditing(!tableView.isEditing, animated: true)
+                button.setTitle(tableView.isEditing ? "Done" : "Select", for: .normal)
+            }
+    }
     
 
     @IBOutlet weak var tableView: UITableView!
@@ -119,7 +125,6 @@ extension ProductListViewController: UITableViewDataSource, UITableViewDelegate 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ProductCell", for: indexPath) as! ProductTableViewCell
         let product = products[indexPath.row]
-
         cell.titleLabel.text = product.name
         cell.categoryLabel.text = "\(product.category)"
         cell.priceLabel.text = "$\(product.price)"
@@ -138,5 +143,29 @@ extension ProductListViewController: UITableViewDataSource, UITableViewDelegate 
 
         return cell
     }
-    
+
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let productToDelete = products[indexPath.row]
+            products.remove(at: indexPath.row)
+            deleteProductFromFirebase(product: productToDelete)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
+    }
+
+    func deleteProductFromFirebase(product: Product) {
+        db.collection("storeProducts").whereField("ID", isEqualTo: product.ID).getDocuments { snapshot, error in
+            if let documents = snapshot?.documents {
+                documents.forEach { document in
+                    document.reference.delete { error in
+                        if let error = error {
+                            print("Error deleting product: \(error.localizedDescription)")
+                        }
+                    }
+                }
+            }
+        }
+    }
+
 }
+
