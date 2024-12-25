@@ -25,6 +25,13 @@
 		0ECD755C2D0F652D00DA963F /* AddProduct.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0ECD755B2D0F652D00DA963F /* AddProduct.storyboard */; };
 		0EDE91A62D18025500130FED /* RefundPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDE91A52D18025500130FED /* RefundPageViewController.swift */; };
 		0EE088852D07044700E430DA /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE088842D07044700E430DA /* LoginViewController.swift */; };
+		342C46E42D1AF3510044A1E7 /* ManageProfile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 342C46E32D1AF3510044A1E7 /* ManageProfile.storyboard */; };
+		342C46E62D1AF7280044A1E7 /* ManageProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 342C46E52D1AF7280044A1E7 /* ManageProfileViewController.swift */; };
+		342C46EB2D1AFE150044A1E7 /* AdminMenu.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 342C46EA2D1AFE150044A1E7 /* AdminMenu.storyboard */; };
+		342C46ED2D1AFEFF0044A1E7 /* AdminMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 342C46EC2D1AFEFF0044A1E7 /* AdminMenuViewController.swift */; };
+		342C46EF2D1B088D0044A1E7 /* CreateaStoreAccount.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 342C46EE2D1B088D0044A1E7 /* CreateaStoreAccount.storyboard */; };
+		347542B52D199B2700C903E9 /* Menu.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 347542B42D199B2700C903E9 /* Menu.storyboard */; };
+		347542B72D199C5E00C903E9 /* MenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 347542B62D199C5E00C903E9 /* MenuTableViewController.swift */; };
 		CCCBDE202D198472009586E2 /* ProductPage.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CCCBDE1F2D198472009586E2 /* ProductPage.storyboard */; };
 		CCCBDE222D1984C0009586E2 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCBDE212D1984BF009586E2 /* Product.swift */; };
 		CCCBDE242D1984D2009586E2 /* ProductTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCBDE232D1984D2009586E2 /* ProductTableView.swift */; };
@@ -76,6 +83,13 @@
 		0ECD755B2D0F652D00DA963F /* AddProduct.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AddProduct.storyboard; sourceTree = "<group>"; };
 		0EDE91A52D18025500130FED /* RefundPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefundPageViewController.swift; sourceTree = "<group>"; };
 		0EE088842D07044700E430DA /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		342C46E32D1AF3510044A1E7 /* ManageProfile.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ManageProfile.storyboard; sourceTree = "<group>"; };
+		342C46E52D1AF7280044A1E7 /* ManageProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageProfileViewController.swift; sourceTree = "<group>"; };
+		342C46EA2D1AFE150044A1E7 /* AdminMenu.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AdminMenu.storyboard; sourceTree = "<group>"; };
+		342C46EC2D1AFEFF0044A1E7 /* AdminMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminMenuViewController.swift; sourceTree = "<group>"; };
+		342C46EE2D1B088D0044A1E7 /* CreateaStoreAccount.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CreateaStoreAccount.storyboard; sourceTree = "<group>"; };
+		347542B42D199B2700C903E9 /* Menu.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Menu.storyboard; sourceTree = "<group>"; };
+		347542B62D199C5E00C903E9 /* MenuTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableViewController.swift; sourceTree = "<group>"; };
 		CCCBDE1F2D198472009586E2 /* ProductPage.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ProductPage.storyboard; sourceTree = "<group>"; };
 		CCCBDE212D1984BF009586E2 /* Product.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
 		CCCBDE232D1984D2009586E2 /* ProductTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductTableView.swift; sourceTree = "<group>"; };
@@ -126,6 +140,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		342C46E92D1AF9140044A1E7 /* Admin */ = {
+			isa = PBXGroup;
+			children = (
+				342C46EA2D1AFE150044A1E7 /* AdminMenu.storyboard */,
+				342C46EC2D1AFEFF0044A1E7 /* AdminMenuViewController.swift */,
+				342C46EE2D1B088D0044A1E7 /* CreateaStoreAccount.storyboard */,
+			);
+			path = Admin;
+			sourceTree = "<group>";
+		};
+		347542B32D199AEC00C903E9 /* MenuAndManage Profile */ = {
+			isa = PBXGroup;
+			children = (
+				347542B42D199B2700C903E9 /* Menu.storyboard */,
+				342C46E32D1AF3510044A1E7 /* ManageProfile.storyboard */,
+				342C46E52D1AF7280044A1E7 /* ManageProfileViewController.swift */,
+				347542B62D199C5E00C903E9 /* MenuTableViewController.swift */,
+			);
+			path = "MenuAndManage Profile";
+			sourceTree = "<group>";
+		};
 		D4C8E4382D00799C00B254E2 = {
 			isa = PBXGroup;
 			children = (
@@ -151,6 +186,8 @@
 			children = (
 				0E863A2B2D18DDDF00A0FA3C /* GoogleService-Info.plist */,
 				CCCBDE1F2D198472009586E2 /* ProductPage.storyboard */,
+				342C46E92D1AF9140044A1E7 /* Admin */,
+				347542B32D199AEC00C903E9 /* MenuAndManage Profile */,
 				CCCBDE212D1984BF009586E2 /* Product.swift */,
 				CCCBDE232D1984D2009586E2 /* ProductTableView.swift */,
 				CCCBDE252D1984D8009586E2 /* StorePage.storyboard */,
@@ -312,11 +349,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				0ECD755C2D0F652D00DA963F /* AddProduct.storyboard in Resources */,
+				342C46EB2D1AFE150044A1E7 /* AdminMenu.storyboard in Resources */,
+				342C46EF2D1B088D0044A1E7 /* CreateaStoreAccount.storyboard in Resources */,
 				CCCBDE282D1984DD009586E2 /* Cart.storyboard in Resources */,
 				0E1A6BAA2D05F40C009D0EB1 /* AUTH.storyboard in Resources */,
 				D4C8E4512D00799E00B254E2 /* LaunchScreen.storyboard in Resources */,
 				D4C8E44E2D00799E00B254E2 /* Assets.xcassets in Resources */,
+				347542B52D199B2700C903E9 /* Menu.storyboard in Resources */,
 				D4C8E44C2D00799C00B254E2 /* Main.storyboard in Resources */,
+				342C46E42D1AF3510044A1E7 /* ManageProfile.storyboard in Resources */,
 				CCCBDE262D1984D8009586E2 /* StorePage.storyboard in Resources */,
 				0E863A2C2D18DDDF00A0FA3C /* GoogleService-Info.plist in Resources */,
 				CCCBDE202D198472009586E2 /* ProductPage.storyboard in Resources */,
@@ -351,12 +392,15 @@
 				0E19A51E2D0CABA6002102F7 /* StoreLoginViewController.swift in Sources */,
 				0EA600262D17475800FA2AF0 /* RefundRequestsViewController.swift in Sources */,
 				0E19A51C2D0C9C05002102F7 /* AdminLoginViewController.swift in Sources */,
+				342C46ED2D1AFEFF0044A1E7 /* AdminMenuViewController.swift in Sources */,
 				CCCBDE2A2D1984E1009586E2 /* HomeTableViewCell.swift in Sources */,
 				0E9907222D122C96001A42C2 /* ProductTableViewCell.swift in Sources */,
 				D4C8E4452D00799C00B254E2 /* AppDelegate.swift in Sources */,
 				0E4E67E52D0B596700CC72C1 /* AuthenticationViewController.swift in Sources */,
 				CCCBDE222D1984C0009586E2 /* Product.swift in Sources */,
+				347542B72D199C5E00C903E9 /* MenuTableViewController.swift in Sources */,
 				0EDE91A62D18025500130FED /* RefundPageViewController.swift in Sources */,
+				342C46E62D1AF7280044A1E7 /* ManageProfileViewController.swift in Sources */,
 				0E6A2E0A2D0B276C00C35552 /* ChangePasswordViewController.swift in Sources */,
 				D4C8E4472D00799C00B254E2 /* SceneDelegate.swift in Sources */,
 				0E6C59BB2D10AAAF002E0333 /* ProductListViewController.swift in Sources */,
