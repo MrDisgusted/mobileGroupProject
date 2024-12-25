@@ -13,11 +13,6 @@ class HomeTableViewCell: UITableViewCell {
     @IBOutlet weak var ProductName: UILabel!
     @IBOutlet weak var ProductDescription: UILabel!
     @IBOutlet weak var ProductPrice: UIButton!
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
 
     @IBAction func buttonPurchase(_ sender: Any) {
         

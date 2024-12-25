@@ -10,7 +10,6 @@
 		0E0091442D0F9DAC0017A672 /* AddProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E0091432D0F9DAC0017A672 /* AddProductViewController.swift */; };
 		0E19A51C2D0C9C05002102F7 /* AdminLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E19A51B2D0C9C05002102F7 /* AdminLoginViewController.swift */; };
 		0E19A51E2D0CABA6002102F7 /* StoreLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E19A51D2D0CABA6002102F7 /* StoreLoginViewController.swift */; };
-		0E1A6BAA2D05F40C009D0EB1 /* AUTH.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0E1A6BA92D05F40C009D0EB1 /* AUTH.storyboard */; };
 		0E4E67E52D0B596700CC72C1 /* AuthenticationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E4E67E42D0B596600CC72C1 /* AuthenticationViewController.swift */; };
 		0E6A2E0A2D0B276C00C35552 /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E6A2E092D0B276C00C35552 /* ChangePasswordViewController.swift */; };
 		0E6C59BB2D10AAAF002E0333 /* ProductListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E6C59BA2D10AAAF002E0333 /* ProductListViewController.swift */; };
@@ -32,6 +31,9 @@
 		342C46EF2D1B088D0044A1E7 /* CreateaStoreAccount.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 342C46EE2D1B088D0044A1E7 /* CreateaStoreAccount.storyboard */; };
 		347542B52D199B2700C903E9 /* Menu.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 347542B42D199B2700C903E9 /* Menu.storyboard */; };
 		347542B72D199C5E00C903E9 /* MenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 347542B62D199C5E00C903E9 /* MenuTableViewController.swift */; };
+		CC5CBCCF2D1C400D000EE8CF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CC5CBCCD2D1C400D000EE8CF /* Main.storyboard */; };
+		CC5CBCD12D1C4033000EE8CF /* CategoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC5CBCD02D1C4033000EE8CF /* CategoryTableViewController.swift */; };
+		CC5CBCD32D1C4076000EE8CF /* UserTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC5CBCD22D1C4076000EE8CF /* UserTabBarController.swift */; };
 		CCCBDE202D198472009586E2 /* ProductPage.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CCCBDE1F2D198472009586E2 /* ProductPage.storyboard */; };
 		CCCBDE222D1984C0009586E2 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCBDE212D1984BF009586E2 /* Product.swift */; };
 		CCCBDE242D1984D2009586E2 /* ProductTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCBDE232D1984D2009586E2 /* ProductTableView.swift */; };
@@ -42,7 +44,6 @@
 		D4C8E4452D00799C00B254E2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C8E4442D00799C00B254E2 /* AppDelegate.swift */; };
 		D4C8E4472D00799C00B254E2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C8E4462D00799C00B254E2 /* SceneDelegate.swift */; };
 		D4C8E4492D00799C00B254E2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C8E4482D00799C00B254E2 /* ViewController.swift */; };
-		D4C8E44C2D00799C00B254E2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4C8E44A2D00799C00B254E2 /* Main.storyboard */; };
 		D4C8E44E2D00799E00B254E2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D4C8E44D2D00799E00B254E2 /* Assets.xcassets */; };
 		D4C8E4512D00799E00B254E2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4C8E44F2D00799E00B254E2 /* LaunchScreen.storyboard */; };
 		D4C8E45C2D00799F00B254E2 /* LavenderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C8E45B2D00799F00B254E2 /* LavenderTests.swift */; };
@@ -71,7 +72,6 @@
 		0E0091432D0F9DAC0017A672 /* AddProductViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProductViewController.swift; sourceTree = "<group>"; };
 		0E19A51B2D0C9C05002102F7 /* AdminLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminLoginViewController.swift; sourceTree = "<group>"; };
 		0E19A51D2D0CABA6002102F7 /* StoreLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreLoginViewController.swift; sourceTree = "<group>"; };
-		0E1A6BA92D05F40C009D0EB1 /* AUTH.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AUTH.storyboard; sourceTree = "<group>"; };
 		0E4E67E42D0B596600CC72C1 /* AuthenticationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewController.swift; sourceTree = "<group>"; };
 		0E6A2E092D0B276C00C35552 /* ChangePasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewController.swift; sourceTree = "<group>"; };
 		0E6C59BA2D10AAAF002E0333 /* ProductListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductListViewController.swift; sourceTree = "<group>"; };
@@ -90,6 +90,9 @@
 		342C46EE2D1B088D0044A1E7 /* CreateaStoreAccount.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CreateaStoreAccount.storyboard; sourceTree = "<group>"; };
 		347542B42D199B2700C903E9 /* Menu.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Menu.storyboard; sourceTree = "<group>"; };
 		347542B62D199C5E00C903E9 /* MenuTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableViewController.swift; sourceTree = "<group>"; };
+		CC5CBCCE2D1C400D000EE8CF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = ../../../mobileGroupProject/Lavender/Lavender/Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		CC5CBCD02D1C4033000EE8CF /* CategoryTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CategoryTableViewController.swift; path = ../../../mobileGroupProject/Lavender/Lavender/CategoryTableViewController.swift; sourceTree = "<group>"; };
+		CC5CBCD22D1C4076000EE8CF /* UserTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTabBarController.swift; sourceTree = "<group>"; };
 		CCCBDE1F2D198472009586E2 /* ProductPage.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ProductPage.storyboard; sourceTree = "<group>"; };
 		CCCBDE212D1984BF009586E2 /* Product.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
 		CCCBDE232D1984D2009586E2 /* ProductTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductTableView.swift; sourceTree = "<group>"; };
@@ -101,7 +104,6 @@
 		D4C8E4442D00799C00B254E2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D4C8E4462D00799C00B254E2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		D4C8E4482D00799C00B254E2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		D4C8E44B2D00799C00B254E2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D4C8E44D2D00799E00B254E2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D4C8E4502D00799E00B254E2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D4C8E4522D00799E00B254E2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -190,6 +192,8 @@
 				347542B32D199AEC00C903E9 /* MenuAndManage Profile */,
 				CCCBDE212D1984BF009586E2 /* Product.swift */,
 				CCCBDE232D1984D2009586E2 /* ProductTableView.swift */,
+				CC5CBCD02D1C4033000EE8CF /* CategoryTableViewController.swift */,
+				CC5CBCD22D1C4076000EE8CF /* UserTabBarController.swift */,
 				CCCBDE252D1984D8009586E2 /* StorePage.storyboard */,
 				CCCBDE272D1984DD009586E2 /* Cart.storyboard */,
 				CCCBDE292D1984E1009586E2 /* HomeTableViewCell.swift */,
@@ -197,11 +201,10 @@
 				D4C8E4442D00799C00B254E2 /* AppDelegate.swift */,
 				D4C8E4462D00799C00B254E2 /* SceneDelegate.swift */,
 				D4C8E4482D00799C00B254E2 /* ViewController.swift */,
-				D4C8E44A2D00799C00B254E2 /* Main.storyboard */,
+				CC5CBCCD2D1C400D000EE8CF /* Main.storyboard */,
 				D4C8E44D2D00799E00B254E2 /* Assets.xcassets */,
 				D4C8E44F2D00799E00B254E2 /* LaunchScreen.storyboard */,
 				D4C8E4522D00799E00B254E2 /* Info.plist */,
-				0E1A6BA92D05F40C009D0EB1 /* AUTH.storyboard */,
 				0EE088842D07044700E430DA /* LoginViewController.swift */,
 				0EAF42AC2D08B95A005F04CC /* SignUpViewController.swift */,
 				0E6A2E092D0B276C00C35552 /* ChangePasswordViewController.swift */,
@@ -352,11 +355,10 @@
 				342C46EB2D1AFE150044A1E7 /* AdminMenu.storyboard in Resources */,
 				342C46EF2D1B088D0044A1E7 /* CreateaStoreAccount.storyboard in Resources */,
 				CCCBDE282D1984DD009586E2 /* Cart.storyboard in Resources */,
-				0E1A6BAA2D05F40C009D0EB1 /* AUTH.storyboard in Resources */,
 				D4C8E4512D00799E00B254E2 /* LaunchScreen.storyboard in Resources */,
 				D4C8E44E2D00799E00B254E2 /* Assets.xcassets in Resources */,
+				CC5CBCCF2D1C400D000EE8CF /* Main.storyboard in Resources */,
 				347542B52D199B2700C903E9 /* Menu.storyboard in Resources */,
-				D4C8E44C2D00799C00B254E2 /* Main.storyboard in Resources */,
 				342C46E42D1AF3510044A1E7 /* ManageProfile.storyboard in Resources */,
 				CCCBDE262D1984D8009586E2 /* StorePage.storyboard in Resources */,
 				0E863A2C2D18DDDF00A0FA3C /* GoogleService-Info.plist in Resources */,
@@ -389,6 +391,7 @@
 				D4C8E4492D00799C00B254E2 /* ViewController.swift in Sources */,
 				CCCBDE2C2D198506009586E2 /* HomeViewController.swift in Sources */,
 				0E0091442D0F9DAC0017A672 /* AddProductViewController.swift in Sources */,
+				CC5CBCD32D1C4076000EE8CF /* UserTabBarController.swift in Sources */,
 				0E19A51E2D0CABA6002102F7 /* StoreLoginViewController.swift in Sources */,
 				0EA600262D17475800FA2AF0 /* RefundRequestsViewController.swift in Sources */,
 				0E19A51C2D0C9C05002102F7 /* AdminLoginViewController.swift in Sources */,
@@ -400,6 +403,7 @@
 				CCCBDE222D1984C0009586E2 /* Product.swift in Sources */,
 				347542B72D199C5E00C903E9 /* MenuTableViewController.swift in Sources */,
 				0EDE91A62D18025500130FED /* RefundPageViewController.swift in Sources */,
+				CC5CBCD12D1C4033000EE8CF /* CategoryTableViewController.swift in Sources */,
 				342C46E62D1AF7280044A1E7 /* ManageProfileViewController.swift in Sources */,
 				0E6A2E0A2D0B276C00C35552 /* ChangePasswordViewController.swift in Sources */,
 				D4C8E4472D00799C00B254E2 /* SceneDelegate.swift in Sources */,
@@ -443,10 +447,10 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		D4C8E44A2D00799C00B254E2 /* Main.storyboard */ = {
+		CC5CBCCD2D1C400D000EE8CF /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				D4C8E44B2D00799C00B254E2 /* Base */,
+				CC5CBCCE2D1C400D000EE8CF /* Base */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";

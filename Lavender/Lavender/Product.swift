@@ -34,6 +34,7 @@ enum Category {
     case accessories
     case food
     case hygiene
+    case electronics
 }
 
 struct Ecobar {
@@ -58,6 +59,7 @@ struct Product {
     let lavender : Ecobar
     let isAvailable : Bool
     let arrivalDay : Int
+    
 }
 
 
