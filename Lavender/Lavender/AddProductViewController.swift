@@ -1,19 +1,38 @@
 import UIKit
+import FirebaseFirestore
 
 protocol AddProductDelegate: AnyObject {
     func didAddProduct(_ product: Product)
 }
 
 class AddProductViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate {
-
+    
     @IBOutlet weak var productImageView: UIImageView!
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var descriptionTextView: UITextView!
     @IBOutlet weak var priceTextField: UITextField!
     @IBOutlet weak var stockTextField: UITextField!
     
+    @IBOutlet weak var categoryButton: UIButton!
+    
+    @IBAction func categoryButtonTapped(_ sender: Any) {
+        
+        
+        let categoryAlert = UIAlertController(title: "Select Category", message: nil, preferredStyle: .actionSheet)
+        
+        let categories: [String] = ["Bodycare", "Cleaning", "Stationary", "Gardening", "Supplements", "Accessories", "Food", "Hygiene"]
+        
+        for category in categories {
+            categoryAlert.addAction(UIAlertAction(title: category, style: .default, handler: { [weak self] _ in
+                self?.categoryButton.setTitle(category, for: .normal)
+            }))
+        }
+        
+        categoryAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        present(categoryAlert, animated: true)}
     weak var delegate: AddProductDelegate?
     var uploadedImageUrl: String?
+    let db = Firestore.firestore()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,6 +40,8 @@ class AddProductViewController: UIViewController, UIImagePickerControllerDelegat
         descriptionTextView.text = "Product Description"
         descriptionTextView.textColor = .gray
         descriptionTextView.delegate = self
+        
+        categoryButton.setTitle("Select Category", for: .normal)
     }
     
     @IBAction func addPhotoButtonTapped(_ sender: UIButton) {
@@ -33,27 +54,45 @@ class AddProductViewController: UIViewController, UIImagePickerControllerDelegat
     
     @IBAction func confirmButtonTapped(_ sender: UIButton) {
         guard let name = nameTextField.text, !name.isEmpty,
-              let description = descriptionTextView.text, description != "Product Description",
-              let price = priceTextField.text, !price.isEmpty,
-              let stock = stockTextField.text, !stock.isEmpty,
-              let imageUrl = uploadedImageUrl else {
-            showErrorAlert("Please fill in all fields and upload an image.")
-            return
-        }
+                 let description = descriptionTextView.text, description != "Product Description",
+                 let priceString = priceTextField.text, !priceString.isEmpty,
+                 let stockString = stockTextField.text, !stockString.isEmpty,
+                 let price = Double(priceString),
+                 let stock = Int(stockString),
+                 let imageUrl = uploadedImageUrl, !imageUrl.isEmpty, 
+                 let categoryName = categoryButton.titleLabel?.text, categoryName != "Select Category" else {
+               showErrorAlert("Please fill in all fields and upload an image.")
+               return
+           }
+
+           let productData: [String: Any] = [
+               "ID": Int.random(in: 1...99999),
+               "name": name,
+               "imageUrl": imageUrl,
+               "category": categoryName,
+               "description": description,
+               "price": price,
+               "quantity": stock,
+               "isAvailable": true,
+               "arrivalDay": 1
+           ]
+
+           db.collection("storeProducts").addDocument(data: productData) { error in
+               if let error = error {
+                   self.showErrorAlert("Failed to save product: \(error.localizedDescription)")
+               } else {
+                   self.dismiss(animated: true, completion: nil)
+               }
+           }
         
-        //let newProduct = Product(imageUrl: imageUrl, title: name, category: description, price: price)
-        
-        //delegate?.didAddProduct(newProduct)
-        
-        dismiss(animated: true, completion: nil)
     }
+    
     
     func textViewDidBeginEditing(_ textView: UITextView) {
         if textView.text == "Product Description" {
             textView.text = ""
             textView.textColor = .white
-        }
-    }
+        }}
     
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text.isEmpty {
@@ -62,15 +101,15 @@ class AddProductViewController: UIViewController, UIImagePickerControllerDelegat
         }
     }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         if let selectedImage = info[.editedImage] as? UIImage ?? info[.originalImage] as? UIImage {
             productImageView.image = selectedImage
-            
+
             uploadImageToCloudinary(selectedImage) { [weak self] imageUrl in
                 DispatchQueue.main.async {
                     if let imageUrl = imageUrl {
                         self?.uploadedImageUrl = imageUrl
-                        print("Cloudinary Image URL: \(imageUrl)")
+                        print("Image uploaded successfully: \(imageUrl)")
                     } else {
                         self?.showErrorAlert("Image upload failed. Please try again.")
                     }
@@ -79,6 +118,7 @@ class AddProductViewController: UIViewController, UIImagePickerControllerDelegat
         }
         picker.dismiss(animated: true, completion: nil)
     }
+
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true, completion: nil)
@@ -88,14 +128,8 @@ class AddProductViewController: UIViewController, UIImagePickerControllerDelegat
         let cloudName = "dya8ndfhj"
         let uploadPreset = "ml_default"
 
-        guard let url = URL(string: "https://api.cloudinary.com/v1_1/\(cloudName)/image/upload") else {
-            print("Invalid URL")
-            completion(nil)
-            return
-        }
-
-        guard let imageData = image.jpegData(compressionQuality: 0.8) else {
-            print("Failed to convert image to data")
+        guard let url = URL(string: "https://api.cloudinary.com/v1_1/\(cloudName)/image/upload"),
+              let imageData = image.jpegData(compressionQuality: 0.8) else {
             completion(nil)
             return
         }
@@ -107,17 +141,15 @@ class AddProductViewController: UIViewController, UIImagePickerControllerDelegat
         request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
 
         var body = Data()
-
-//        body.append("--\(boundary)\r\n".data(using: .utf8)!)
-//        body.append("Content-Disposition: form-data; name=\"upload_preset\"\r\n\r\n".data(using: .utf8)!)
-//        body.append("\(uploadPreset)\r\n".data(using: .utf8)!)
-//
-//=        body.append("--\(boundary)\r\n".data(using: .utf8)!)
-//        body.append("Content-Disposition: form-data; name=\"file\"; filename=\"image.jpg\"\r\n".data(using: .utf8)!)
-//        body.append("Content-Type: image/jpeg\r\n\r\n".data(using: .utf8)!)
-//        body.append(imageData)
-//        body.append("\r\n".data(using: .utf8)!)
-//        body.append("--\(boundary)--\r\n".data(using: .utf8)!)
+        body.append("--\(boundary)\r\n".data(using: .utf8)!)
+        body.append("Content-Disposition: form-data; name=\"upload_preset\"\r\n\r\n".data(using: .utf8)!)
+        body.append("\(uploadPreset)\r\n".data(using: .utf8)!)
+        body.append("--\(boundary)\r\n".data(using: .utf8)!)
+        body.append("Content-Disposition: form-data; name=\"file\"; filename=\"image.jpg\"\r\n".data(using: .utf8)!)
+        body.append("Content-Type: image/jpeg\r\n\r\n".data(using: .utf8)!)
+        body.append(imageData)
+        body.append("\r\n".data(using: .utf8)!)
+        body.append("--\(boundary)--\r\n".data(using: .utf8)!)
 
         request.httpBody = body
 
@@ -128,29 +160,15 @@ class AddProductViewController: UIViewController, UIImagePickerControllerDelegat
                 return
             }
 
-            if let httpResponse = response as? HTTPURLResponse {
-                print("HTTP Response Code: \(httpResponse.statusCode)")
+            guard let data = data,
+                  let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
+                  let secureUrl = json["secure_url"] as? String else {
+                completion(nil)
+                return
             }
 
-            if let data = data {
-                do {
-                    if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
-                        print("Cloudinary Response: \(json)")
-                        if let secureUrl = json["secure_url"] as? String {
-                            completion(secureUrl) // Return Cloudinary URL
-                        } else if let errorDetails = json["error"] as? [String: Any] {
-                            print("Cloudinary Error: \(errorDetails)")
-                            completion(nil)
-                        } else {
-                            print("Unexpected response format.")
-                            completion(nil)
-                        }
-                    }
-                } catch {
-                    print("Error parsing response: \(error.localizedDescription)")
-                    completion(nil)
-                }
-            }
+            print("Uploaded Image URL: \(secureUrl)")
+            completion(secureUrl)
         }.resume()
     }
 
