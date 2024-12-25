@@ -8,8 +8,6 @@ class MenuTableViewController: UITableViewController {
         "My Refund Requests",
         "Current Orders",
         "Receipts",
-        "Sign in as Store Owner",
-        "Sign in as Admin",
         "Manage Profile",
         "Purchase History",
         "Default Payment method",
@@ -57,21 +55,43 @@ class MenuTableViewController: UITableViewController {
         
         // Get the selected menu item
         let selectedItem = menuItems[indexPath.row]
-        print("Selected: \(selectedItem)")
         
-        // Handle menu action
-        handleMenuAction(for: selectedItem)
+        // Navigate based on the selected item
+        performSegue(for: selectedItem)
     }
     
-    // MARK: - Menu Actions
-    func handleMenuAction(for item: String) {
-        // Placeholder action - Show an alert
-        let alert = UIAlertController(
-            title: item,
-            message: "You selected \(item). Implement functionality here.",
-            preferredStyle: .alert
-        )
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        present(alert, animated: true, completion: nil)
+    // MARK: - Navigation via Segues
+    func performSegue(for item: String) {
+        switch item {
+        case "Request a Refund":
+            performSegue(withIdentifier: "RequestRefundSegue", sender: self)
+        case "My Refund Requests":
+            performSegue(withIdentifier: "RefundRequestsSegue", sender: self)
+        case "Current Orders":
+            performSegue(withIdentifier: "CurrentOrdersSegue", sender: self)
+        case "Receipts":
+            performSegue(withIdentifier: "ReceiptsSegue", sender: self)
+        case "Manage Profile":
+            performSegue(withIdentifier: "ManageProfileSegue", sender: self)
+        case "Purchase History":
+            performSegue(withIdentifier: "PurchaseHistorySegue", sender: self)
+        case "Default Payment method":
+            performSegue(withIdentifier: "PaymentMethodSegue", sender: self)
+        case "Sign out":
+            performSegue(withIdentifier: "SignOutSegue", sender: self)
+        default:
+            break
+        }
+    }
+    
+    // MARK: - Prepare for Segue
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Customize navigation to the destination view controller if needed
+        // Example:
+        // if segue.identifier == "RequestRefundSegue" {
+        //     let destinationVC = segue.destination as? RequestRefundViewController
+        //     destinationVC.someProperty = someValue
+        // }
     }
 }
+
