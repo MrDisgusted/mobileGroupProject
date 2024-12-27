@@ -15,19 +15,23 @@ class HomeTableViewCell: UITableViewCell {
     @IBOutlet weak var ProductPrice: UIButton!
 
     @IBAction func buttonPurchase(_ sender: Any) {
-        
     }
-    
-    func setupCell(photo: UIImage, name: String, price: Double, description: String) {
+
+    func setupCell(photo: UIImage?, name: String, price: Double, description: String) {
         ProductImage.image = photo
         ProductName.text = name
         ProductDescription.text = description
+        ProductPrice.setTitle("$\(price)", for: .normal)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
 
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        ProductImage.contentMode = .scaleAspectFill
+        ProductImage.clipsToBounds = true
+    }
 }
+
