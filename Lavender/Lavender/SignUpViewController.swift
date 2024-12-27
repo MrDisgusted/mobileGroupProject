@@ -7,6 +7,7 @@
 
 import UIKit
 import FirebaseAuth
+import FirebaseFirestore
 
 class SignUpViewController: UIViewController {
 
@@ -18,8 +19,6 @@ class SignUpViewController: UIViewController {
         present(alert, animated: true, completion: nil)
     }
 
-
-    // Eye toggle
     @IBOutlet weak var passwordToggleButton: UIButton!
     @IBAction func passwordToggleButtonTapped(_ sender: Any) {
         passwordTextField.isSecureTextEntry.toggle()
@@ -68,12 +67,31 @@ class SignUpViewController: UIViewController {
                         return
                     }
 
-                    self.showAlert(title: "Sign Up Successful", message: "Your account has been created!") {
-                        // Navigate to the next screen (e.g., login or home screen)
-                        self.performSegue(withIdentifier: "goToLoginFromSignUp", sender: self)
+                    self.createUserDocument(userID: user.uid, email: email, username: username) {
+                        self.showAlert(title: "Sign Up Successful", message: "Your account has been created!") {
+                            self.performSegue(withIdentifier: "goToLoginFromSignUp", sender: self)
+                        }
                     }
                 }
             }
+        }
+    }
+
+    func createUserDocument(userID: String, email: String, username: String, completion: @escaping () -> Void) {
+        let db = Firestore.firestore()
+        let userData = [
+            "firstName": username,
+            "lastName": "",
+            "phone": "",
+            "email": email
+        ]
+
+        db.collection("users").document(userID).setData(userData) { error in
+            if let error = error {
+                self.showAlert(title: "Error", message: "Failed to save your data: \(error.localizedDescription)")
+                return
+            }
+            completion()
         }
     }
 
@@ -105,17 +123,4 @@ class SignUpViewController: UIViewController {
         passwordTextField.isSecureTextEntry = true
         updatePasswordToggleIcon()
     }
-
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

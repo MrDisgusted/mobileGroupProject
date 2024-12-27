@@ -1,4 +1,5 @@
 import UIKit
+import FirebaseAuth
 
 class MenuTableViewController: UITableViewController {
     
@@ -18,15 +19,14 @@ class MenuTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Set up navigation title
-        self.title = "Menu"
+        // Set the table view background color to match the desired color code (#0F0D12)
+        tableView.backgroundColor = UIColor(red: 15/255, green: 13/255, blue: 18/255, alpha: 1.0) // #0F0D12
         
         // Register the default cell
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "MenuCell")
     }
     
     // MARK: - Table View Data Source
-    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1 // Single section
     }
@@ -42,13 +42,14 @@ class MenuTableViewController: UITableViewController {
         // Configure the cell
         cell.textLabel?.text = menuItems[indexPath.row] // Set menu item text
         cell.textLabel?.font = UIFont.systemFont(ofSize: 16, weight: .regular)
+        cell.textLabel?.textColor = UIColor.white // Set text color to white
         cell.accessoryType = .disclosureIndicator // Add arrow to indicate navigation
+        cell.backgroundColor = UIColor(red: 15/255, green: 13/255, blue: 18/255, alpha: 1.0) // #0F0D12
         
         return cell
     }
     
     // MARK: - Table View Delegate
-    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // Deselect row after tap
         tableView.deselectRow(at: indexPath, animated: true)
@@ -56,42 +57,74 @@ class MenuTableViewController: UITableViewController {
         // Get the selected menu item
         let selectedItem = menuItems[indexPath.row]
         
-        // Navigate based on the selected item
-        performSegue(for: selectedItem)
-    }
-    
-    // MARK: - Navigation via Segues
-    func performSegue(for item: String) {
-        switch item {
-        case "Request a Refund":
-            performSegue(withIdentifier: "RequestRefundSegue", sender: self)
-        case "My Refund Requests":
-            performSegue(withIdentifier: "RefundRequestsSegue", sender: self)
-        case "Current Orders":
-            performSegue(withIdentifier: "CurrentOrdersSegue", sender: self)
-        case "Receipts":
-            performSegue(withIdentifier: "ReceiptsSegue", sender: self)
-        case "Manage Profile":
-            performSegue(withIdentifier: "ManageProfileSegue", sender: self)
-        case "Purchase History":
-            performSegue(withIdentifier: "PurchaseHistorySegue", sender: self)
-        case "Default Payment method":
-            performSegue(withIdentifier: "PaymentMethodSegue", sender: self)
-        case "Sign out":
-            performSegue(withIdentifier: "SignOutSegue", sender: self)
-        default:
-            break
+        if selectedItem == "Sign out" {
+            // Show sign out confirmation alert
+            presentSignOutAlert()
+        } else {
+            // Navigate dynamically to the storyboard
+            navigateToStoryboard(for: selectedItem)
         }
     }
     
-    // MARK: - Prepare for Segue
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Customize navigation to the destination view controller if needed
-        // Example:
-        // if segue.identifier == "RequestRefundSegue" {
-        //     let destinationVC = segue.destination as? RequestRefundViewController
-        //     destinationVC.someProperty = someValue
-        // }
+    // MARK: - Dynamic Storyboard Navigation
+    func navigateToStoryboard(for item: String) {
+        // Convert the menu item to storyboard name format (remove spaces)
+        let storyboardName = item.replacingOccurrences(of: " ", with: "")
+        
+        // Load and navigate to the storyboard's initial view controller
+        let storyboard = UIStoryboard(name: storyboardName, bundle: nil)
+        if let initialViewController = storyboard.instantiateInitialViewController() {
+            navigationController?.pushViewController(initialViewController, animated: true)
+        }
+    }
+    
+    // MARK: - Sign Out Alert
+    func presentSignOutAlert() {
+        let alert = UIAlertController(
+            title: "Sign Out",
+            message: "Are you sure you want to sign out?",
+            preferredStyle: .alert
+        )
+        
+        // "Cancel" action
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        // "Sign Out" action
+        alert.addAction(UIAlertAction(title: "Sign Out", style: .destructive) { [weak self] _ in
+            self?.signOutUser()
+        })
+        
+        present(alert, animated: true, completion: nil)
+    }
+    
+    // MARK: - Sign Out User
+    func signOutUser() {
+        do {
+            // Firebase sign out
+            try Auth.auth().signOut()
+            
+            // Navigate to the login screen
+            navigateToLoginScreen()
+        } catch let error {
+            // Show error alert if sign out fails
+            showAlert(title: "Sign Out Failed", message: error.localizedDescription)
+        }
+    }
+    
+    func navigateToLoginScreen() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        if let loginViewController = storyboard.instantiateViewController(withIdentifier: "Login") as? LoginViewController {
+            loginViewController.modalPresentationStyle = .fullScreen
+            present(loginViewController, animated: true, completion: nil)
+        } else {
+            showAlert(title: "Navigation Error", message: "Unable to navigate to the login screen.")
+        }
+    }
+    
+    // MARK: - Helper Method for Alert
+    func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        present(alert, animated: true, completion: nil)
     }
 }
-
