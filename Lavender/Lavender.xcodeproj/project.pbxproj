@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		0E0091442D0F9DAC0017A672 /* AddProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E0091432D0F9DAC0017A672 /* AddProductViewController.swift */; };
+		0E04FC3B2D1EA0BE00440B4A /* OrderPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E04FC3A2D1EA0BE00440B4A /* OrderPageViewController.swift */; };
+		0E04FC3D2D1EA0E200440B4A /* OrdersListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E04FC3C2D1EA0E200440B4A /* OrdersListViewController.swift */; };
+		0E04FC3F2D1EA61400440B4A /* OrderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E04FC3E2D1EA61400440B4A /* OrderTableViewCell.swift */; };
 		0E19A51C2D0C9C05002102F7 /* AdminLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E19A51B2D0C9C05002102F7 /* AdminLoginViewController.swift */; };
 		0E19A51E2D0CABA6002102F7 /* StoreLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E19A51D2D0CABA6002102F7 /* StoreLoginViewController.swift */; };
 		0E1A6BAA2D05F40C009D0EB1 /* AUTH.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0E1A6BA92D05F40C009D0EB1 /* AUTH.storyboard */; };
@@ -62,6 +65,9 @@
 
 /* Begin PBXFileReference section */
 		0E0091432D0F9DAC0017A672 /* AddProductViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProductViewController.swift; sourceTree = "<group>"; };
+		0E04FC3A2D1EA0BE00440B4A /* OrderPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderPageViewController.swift; sourceTree = "<group>"; };
+		0E04FC3C2D1EA0E200440B4A /* OrdersListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersListViewController.swift; sourceTree = "<group>"; };
+		0E04FC3E2D1EA61400440B4A /* OrderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderTableViewCell.swift; sourceTree = "<group>"; };
 		0E19A51B2D0C9C05002102F7 /* AdminLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminLoginViewController.swift; sourceTree = "<group>"; };
 		0E19A51D2D0CABA6002102F7 /* StoreLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreLoginViewController.swift; sourceTree = "<group>"; };
 		0E1A6BA92D05F40C009D0EB1 /* AUTH.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AUTH.storyboard; sourceTree = "<group>"; };
@@ -178,6 +184,9 @@
 				0EDE91A52D18025500130FED /* RefundPageViewController.swift */,
 				0EA600252D17475800FA2AF0 /* RefundRequestsViewController.swift */,
 				0EA600272D174A7F00FA2AF0 /* RefundRequestCell.swift */,
+				0E04FC3A2D1EA0BE00440B4A /* OrderPageViewController.swift */,
+				0E04FC3C2D1EA0E200440B4A /* OrdersListViewController.swift */,
+				0E04FC3E2D1EA61400440B4A /* OrderTableViewCell.swift */,
 			);
 			path = Lavender;
 			sourceTree = "<group>";
@@ -352,6 +361,7 @@
 				0EA600262D17475800FA2AF0 /* RefundRequestsViewController.swift in Sources */,
 				0E19A51C2D0C9C05002102F7 /* AdminLoginViewController.swift in Sources */,
 				CCCBDE2A2D1984E1009586E2 /* HomeTableViewCell.swift in Sources */,
+				0E04FC3B2D1EA0BE00440B4A /* OrderPageViewController.swift in Sources */,
 				0E9907222D122C96001A42C2 /* ProductTableViewCell.swift in Sources */,
 				D4C8E4452D00799C00B254E2 /* AppDelegate.swift in Sources */,
 				0E4E67E52D0B596700CC72C1 /* AuthenticationViewController.swift in Sources */,
@@ -359,6 +369,8 @@
 				0EDE91A62D18025500130FED /* RefundPageViewController.swift in Sources */,
 				0E6A2E0A2D0B276C00C35552 /* ChangePasswordViewController.swift in Sources */,
 				D4C8E4472D00799C00B254E2 /* SceneDelegate.swift in Sources */,
+				0E04FC3F2D1EA61400440B4A /* OrderTableViewCell.swift in Sources */,
+				0E04FC3D2D1EA0E200440B4A /* OrdersListViewController.swift in Sources */,
 				0E6C59BB2D10AAAF002E0333 /* ProductListViewController.swift in Sources */,
 				0EAF42AD2D08B95A005F04CC /* SignUpViewController.swift in Sources */,
 				0EA600282D174A7F00FA2AF0 /* RefundRequestCell.swift in Sources */,
