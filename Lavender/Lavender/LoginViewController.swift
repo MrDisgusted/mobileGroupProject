@@ -4,7 +4,6 @@ import FirebaseFirestore
 
 class LoginViewController: UIViewController {
     
-    // MARK: - Outlets
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var passwordToggleButton: UIButton!
@@ -13,9 +12,7 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var captchaAnswerTextField: UITextField!
     @IBOutlet weak var captchaSubmitButton: UIButton!
 
-    // MARK: - Variables
     var captchaAnswer: Int = 0
-    
     var failedLoginAttempts: Int {
         get {
             return UserDefaults.standard.integer(forKey: "FailedLoginAttempts")
@@ -25,7 +22,6 @@ class LoginViewController: UIViewController {
         }
     }
 
-    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -48,7 +44,6 @@ class LoginViewController: UIViewController {
         )
     }
 
-    // MARK: - Actions
     @IBAction func passwordToggleButtonTapped(_ sender: UIButton) {
         passwordTextField.isSecureTextEntry.toggle()
         updatePasswordToggleIcon()
@@ -73,7 +68,6 @@ class LoginViewController: UIViewController {
             return
         }
 
-        // Firebase Login
         Auth.auth().signIn(withEmail: enteredEmail, password: enteredPassword) { [weak self] authResult, error in
             if let error = error {
                 self?.failedLoginAttempts += 1
@@ -85,19 +79,8 @@ class LoginViewController: UIViewController {
                 return
             }
 
-            // Login success validation
-            guard let user = authResult?.user, user.isEmailVerified else {
-                self?.showAlert(title: "Login Failed", message: "Please verify your email before logging in.")
-                return
-            }
-
-            // Reset failed attempts on successful login
             self?.failedLoginAttempts = 0
-
-            // Ensure Firestore document creation
             self?.createUserDocumentIfNeeded(authResult: authResult)
-
-            // Login success
             self?.showAlert(title: "Login Successful", message: "Welcome back!") {
                 self?.performSegue(withIdentifier: "goToHomePage", sender: self)
             }
@@ -130,7 +113,6 @@ class LoginViewController: UIViewController {
         performSegue(withIdentifier: "goToSignUp", sender: self)
     }
 
-    // MARK: - Helper Methods
     func showCaptcha() {
         let num1 = Int.random(in: 1...10)
         let num2 = Int.random(in: 1...10)
@@ -158,7 +140,6 @@ class LoginViewController: UIViewController {
 
         userRef.getDocument { document, _ in
             if document?.exists == false {
-                // Create the user document if it doesn't exist
                 let userData = [
                     "firstName": "",
                     "lastName": "",

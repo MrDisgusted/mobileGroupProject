@@ -160,7 +160,7 @@ class ManageProfileViewController: UITableViewController {
 
     func navigateToLoginScreen() {
         // Navigate to the login screen after signing out
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let storyboard = UIStoryboard(name: "AUTH", bundle: nil)
         let loginViewController = storyboard.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
         loginViewController.modalPresentationStyle = .fullScreen
         present(loginViewController, animated: true, completion: nil)
