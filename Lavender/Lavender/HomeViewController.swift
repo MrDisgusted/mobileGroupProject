@@ -6,11 +6,22 @@
 //
 
 import UIKit
+import FirebaseFirestore
 
 class HomeViewController: UIViewController, UITableViewDelegate, UISearchBarDelegate, UITableViewDataSource {
     
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 5
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "recommendedCell") as! HomeTableViewCell
+        return cell
+    }
+    
+    
     @IBOutlet weak var recommendedTable: UITableView!
-    var productArray:[Product] = [Product]()
+    var productArray: [Product] = []
     var tableView: UITableView!
     
     
@@ -20,28 +31,26 @@ class HomeViewController: UIViewController, UITableViewDelegate, UISearchBarDele
         recommendedTable.delegate = self
         recommendedTable.dataSource = self
         
-        //        if let loadedProducts = loadProducts() {
-        //            Product = loadedProducts
-        //        }
+    }
+    
+    func fetchProduct(byID productID: Int, completion: @escaping (Product?) -> Void) {
+        let db = Firestore.firestore()
         
-        //        tableViewSetup()
+        db.collection("storeProducts").whereField("ID", isEqualTo: productID).getDocuments { querySnapshot, error in
+            if let error = error {
+                print("Error fetching product: \(error.localizedDescription)")
+                completion(nil)
+                return
+            }
+            
+            guard let document = querySnapshot?.documents.first else {
+                print("Product not found!")
+                completion(nil)
+                return
+            }
+            
+            
+        }
     }
     
-    //    func tableViewSetup(){
-    //        recommendedTable = UITableView(frame: self.view.bounds, style: .plain) as UITableView
-    //        recommendedTable.register(UITableViewCell.self, forCellReuseIdentifier: "ProductCell")
-    //        self.view.addSubview(recommendedTable)
-    
-    //for Ebrahim to make the Add product feature for the store owner
-    //let addButton = UIBarButtonItem(title: "Add Product", style: .plain, target: self, action: #selector(addProduct))
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "recommendedCell") as! HomeTableViewCell
-        return cell
-    }
 }
-

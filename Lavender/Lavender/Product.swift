@@ -43,8 +43,6 @@ struct Ecobar {
     let sustainability: Double
     let recyclability: Double
     let longjevity: Double
-    
-    // salem add the equation here so that it calculates the lavender rating
     let lavenderRating = 0
 }
 

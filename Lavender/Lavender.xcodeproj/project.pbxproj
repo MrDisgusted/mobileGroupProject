@@ -31,6 +31,7 @@
 		342C46EF2D1B088D0044A1E7 /* CreateaStoreAccount.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 342C46EE2D1B088D0044A1E7 /* CreateaStoreAccount.storyboard */; };
 		347542B52D199B2700C903E9 /* Menu.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 347542B42D199B2700C903E9 /* Menu.storyboard */; };
 		347542B72D199C5E00C903E9 /* MenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 347542B62D199C5E00C903E9 /* MenuTableViewController.swift */; };
+		CC1EEC112D1D932C00D430DF /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = CC1EEC102D1D932C00D430DF /* FirebaseDatabase */; };
 		CC5CBCD32D1C4076000EE8CF /* UserTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC5CBCD22D1C4076000EE8CF /* UserTabBarController.swift */; };
 		CCCBDE202D198472009586E2 /* ProductPage.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CCCBDE1F2D198472009586E2 /* ProductPage.storyboard */; };
 		CCCBDE222D1984C0009586E2 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCBDE212D1984BF009586E2 /* Product.swift */; };
@@ -121,6 +122,7 @@
 			files = (
 				0E863A242D18DB3A00A0FA3C /* FirebaseAnalytics in Frameworks */,
 				0E863A262D18DB3A00A0FA3C /* FirebaseAuth in Frameworks */,
+				CC1EEC112D1D932C00D430DF /* FirebaseDatabase in Frameworks */,
 				0E863A282D18DB3A00A0FA3C /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -187,20 +189,20 @@
 			isa = PBXGroup;
 			children = (
 				0E863A2B2D18DDDF00A0FA3C /* GoogleService-Info.plist */,
-				CCCBDE1F2D198472009586E2 /* ProductPage.storyboard */,
 				342C46E92D1AF9140044A1E7 /* Admin */,
 				347542B32D199AEC00C903E9 /* MenuAndManage Profile */,
 				CCCBDE212D1984BF009586E2 /* Product.swift */,
+				CCCBDE1F2D198472009586E2 /* ProductPage.storyboard */,
 				CCCBDE232D1984D2009586E2 /* ProductTableView.swift */,
 				CC5CBCD22D1C4076000EE8CF /* UserTabBarController.swift */,
 				CCCBDE252D1984D8009586E2 /* StorePage.storyboard */,
 				CCCBDE272D1984DD009586E2 /* Cart.storyboard */,
-				CCF076582D1C595C00CA6872 /* Main.storyboard */,
 				CCCBDE292D1984E1009586E2 /* HomeTableViewCell.swift */,
 				CCCBDE2B2D198506009586E2 /* HomeViewController.swift */,
 				D4C8E4442D00799C00B254E2 /* AppDelegate.swift */,
 				D4C8E4462D00799C00B254E2 /* SceneDelegate.swift */,
 				D4C8E4482D00799C00B254E2 /* ViewController.swift */,
+				CCF076582D1C595C00CA6872 /* Main.storyboard */,
 				D4C8E44D2D00799E00B254E2 /* Assets.xcassets */,
 				D4C8E44F2D00799E00B254E2 /* LaunchScreen.storyboard */,
 				D4C8E4522D00799E00B254E2 /* Info.plist */,
@@ -259,6 +261,7 @@
 				0E863A232D18DB3A00A0FA3C /* FirebaseAnalytics */,
 				0E863A252D18DB3A00A0FA3C /* FirebaseAuth */,
 				0E863A272D18DB3A00A0FA3C /* FirebaseFirestore */,
+				CC1EEC102D1D932C00D430DF /* FirebaseDatabase */,
 			);
 			productName = Lavender;
 			productReference = D4C8E4412D00799C00B254E2 /* Lavender.app */;
@@ -772,6 +775,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 0E863A222D18DB3A00A0FA3C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestore;
+		};
+		CC1EEC102D1D932C00D430DF /* FirebaseDatabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0E863A222D18DB3A00A0FA3C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseDatabase;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

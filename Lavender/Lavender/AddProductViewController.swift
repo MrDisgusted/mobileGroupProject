@@ -54,36 +54,36 @@ class AddProductViewController: UIViewController, UIImagePickerControllerDelegat
     
     @IBAction func confirmButtonTapped(_ sender: UIButton) {
         guard let name = nameTextField.text, !name.isEmpty,
-                 let description = descriptionTextView.text, description != "Product Description",
-                 let priceString = priceTextField.text, !priceString.isEmpty,
-                 let stockString = stockTextField.text, !stockString.isEmpty,
-                 let price = Double(priceString),
-                 let stock = Int(stockString),
-                 let imageUrl = uploadedImageUrl, !imageUrl.isEmpty, 
-                 let categoryName = categoryButton.titleLabel?.text, categoryName != "Select Category" else {
-               showErrorAlert("Please fill in all fields and upload an image.")
-               return
-           }
-
-           let productData: [String: Any] = [
-               "ID": Int.random(in: 1...99999),
-               "name": name,
-               "imageUrl": imageUrl,
-               "category": categoryName,
-               "description": description,
-               "price": price,
-               "quantity": stock,
-               "isAvailable": true,
-               "arrivalDay": 1
-           ]
-
-           db.collection("storeProducts").addDocument(data: productData) { error in
-               if let error = error {
-                   self.showErrorAlert("Failed to save product: \(error.localizedDescription)")
-               } else {
-                   self.dismiss(animated: true, completion: nil)
-               }
-           }
+              let description = descriptionTextView.text, description != "Product Description",
+              let priceString = priceTextField.text, !priceString.isEmpty,
+              let stockString = stockTextField.text, !stockString.isEmpty,
+              let price = Double(priceString),
+              let stock = Int(stockString),
+              let imageUrl = uploadedImageUrl, !imageUrl.isEmpty,
+                let categoryName = categoryButton.titleLabel?.text, categoryName != "Select Category" else {
+            showErrorAlert("Please fill in all fields and upload an image.")
+            return
+        }
+        
+        let productData: [String: Any] = [
+            "ID": Int.random(in: 1...99999),
+            "name": name,
+            "imageUrl": imageUrl,
+            "category": categoryName,
+            "description": description,
+            "price": price,
+            "quantity": stock,
+            "isAvailable": true,
+            "arrivalDay": 1
+        ]
+        
+        db.collection("storeProducts").addDocument(data: productData) { error in
+            if let error = error {
+                self.showErrorAlert("Failed to save product: \(error.localizedDescription)")
+            } else {
+                self.dismiss(animated: true, completion: nil)
+            }
+        }
         
     }
     
@@ -104,7 +104,7 @@ class AddProductViewController: UIViewController, UIImagePickerControllerDelegat
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         if let selectedImage = info[.editedImage] as? UIImage ?? info[.originalImage] as? UIImage {
             productImageView.image = selectedImage
-
+            
             uploadImageToCloudinary(selectedImage) { [weak self] imageUrl in
                 DispatchQueue.main.async {
                     if let imageUrl = imageUrl {
@@ -118,7 +118,7 @@ class AddProductViewController: UIViewController, UIImagePickerControllerDelegat
         }
         picker.dismiss(animated: true, completion: nil)
     }
-
+    
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true, completion: nil)
@@ -127,19 +127,19 @@ class AddProductViewController: UIViewController, UIImagePickerControllerDelegat
     func uploadImageToCloudinary(_ image: UIImage, completion: @escaping (String?) -> Void) {
         let cloudName = "dya8ndfhj"
         let uploadPreset = "ml_default"
-
+        
         guard let url = URL(string: "https://api.cloudinary.com/v1_1/\(cloudName)/image/upload"),
               let imageData = image.jpegData(compressionQuality: 0.8) else {
             completion(nil)
             return
         }
-
+        
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-
+        
         let boundary = "Boundary-\(UUID().uuidString)"
         request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
-
+        
         var body = Data()
         body.append("--\(boundary)\r\n".data(using: .utf8)!)
         body.append("Content-Disposition: form-data; name=\"upload_preset\"\r\n\r\n".data(using: .utf8)!)
@@ -150,32 +150,34 @@ class AddProductViewController: UIViewController, UIImagePickerControllerDelegat
         body.append(imageData)
         body.append("\r\n".data(using: .utf8)!)
         body.append("--\(boundary)--\r\n".data(using: .utf8)!)
-
+        
         request.httpBody = body
-
+        
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
                 print("Error uploading image: \(error.localizedDescription)")
                 completion(nil)
                 return
             }
-
+            
             guard let data = data,
                   let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
                   let secureUrl = json["secure_url"] as? String else {
                 completion(nil)
                 return
             }
-
+            
             print("Uploaded Image URL: \(secureUrl)")
             completion(secureUrl)
         }.resume()
     }
-
+    
     
     func showErrorAlert(_ message: String) {
         let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default))
         present(alert, animated: true)
     }
+    
+    
 }
