@@ -56,35 +56,45 @@ class LoginViewController: UIViewController {
 
     @IBAction func loginButtonTapped(_ sender: UIButton) {
         let enteredEmail = emailTextField.text ?? ""
-        let enteredPassword = passwordTextField.text ?? ""
+            let enteredPassword = passwordTextField.text ?? ""
 
-        if enteredEmail.isEmpty || enteredPassword.isEmpty {
-            showAlert(title: "Login Failed", message: "Please enter both email and password.")
-            return
-        }
-
-        if !isValidEmail(enteredEmail) {
-            showAlert(title: "Invalid Email", message: "Please enter a valid email address.")
-            return
-        }
-
-        Auth.auth().signIn(withEmail: enteredEmail, password: enteredPassword) { [weak self] authResult, error in
-            if let error = error {
-                self?.failedLoginAttempts += 1
-                if self?.failedLoginAttempts ?? 0 >= 5 {
-                    self?.showCaptcha()
-                } else {
-                    self?.showAlert(title: "Login Failed", message: "Invalid email or password. Attempt \(self?.failedLoginAttempts ?? 0) of 5.")
-                }
+            if enteredEmail.isEmpty || enteredPassword.isEmpty {
+                showAlert(title: "Login Failed", message: "Please enter both email and password.")
                 return
             }
 
-            self?.failedLoginAttempts = 0
-            self?.createUserDocumentIfNeeded(authResult: authResult)
-            self?.showAlert(title: "Login Successful", message: "Welcome back!") {
-                self?.performSegue(withIdentifier: "goToHomePage", sender: self)
+            if !isValidEmail(enteredEmail) {
+                showAlert(title: "Invalid Email", message: "Please enter a valid email address.")
+                return
+            }
+
+            Auth.auth().signIn(withEmail: enteredEmail, password: enteredPassword) { [weak self] authResult, error in
+                if let error = error {
+                    self?.failedLoginAttempts += 1
+                    if self?.failedLoginAttempts ?? 0 >= 5 {
+                        self?.showCaptcha()
+                    } else {
+                        self?.showAlert(title: "Login Failed", message: "Invalid email or password. Attempt \(self?.failedLoginAttempts ?? 0) of 5.")
+                    }
+                    return
+                }
+
+                self?.failedLoginAttempts = 0
+                self?.createUserDocumentIfNeeded(authResult: authResult)
+
+                // Navigate to HomeViewController
+                self?.navigateToHomeViewController()
             }
         }
+
+        func navigateToHomeViewController() {
+            let storyboard = UIStoryboard(name: "StorePage", bundle: nil)
+            if let homeVC = storyboard.instantiateViewController(withIdentifier: "Store") as? HomeViewController {
+                homeVC.modalPresentationStyle = .fullScreen
+                present(homeVC, animated: true, completion: nil)
+            }
+
+       
     }
 
     @IBAction func captchaSubmitTapped(_ sender: UIButton) {

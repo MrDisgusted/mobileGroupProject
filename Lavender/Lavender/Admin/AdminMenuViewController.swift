@@ -93,34 +93,31 @@ class AdminMenuViewController: UITableViewController {
         
         present(alert, animated: true, completion: nil)
     }
-    
-    // MARK: - Sign Out User
     func signOutUser() {
         do {
-            // Firebase sign out
             try Auth.auth().signOut()
-            
-            // Navigate to the login screen
-            navigateToLoginScreen()
+            navigateToLoginViewController()
         } catch let error {
             showAlert(title: "Sign Out Failed", message: error.localizedDescription)
         }
     }
-    
-    func navigateToLoginScreen() {
-        let storyboard = UIStoryboard(name: "AUTH", bundle: nil)
-        if let loginViewController = storyboard.instantiateViewController(withIdentifier: "AdminLoginViewController") as? AdminLoginViewController {
-            loginViewController.modalPresentationStyle = .fullScreen
-            present(loginViewController, animated: true, completion: nil)
-        } else {
-            showAlert(title: "Navigation Error", message: "Unable to navigate to the login screen.")
-        }
-    }
-    
-    // MARK: - Helper Method for Alert
+
     func showAlert(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
+            self.navigateToLoginViewController()
+        }))
         present(alert, animated: true, completion: nil)
     }
+
+    func navigateToLoginViewController() {
+        let storyboard = UIStoryboard(name: "AUTH", bundle: nil)
+        if let loginVC = storyboard.instantiateViewController(withIdentifier: "Login") as? LoginViewController {
+            loginVC.modalPresentationStyle = .fullScreen
+            present(loginVC, animated: true, completion: nil)
+        }
+    }
+
+
+
 }
