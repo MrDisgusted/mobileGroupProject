@@ -188,7 +188,6 @@
         <!--Cart-->
         <scene sceneID="uf6-hh-lC2">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="GgL-Wz-5th" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <navigationController id="Q0r-B9-T9r" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Cart" image="cart.fill" catalog="system" selectedImage="cart.fill" id="ERp-EO-mlZ"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="LRu-J5-MJL">
@@ -199,6 +198,7 @@
                         <segue destination="Xsm-5x-6xE" kind="relationship" relationship="rootViewController" id="rrp-XO-WEg"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GgL-Wz-5th" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-2147" y="1441"/>
         </scene>

@@ -109,8 +109,22 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             price: product.price,
             description: product.description
         )
-        
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "Product", sender: self)
+        tableView.deselectRow(at: indexPath, animated: false)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "Product",
+           let destinationVC = segue.destination as? ProductViewController,
+           let indexPath = recommendedTable.indexPathForSelectedRow {
+            destinationVC.product = productArray[indexPath.row]
+        }
+    }
+
+    
 
 }
