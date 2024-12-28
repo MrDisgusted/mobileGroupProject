@@ -112,6 +112,11 @@ class LoginViewController: UIViewController {
     @IBAction func signUpButtonTapped(_ sender: UIButton) {
         performSegue(withIdentifier: "goToSignUp", sender: self)
     }
+    
+    // MARK: - New Admin Login Button Action
+    @IBAction func adminLoginButtonTapped(_ sender: UIButton) {
+        performSegue(withIdentifier: "goToAdminLogin", sender: self)
+    }
 
     func showCaptcha() {
         let num1 = Int.random(in: 1...10)

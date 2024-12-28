@@ -1,5 +1,4 @@
 import UIKit
-import Firebase
 import FirebaseAuth
 
 class AdminMenuViewController: UITableViewController {
@@ -9,8 +8,6 @@ class AdminMenuViewController: UITableViewController {
         "Create a Store Account",
         "Delete a Store Account",
         "Manage Stores",
-        "Add Store category in creation + cancel pending...",
-        "Pending Tickets",
         "Sign Out"
     ]
     
@@ -51,10 +48,6 @@ class AdminMenuViewController: UITableViewController {
             navigateToDeleteStoreAccount()
         case "Manage Stores":
             navigateToManageStores()
-        case "Add Store category in creation + cancel pending...":
-            navigateToAddCategory()
-        case "Pending Tickets":
-            navigateToPendingTickets()
         case "Sign Out":
             signOut()
         default:
@@ -65,27 +58,23 @@ class AdminMenuViewController: UITableViewController {
     // MARK: - Navigation Methods
     func navigateToCreateStoreAccount() {
         // Navigate to Create Store Account screen
-        print("Navigating to Create Store Account")
+        if let createStoreVC = storyboard?.instantiateViewController(withIdentifier: "CreateStoreAccountViewController") {
+            navigationController?.pushViewController(createStoreVC, animated: true)
+        }
     }
     
     func navigateToDeleteStoreAccount() {
         // Navigate to Delete Store Account screen
-        print("Navigating to Delete Store Account")
+        if let deleteStoreVC = storyboard?.instantiateViewController(withIdentifier: "DeleteStoreAccountViewController") {
+            navigationController?.pushViewController(deleteStoreVC, animated: true)
+        }
     }
     
     func navigateToManageStores() {
         // Navigate to Manage Stores screen
-        print("Navigating to Manage Stores")
-    }
-    
-    func navigateToAddCategory() {
-        // Navigate to Add Store Category screen
-        print("Navigating to Add Store Category")
-    }
-    
-    func navigateToPendingTickets() {
-        // Navigate to Pending Tickets screen
-        print("Navigating to Pending Tickets")
+        if let manageStoresVC = storyboard?.instantiateViewController(withIdentifier: "ManageStoresViewController") {
+            navigationController?.pushViewController(manageStoresVC, animated: true)
+        }
     }
     
     func signOut() {
@@ -93,9 +82,18 @@ class AdminMenuViewController: UITableViewController {
         do {
             try Auth.auth().signOut()
             print("Signed out successfully")
+            navigateToLoginScreen()
         } catch let error {
             print("Error signing out: \(error.localizedDescription)")
         }
     }
+    
+    // MARK: - Helper Method for Sign Out Navigation
+    func navigateToLoginScreen() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        if let loginVC = storyboard.instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController {
+            loginVC.modalPresentationStyle = .fullScreen
+            present(loginVC, animated: true, completion: nil)
+        }
+    }
 }
-
