@@ -11,10 +11,10 @@ class ProductViewController: UIViewController {
     
     @IBOutlet weak var productImage: UIImageView!
     @IBOutlet weak var productName: UILabel!
-    @IBOutlet weak var productCategory: UILabel!
     @IBOutlet weak var productDescription: UILabel!
     @IBOutlet weak var productStatus: UILabel!
     @IBOutlet weak var productArrival: UILabel!
+    @IBOutlet weak var productCategory: UILabel!
     @IBOutlet weak var productPrice: UIButton!
     var product: Product?
     
@@ -32,6 +32,10 @@ class ProductViewController: UIViewController {
         productDescription.text = product.description
         productPrice.setTitle("$\(product.price)", for: .normal)
         productStatus.text = product.isAvailable ? "Available" : "Out of Stock"
+        productArrival.text = "Will arrive in: " + ("\(product.arrivalDay)") + " days"
+        productCategory.text = product.category.toString
+        
+        
         
         if let imageUrl = String(data: product.image, encoding: .utf8),
            let url = URL(string: imageUrl),

@@ -38,6 +38,8 @@
 		CCCBDE282D1984DD009586E2 /* Cart.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CCCBDE272D1984DD009586E2 /* Cart.storyboard */; };
 		CCCBDE2A2D1984E1009586E2 /* HomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCBDE292D1984E1009586E2 /* HomeTableViewCell.swift */; };
 		CCCBDE2C2D198506009586E2 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCBDE2B2D198506009586E2 /* HomeViewController.swift */; };
+		CCDCE6BE2D204D330096BF34 /* CategoriesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCDCE6BD2D204D330096BF34 /* CategoriesTableViewController.swift */; };
+		CCDCE6C02D2051100096BF34 /* ProductSearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCDCE6BF2D2051100096BF34 /* ProductSearchTableViewController.swift */; };
 		CCE3D0132D200BA900A321D2 /* ProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE3D0122D200BA900A321D2 /* ProductViewController.swift */; };
 		CCF076592D1C595C00CA6872 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CCF076582D1C595C00CA6872 /* Main.storyboard */; };
 		CCF0765B2D1C599D00CA6872 /* AUTH.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CCF0765A2D1C599D00CA6872 /* AUTH.storyboard */; };
@@ -96,6 +98,8 @@
 		CCCBDE272D1984DD009586E2 /* Cart.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Cart.storyboard; sourceTree = "<group>"; };
 		CCCBDE292D1984E1009586E2 /* HomeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeTableViewCell.swift; sourceTree = "<group>"; };
 		CCCBDE2B2D198506009586E2 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		CCDCE6BD2D204D330096BF34 /* CategoriesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesTableViewController.swift; sourceTree = "<group>"; };
+		CCDCE6BF2D2051100096BF34 /* ProductSearchTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductSearchTableViewController.swift; sourceTree = "<group>"; };
 		CCE3D0122D200BA900A321D2 /* ProductViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductViewController.swift; sourceTree = "<group>"; };
 		CCF076582D1C595C00CA6872 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		CCF0765A2D1C599D00CA6872 /* AUTH.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AUTH.storyboard; sourceTree = "<group>"; };
@@ -195,6 +199,8 @@
 				CCCBDE252D1984D8009586E2 /* StorePage.storyboard */,
 				CCCBDE292D1984E1009586E2 /* HomeTableViewCell.swift */,
 				CCCBDE2B2D198506009586E2 /* HomeViewController.swift */,
+				CCDCE6BD2D204D330096BF34 /* CategoriesTableViewController.swift */,
+				CCDCE6BF2D2051100096BF34 /* ProductSearchTableViewController.swift */,
 				CCCBDE272D1984DD009586E2 /* Cart.storyboard */,
 				D4C8E4442D00799C00B254E2 /* AppDelegate.swift */,
 				D4C8E4462D00799C00B254E2 /* SceneDelegate.swift */,
@@ -390,6 +396,7 @@
 				0EE088852D07044700E430DA /* LoginViewController.swift in Sources */,
 				D4C8E4492D00799C00B254E2 /* ViewController.swift in Sources */,
 				CCCBDE2C2D198506009586E2 /* HomeViewController.swift in Sources */,
+				CCDCE6BE2D204D330096BF34 /* CategoriesTableViewController.swift in Sources */,
 				0E0091442D0F9DAC0017A672 /* AddProductViewController.swift in Sources */,
 				CC5CBCD32D1C4076000EE8CF /* UserTabBarController.swift in Sources */,
 				0E19A51E2D0CABA6002102F7 /* StoreLoginViewController.swift in Sources */,
@@ -402,6 +409,7 @@
 				0E4E67E52D0B596700CC72C1 /* AuthenticationViewController.swift in Sources */,
 				CCCBDE222D1984C0009586E2 /* Product.swift in Sources */,
 				347542B72D199C5E00C903E9 /* MenuTableViewController.swift in Sources */,
+				CCDCE6C02D2051100096BF34 /* ProductSearchTableViewController.swift in Sources */,
 				0EDE91A62D18025500130FED /* RefundPageViewController.swift in Sources */,
 				342C46E62D1AF7280044A1E7 /* ManageProfileViewController.swift in Sources */,
 				0E6A2E0A2D0B276C00C35552 /* ChangePasswordViewController.swift in Sources */,

@@ -35,6 +35,20 @@ enum Category {
     case food
     case hygiene
     case electronics
+    
+    var toString: String {
+        switch self {
+        case .bodycare: return "Bodycare"
+        case .cleaning: return "Cleaning"
+        case .stationary: return "Stationary"
+        case .gardening: return "Gardening"
+        case .supplements: return "Supplements"
+        case .accessories: return "Accessories"
+        case .food: return "Food"
+        case .hygiene: return "Hygiene"
+        case .electronics: return "Electronics"
+        }
+    }
 }
 
 struct Ecobar {
@@ -59,5 +73,4 @@ struct Product {
     let arrivalDay : Int
     
 }
-
 

@@ -124,7 +124,4 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             destinationVC.product = productArray[indexPath.row]
         }
     }
-
-    
-
 }

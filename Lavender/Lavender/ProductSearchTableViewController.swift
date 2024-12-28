@@ -1,89 +1,110 @@
-//
-//  ProductSearchTableViewController.swift
-//  Lavender
-//
-//  Created by fawaz on 28/12/2024.
-//
-
 import UIKit
+import FirebaseFirestore
 
 class ProductSearchTableViewController: UITableViewController {
+
+    var selectedCategory: String?
+    var allProducts: [Product] = []
+    var filteredProducts: [Product] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
+        title = selectedCategory
 
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        fetchAllProducts()
     }
 
-    // MARK: - Table view data source
+    func categoryFromString(_ string: String) -> Category? {
+        switch string.lowercased() {
+        case "bodycare": return .bodycare
+        case "cleaning": return .cleaning
+        case "stationary": return .stationary
+        case "gardening": return .gardening
+        case "supplements": return .supplements
+        case "accessories": return .accessories
+        case "food": return .food
+        case "hygiene": return .hygiene
+        case "electronics": return .electronics
+        default: return nil
+        }
+    }
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+    func fetchAllProducts() {
+        let db = Firestore.firestore()
+        db.collection("storeProducts").getDocuments { snapshot, error in
+            if let error = error {
+                print("Error fetching products: \(error.localizedDescription)")
+                return
+            }
+
+            guard let documents = snapshot?.documents else { return }
+
+            self.allProducts = documents.compactMap { doc -> Product? in
+                let data = doc.data()
+                
+                guard
+                    let id = data["ID"] as? Int,
+                    let name = data["name"] as? String,
+                    let imageString = data["imageUrl"] as? String,
+                    let imageUrl = URL(string: imageString),
+                    let imageData = try? Data(contentsOf: imageUrl),
+                    let categoryString = data["category"] as? String,
+                    let category = self.categoryFromString(categoryString),
+                    let description = data["description"] as? String,
+                    let price = data["price"] as? Double,
+                    let quantity = data["quantity"] as? Int,
+                    let isAvailable = data["isAvailable"] as? Bool,
+                    let arrivalDay = data["arrivalDay"] as? Int
+                else {
+                    return nil
+                }
+
+                let lavender = Ecobar(emission: 0, impact: 0, sustainability: 0, recyclability: 0, longjevity: 0)
+
+                return Product(
+                    ID: id,
+                    name: name,
+                    image: imageData,
+                    category: category,
+                    description: description,
+                    price: price,
+                    quantity: quantity,
+                    lavender: lavender,
+                    isAvailable: isAvailable,
+                    arrivalDay: arrivalDay
+                )
+            }
+
+            self.filterProducts()
+        }
+    }
+
+    func filterProducts() {
+        guard let category = selectedCategory else { return }
+
+        if category == "All" {
+            filteredProducts = allProducts
+        } else {
+            filteredProducts = allProducts.filter { product in
+                product.category.toString == category
+            }
+        }
+
+        tableView.reloadData()
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        return filteredProducts.count
     }
 
-    /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ProductCell", for: indexPath)
+        let product = filteredProducts[indexPath.row]
 
-        // Configure the cell...
-
+        cell.textLabel?.text = product.name
+        cell.detailTextLabel?.text = "$\(product.price)"
         return cell
     }
-    */
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
+
