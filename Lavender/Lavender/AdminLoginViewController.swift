@@ -10,17 +10,14 @@ import FirebaseAuth
 
 class AdminLoginViewController: UIViewController {
 
-    // MARK: - Outlets
+    @IBOutlet weak var passwordToggleButton: UIButton!
     @IBOutlet weak var adminEmailTextField: UITextField!
     @IBOutlet weak var adminPasswordTextField: UITextField!
     @IBOutlet weak var adminIDTextField: UITextField!
-    @IBOutlet weak var passwordToggleButton: UIButton!
-
-    // MARK: - Lifecycle
+    @IBOutlet weak var loginButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Set placeholders
         adminEmailTextField.attributedPlaceholder = NSAttributedString(
             string: "example@example.com",
             attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray]
@@ -33,13 +30,10 @@ class AdminLoginViewController: UIViewController {
             string: "123",
             attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray]
         )
-        
-        // Hide password initially
         adminPasswordTextField.isSecureTextEntry = true
         updatePasswordToggleIcon()
     }
-
-    // MARK: - Actions
+    
     @IBAction func passwordToggleButtonTapped(_ sender: Any) {
         adminPasswordTextField.isSecureTextEntry.toggle()
         let currentText = adminPasswordTextField.text
@@ -52,58 +46,43 @@ class AdminLoginViewController: UIViewController {
         let imageName = adminPasswordTextField.isSecureTextEntry ? "eye.slash" : "eye"
         passwordToggleButton.setImage(UIImage(systemName: imageName), for: .normal)
     }
-
+    
     @IBAction func adminLoginButtonTapped(_ sender: UIButton) {
         let enteredEmail = adminEmailTextField.text ?? ""
         let enteredPassword = adminPasswordTextField.text ?? ""
         let enteredAdminID = adminIDTextField.text ?? ""
-
+        
         let correctAdminID = "765"
-
-        // Validate input fields
+        
         if enteredEmail.isEmpty || enteredPassword.isEmpty || enteredAdminID.isEmpty {
             showAlert(title: "Error", message: "All fields are required.")
             return
         }
-
-        // Validate Admin ID
+        
         if enteredAdminID != correctAdminID {
             showAlert(title: "Error", message: "Invalid Admin ID.")
             return
         }
-
-        // Authenticate Admin
-        if enteredEmail == "admin@lavender.com" && enteredPassword == "adminlavender123" {
-            Auth.auth().signIn(withEmail: enteredEmail, password: enteredPassword) { [weak self] authResult, error in
+        
+        if enteredEmail == "admin@lavendar.com" && enteredPassword == "adminlavendar123" {
+            Auth.auth().signIn(withEmail: enteredEmail, password: enteredPassword) { authResult, error in
                 if let error = error {
-                    self?.showAlert(title: "Error", message: "Authentication failed: \(error.localizedDescription)")
+                    self.showAlert(title: "Error", message: "Authentication failed: \(error.localizedDescription)")
                     return
                 }
-                
-                // Successful login, navigate to Admin Menu
-                self?.showAlert(title: "Success", message: "Welcome, Admin!") {
-                    self?.navigateToAdminMenu()
+                self.showAlert(title: "Success", message: "Welcome, Admin!") {
+                    let storyboard = UIStoryboard(name: "AdminMenu", bundle: nil)
+                    if let adminMenuVC = storyboard.instantiateViewController(withIdentifier: "AdminMenuViewController") as? AdminMenuViewController {
+                        adminMenuVC.modalPresentationStyle = .fullScreen
+                        self.present(adminMenuVC, animated: true, completion: nil)
+                    }
                 }
             }
         } else {
             showAlert(title: "Error", message: "Invalid email or password.")
         }
     }
-
-    // MARK: - Navigation
-    func navigateToAdminMenu() {
-        // Instantiate Admin Menu from Storyboard
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        guard let adminMenuViewController = storyboard.instantiateViewController(withIdentifier: "AdminMenuViewController") as? AdminMenuViewController else {
-            showAlert(title: "Error", message: "Unable to load Admin Menu.")
-            return
-        }
-        
-        adminMenuViewController.modalPresentationStyle = .fullScreen
-        self.present(adminMenuViewController, animated: true, completion: nil)
-    }
-
-    // MARK: - Helper Methods
+    
     func showAlert(title: String, message: String, completion: (() -> Void)? = nil) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in

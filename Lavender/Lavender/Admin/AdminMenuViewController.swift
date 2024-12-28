@@ -90,10 +90,10 @@ class AdminMenuViewController: UITableViewController {
     
     // MARK: - Helper Method for Sign Out Navigation
     func navigateToLoginScreen() {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        if let loginVC = storyboard.instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController {
-            loginVC.modalPresentationStyle = .fullScreen
-            present(loginVC, animated: true, completion: nil)
+        let storyboard = UIStoryboard(name: "AUTH", bundle: nil)
+           if let loginVC = storyboard.instantiateViewController(withIdentifier: "AdminLoginViewController") as? AdminLoginViewController {
+               loginVC.modalPresentationStyle = .fullScreen
+               present(loginVC, animated: true, completion: nil)
         }
     }
 }

@@ -122,7 +122,7 @@
                                 </buttonConfiguration>
                                 <connections>
                                     <action selector="adminLoginButtonTapped:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="fe0-Sc-bsk"/>
-                                    <segue destination="oWs-0f-k7a" kind="presentation" identifier="goToAdminLogin" id="ruZ-rU-2kd"/>
+                                    <segue destination="SZZ-4X-Kww" kind="presentation" identifier="goToAdminLogin" id="ruZ-rU-2kd"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7HC-Hp-SNT">
@@ -188,7 +188,7 @@
         <!--AdminLoginView-->
         <scene sceneID="eKr-wD-ngd">
             <objects>
-                <viewController title="AdminLoginView" id="oWs-0f-k7a" customClass="AdminLoginViewController" customModule="Lavender" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AdminLoginViewController" title="AdminLoginView" useStoryboardIdentifierAsRestorationIdentifier="YES" id="oWs-0f-k7a" customClass="AdminLoginViewController" customModule="Lavender" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="EhC-BM-XSz">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -252,15 +252,6 @@
                                     <action selector="loginButtonTapped:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="44o-gh-CyB"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rdp-Wh-vWH">
-                                <rect key="frame" x="22" y="33" width="62" height="39"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="Back"/>
-                                <connections>
-                                    <segue destination="Y6W-OH-hqX" kind="show" id="NwC-GQ-SiC"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pgs-eJ-O7g">
                                 <rect key="frame" x="315" y="399" width="58" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -285,7 +276,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rns-Cc-C51" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-233" y="418"/>
+            <point key="canvasLocation" x="692.36641221374043" y="417.6056338028169"/>
         </scene>
         <!--SignUpView-->
         <scene sceneID="Whq-0v-wcU">
@@ -630,7 +621,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="H5L-qQ-F7d" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="543" y="427"/>
+            <point key="canvasLocation" x="1469.4656488549617" y="426.76056338028172"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="SGY-me-y1K">
@@ -692,9 +683,27 @@
             </objects>
             <point key="canvasLocation" x="-323" y="1340"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="EXP-5Y-pWV">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="SZZ-4X-Kww" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="MCT-hY-ubC">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="56"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="oWs-0f-k7a" kind="relationship" relationship="rootViewController" id="WRq-0H-NyN"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="w2V-16-VHx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-234.35114503816794" y="417.6056338028169"/>
+        </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="NwC-GQ-SiC"/>
+        <segue reference="gFv-wJ-ftY"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="eye" catalog="system" width="128" height="79"/>
@@ -711,10 +720,10 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray2Color">
-            <color red="0.68235294120000001" green="0.68235294120000001" blue="0.69803921570000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.68235294117647061" green="0.68235294117647061" blue="0.69803921568627447" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGrayColor">
-            <color red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
