@@ -2,18 +2,21 @@ import UIKit
 import FirebaseAuth
 import FirebaseFirestore
 
-class ManageProfileViewController: UITableViewController {
-    
-    // MARK: - Outlets for TextFields
-    @IBOutlet weak var profileFirstNameTextField: UITextField!
-    @IBOutlet weak var profileLastNameTextField: UITextField!
-    @IBOutlet weak var phoneTextField: UITextField!
-    @IBOutlet weak var profileEmailTextField: UITextField!
-    
-    // Save Button
-    private var saveButton: UIButton!
-    
-    // MARK: - Firebase Reference
+class ManageProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+
+    // MARK: - Outlets
+    @IBOutlet weak var personalInfoTableView: UITableView!
+    @IBOutlet weak var addressInfoTableView: UITableView!
+
+    // MARK: - Data
+    let personalInfoFields = ["First Name", "Last Name", "Phone No."]
+    let personalInfoPlaceholders = ["Enter First Name", "Enter Last Name", "Enter Phone Number"]
+    let addressInfoFields = ["Country", "House", "Road", "Block", "Region"]
+    let addressInfoPlaceholders = ["Enter Country", "Enter House", "Enter Road", "Enter Block", "Enter Region"]
+    var personalInfoValues = ["", "", ""]
+    var addressInfoValues = ["", "", "", "", ""]
+
+    // MARK: - Firebase References
     let db = Firestore.firestore()
     var userID: String {
         return Auth.auth().currentUser?.uid ?? "defaultUserID"
@@ -22,147 +25,178 @@ class ManageProfileViewController: UITableViewController {
     // MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
-        fetchProfileData() // Load user data from Firebase when the screen loads
+
+        // Set up TableView background color
+        personalInfoTableView.backgroundColor = UIColor(red: 15/255, green: 13/255, blue: 18/255, alpha: 1.0)
+        addressInfoTableView.backgroundColor = UIColor(red: 15/255, green: 13/255, blue: 18/255, alpha: 1.0)
+
+        // Set delegates and data sources
+        personalInfoTableView.delegate = self
+        personalInfoTableView.dataSource = self
+        addressInfoTableView.delegate = self
+        addressInfoTableView.dataSource = self
+
+        // Clear Firebase cache (optional)
+        clearFirestoreCache()
+
+        // Fetch profile data
+        prepareForNewUser()
+        fetchProfileData()
     }
 
-    func setupUI() {
-        // Configure table view
-        tableView.keyboardDismissMode = .onDrag // Dismiss keyboard on scroll
-        tableView.backgroundColor = UIColor(red: 15/255, green: 13/255, blue: 18/255, alpha: 1.0) // #0F0D12
-        
-        // Add Save button programmatically
-        setupSaveButton()
-    }
-    
-    func setupSaveButton() {
-        // Initialize Save button
-        saveButton = UIButton(type: .system)
-        saveButton.setTitle("Save", for: .normal)
-        saveButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
-        saveButton.backgroundColor = UIColor.systemBlue
-        saveButton.setTitleColor(.white, for: .normal)
-        saveButton.layer.cornerRadius = 8
-        saveButton.translatesAutoresizingMaskIntoConstraints = false
-        saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
-        
-        // Add Save button to the table view's superview
-        if let parentView = tableView.superview {
-            parentView.addSubview(saveButton)
-            
-            // Add constraints
-            NSLayoutConstraint.activate([
-                saveButton.centerXAnchor.constraint(equalTo: parentView.centerXAnchor),
-                saveButton.bottomAnchor.constraint(equalTo: parentView.safeAreaLayoutGuide.bottomAnchor, constant: -20),
-                saveButton.widthAnchor.constraint(equalToConstant: 120),
-                saveButton.heightAnchor.constraint(equalToConstant: 50)
-            ])
+    // MARK: - Clear Firestore Cache
+    func clearFirestoreCache() {
+        db.clearPersistence { error in
+            if let error = error {
+                print("Error clearing Firestore cache: \(error.localizedDescription)")
+            } else {
+                print("Firestore cache cleared successfully.")
+            }
         }
     }
-    
-    // MARK: - Fetch Data from Firebase
+
+    // MARK: - Prepare for New User
+    func prepareForNewUser() {
+        // Reset data and reload placeholders
+        personalInfoValues = ["", "", ""]
+        addressInfoValues = ["", "", "", "", ""]
+        personalInfoTableView.reloadData()
+        addressInfoTableView.reloadData()
+    }
+
+    // MARK: - Fetch Data from Firestore
     func fetchProfileData() {
-        db.collection("users").document(userID).getDocument { [weak self] (document, error) in
+        db.collection("users").document(userID).getDocument { [weak self] document, error in
+            guard let self = self else { return }
             if let error = error {
                 print("Error fetching user data: \(error.localizedDescription)")
                 return
             }
-            
             if let data = document?.data() {
-                self?.profileFirstNameTextField.text = data["firstName"] as? String
-                self?.profileLastNameTextField.text = data["lastName"] as? String
-                self?.phoneTextField.text = data["phone"] as? String
-                self?.profileEmailTextField.text = data["email"] as? String
+                self.personalInfoValues[0] = data["firstName"] as? String ?? ""
+                self.personalInfoValues[1] = data["lastName"] as? String ?? ""
+                self.personalInfoValues[2] = data["phone"] as? String ?? ""
+                self.addressInfoValues[0] = data["country"] as? String ?? ""
+                self.addressInfoValues[1] = data["house"] as? String ?? ""
+                self.addressInfoValues[2] = data["road"] as? String ?? ""
+                self.addressInfoValues[3] = data["block"] as? String ?? ""
+                self.addressInfoValues[4] = data["region"] as? String ?? ""
+
+                // Reload table views
+                self.personalInfoTableView.reloadData()
+                self.addressInfoTableView.reloadData()
             }
         }
     }
 
     // MARK: - Save Button Action
-    @objc func saveButtonTapped() {
-        // Validate inputs
-        guard let firstName = profileFirstNameTextField.text, !firstName.isEmpty,
-              let lastName = profileLastNameTextField.text, !lastName.isEmpty,
-              let phone = phoneTextField.text, !phone.isEmpty,
-              let email = profileEmailTextField.text, !email.isEmpty else {
-            showAlert("Please fill in all fields before saving.")
+    @IBAction func saveButtonTapped(_ sender: UIButton) {
+        guard !personalInfoValues[0].isEmpty, !personalInfoValues[1].isEmpty, !personalInfoValues[2].isEmpty else {
+            showAlert(title: "Error", message: "First name, last name, and phone are required.")
             return
         }
-        
-        // Reference to the current user
-        guard let currentUser = Auth.auth().currentUser else {
-            showAlert("No user is currently signed in.")
-            return
-        }
-        
-        // Check if the email has changed
-        if email != currentUser.email {
-            let alertController = UIAlertController(
-                title: "Change Email",
-                message: "Changing your email will sign you out. Are you sure you want to proceed?",
-                preferredStyle: .alert
-            )
-            alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-            alertController.addAction(UIAlertAction(title: "Confirm", style: .default, handler: { _ in
-                self.updateEmailAndSignOut(currentUser, email: email, firstName: firstName, lastName: lastName, phone: phone)
-            }))
-            present(alertController, animated: true, completion: nil)
-        } else {
-            // Update only Firestore profile if email hasn't changed
-            updateFirestoreProfile(firstName: firstName, lastName: lastName, phone: phone, email: email)
-            showAlert("Profile updated successfully!")
-        }
-    }
-    
-    func updateEmailAndSignOut(_ user: User, email: String, firstName: String, lastName: String, phone: String) {
-        user.updateEmail(to: email) { [weak self] error in
+
+        let profileData: [String: Any] = [
+            "firstName": personalInfoValues[0],
+            "lastName": personalInfoValues[1],
+            "phone": personalInfoValues[2],
+            "country": addressInfoValues[0],
+            "house": addressInfoValues[1],
+            "road": addressInfoValues[2],
+            "block": addressInfoValues[3],
+            "region": addressInfoValues[4],
+            "updatedAt": FieldValue.serverTimestamp()
+        ]
+
+        db.collection("users").document(userID).setData(profileData, merge: true) { [weak self] error in
             if let error = error {
-                self?.showAlert("Failed to update email: \(error.localizedDescription)")
+                self?.showAlert(title: "Error", message: "Failed to save data: \(error.localizedDescription)")
                 return
             }
-            
-            self?.updateFirestoreProfile(firstName: firstName, lastName: lastName, phone: phone, email: email)
-            
-            do {
-                try Auth.auth().signOut()
-                self?.showAlert("Email updated successfully. You have been signed out.") {
-                    self?.navigateToLoginScreen()
-                }
-            } catch {
-                self?.showAlert("Failed to sign out: \(error.localizedDescription)")
-            }
+
+            self?.showAlert(title: "Success", message: "Profile updated successfully!")
         }
     }
 
-    func updateFirestoreProfile(firstName: String, lastName: String, phone: String, email: String) {
-        let userData = [
-            "firstName": firstName,
-            "lastName": lastName,
-            "phone": phone,
-            "email": email
-        ]
-        
-        db.collection("users").document(userID).setData(userData) { error in
-            if let error = error {
-                self.showAlert("Failed to save data: \(error.localizedDescription)")
+    // MARK: - Discard Button Action
+    @IBAction func discardButtonTapped(_ sender: UIButton) {
+        // Clear all input fields
+        prepareForNewUser()
+
+        // Reload the original user collection data
+        fetchProfileData()
+    }
+
+    // MARK: - Table View Data Source
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if tableView == personalInfoTableView {
+            return personalInfoFields.count
+        } else if tableView == addressInfoTableView {
+            return addressInfoFields.count
+        }
+        return 0
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell(style: .value1, reuseIdentifier: nil) // Use `.value1` for better layout
+        cell.backgroundColor = UIColor(red: 15/255, green: 13/255, blue: 18/255, alpha: 1.0)
+        cell.textLabel?.textColor = .white
+        cell.textLabel?.font = UIFont.systemFont(ofSize: 16, weight: .bold) // Larger and bolder font for the field names
+        cell.detailTextLabel?.textColor = .gray
+        cell.detailTextLabel?.font = UIFont.systemFont(ofSize: 18) // Larger font for the values
+
+        if tableView == personalInfoTableView {
+            cell.textLabel?.text = personalInfoFields[indexPath.row]
+            cell.detailTextLabel?.text = personalInfoValues[indexPath.row].isEmpty
+                ? personalInfoPlaceholders[indexPath.row] // Show placeholder if value is empty
+                : personalInfoValues[indexPath.row]
+        } else if tableView == addressInfoTableView {
+            cell.textLabel?.text = addressInfoFields[indexPath.row]
+            cell.detailTextLabel?.text = addressInfoValues[indexPath.row].isEmpty
+                ? addressInfoPlaceholders[indexPath.row] // Show placeholder if value is empty
+                : addressInfoValues[indexPath.row]
+        }
+        return cell
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+
+        let fieldName: String
+        let currentValue: String
+        let placeholder: String
+        if tableView == personalInfoTableView {
+            fieldName = personalInfoFields[indexPath.row]
+            currentValue = personalInfoValues[indexPath.row]
+            placeholder = personalInfoPlaceholders[indexPath.row]
+        } else {
+            fieldName = addressInfoFields[indexPath.row]
+            currentValue = addressInfoValues[indexPath.row]
+            placeholder = addressInfoPlaceholders[indexPath.row]
+        }
+
+        let alert = UIAlertController(title: "Edit \(fieldName)", message: nil, preferredStyle: .alert)
+        alert.addTextField { textField in
+            textField.text = currentValue.isEmpty ? placeholder : currentValue
+        }
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Save", style: .default) { [weak self] _ in
+            guard let self = self else { return }
+            let newValue = alert.textFields?.first?.text ?? ""
+            if tableView == self.personalInfoTableView {
+                self.personalInfoValues[indexPath.row] = newValue
             } else {
-                print("User profile updated in Firestore successfully!")
+                self.addressInfoValues[indexPath.row] = newValue
             }
-        }
-    }
-
-    func showAlert(_ message: String, completion: (() -> Void)? = nil) {
-        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
-            completion?()
-        }))
+            tableView.reloadRows(at: [indexPath], with: .automatic)
+        })
         present(alert, animated: true, completion: nil)
     }
 
-    func navigateToLoginScreen() {
-        // Navigate to the login screen after signing out
-        let storyboard = UIStoryboard(name: "AUTH", bundle: nil)
-        let loginViewController = storyboard.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
-        loginViewController.modalPresentationStyle = .fullScreen
-        present(loginViewController, animated: true, completion: nil)
+    // MARK: - Show Alert Helper
+    func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        present(alert, animated: true, completion: nil)
     }
 }

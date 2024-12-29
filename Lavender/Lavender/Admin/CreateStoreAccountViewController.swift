@@ -1,175 +1,164 @@
-//
-//  CreateStoreAccountViewController.swift
-//  Lavender
-//
-//  Created by Mohamed Nema on 28/12/2024.
-//
-
 import UIKit
-import FirebaseAuth
 import FirebaseFirestore
 
-class CreateStoreAccountViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class CreateStoreAccountViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     // MARK: - Outlets
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var storeInfoTableView: UITableView! // First TableView for Store Information
+    @IBOutlet weak var accountDetailsTableView: UITableView! // Second TableView for Account Details
 
-    // Data to store user input
-    var storeName: String?
-    var ownerName: String?
-    var storeID: String?
-    var category: String?
-    var email: String?
-    var password: String?
+    // MARK: - Data
+    let storeInfoFields = ["Store", "Owner", "Store ID", "Category"]
+    let accountDetailsFields = ["Email", "Password"]
+    var storeInfoValues = ["", "", "", ""]
+    var accountDetailsValues = ["", ""]
 
+    // MARK: - Firebase References
+    let db = Firestore.firestore()
+
+    // MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Set table view delegate and data source
-        tableView.delegate = self
-        tableView.dataSource = self
+        // Safely handle table views
+        guard let storeInfoTableView = storeInfoTableView,
+              let accountDetailsTableView = accountDetailsTableView else {
+            print("Error: One or both table views are not connected.")
+            return
+        }
 
-        // Register cell classes (optional if using storyboard)
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "storeInfoCell")
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "accountDetailsCell")
+        // Set table view delegates and data sources
+        storeInfoTableView.delegate = self
+        storeInfoTableView.dataSource = self
+        accountDetailsTableView.delegate = self
+        accountDetailsTableView.dataSource = self
+
+        // Register cells for reuse
+        storeInfoTableView.register(UITableViewCell.self, forCellReuseIdentifier: "StoreInfoCell")
+        accountDetailsTableView.register(UITableViewCell.self, forCellReuseIdentifier: "AccountDetailsCell")
+
+        // Set background colors
+        storeInfoTableView.backgroundColor = UIColor(red: 15/255, green: 13/255, blue: 18/255, alpha: 1.0)
+        accountDetailsTableView.backgroundColor = UIColor(red: 15/255, green: 13/255, blue: 18/255, alpha: 1.0)
     }
 
-    // MARK: - UITableView DataSource Methods
+    // MARK: - Table View Data Source
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2 // Store Information and Account Details sections
+        return 1 // Each table view has one section
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? 4 : 2 // 4 rows for Store Information, 2 for Account Details
+        // Return the appropriate row count for each table view
+        if tableView == storeInfoTableView {
+            return storeInfoFields.count
+        } else if tableView == accountDetailsTableView {
+            return accountDetailsFields.count
+        }
+        return 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "storeInfoCell", for: indexPath)
+        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: nil)
 
-        // Configure cells based on section and row
-        if indexPath.section == 0 {
-            switch indexPath.row {
-            case 0:
-                cell.textLabel?.text = "Store Name"
-                let textField = createTextField(placeholder: "Enter store name", tag: 0)
-                cell.accessoryView = textField
-            case 1:
-                cell.textLabel?.text = "Owner Name"
-                let textField = createTextField(placeholder: "Enter owner name", tag: 1)
-                cell.accessoryView = textField
-            case 2:
-                cell.textLabel?.text = "Store ID"
-                let textField = createTextField(placeholder: "Enter store ID", tag: 2)
-                cell.accessoryView = textField
-            case 3:
-                cell.textLabel?.text = "Category"
-                let textField = createTextField(placeholder: "Enter store category", tag: 3)
-                cell.accessoryView = textField
-            default:
-                break
-            }
-        } else if indexPath.section == 1 {
-            switch indexPath.row {
-            case 0:
-                cell.textLabel?.text = "Email"
-                let textField = createTextField(placeholder: "Enter email address", tag: 4)
-                cell.accessoryView = textField
-            case 1:
-                cell.textLabel?.text = "Password"
-                let textField = createTextField(placeholder: "Enter password", tag: 5)
-                cell.accessoryView = textField
-            default:
-                break
-            }
+        if tableView == storeInfoTableView {
+            // Configure cell for Store Information
+            cell.textLabel?.text = storeInfoFields[indexPath.row]
+            cell.detailTextLabel?.text = storeInfoValues[indexPath.row]
+        } else if tableView == accountDetailsTableView {
+            // Configure cell for Account Details
+            cell.textLabel?.text = accountDetailsFields[indexPath.row]
+            cell.detailTextLabel?.text = accountDetailsValues[indexPath.row]
         }
+
+        // Set styles
+        cell.textLabel?.textColor = .white
+        cell.detailTextLabel?.textColor = .gray
+        cell.backgroundColor = UIColor(red: 15/255, green: 13/255, blue: 18/255, alpha: 1.0)
 
         return cell
     }
 
-    // MARK: - UITableView Delegate Methods
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return section == 0 ? "Store Information" : "Account Details"
+        // Set the header titles
+        if tableView == storeInfoTableView {
+            return "Store Information"
+        } else if tableView == accountDetailsTableView {
+            return "Account Details"
+        }
+        return nil
     }
 
-    // MARK: - Helper Method to Create Text Fields
-    private func createTextField(placeholder: String, tag: Int) -> UITextField {
-        let textField = UITextField(frame: CGRect(x: 0, y: 0, width: 200, height: 30))
-        textField.placeholder = placeholder
-        textField.borderStyle = .roundedRect
-        textField.tag = tag
-        textField.delegate = self
-        return textField
+    // MARK: - Table View Delegate
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+
+        let fieldName: String
+        let currentValue: String
+
+        if tableView == storeInfoTableView {
+            fieldName = storeInfoFields[indexPath.row]
+            currentValue = storeInfoValues[indexPath.row]
+        } else {
+            fieldName = accountDetailsFields[indexPath.row]
+            currentValue = accountDetailsValues[indexPath.row]
+        }
+
+        let alert = UIAlertController(title: "Edit \(fieldName)", message: nil, preferredStyle: .alert)
+        alert.addTextField { textField in
+            textField.text = currentValue
+        }
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Save", style: .default) { [weak self] _ in
+            guard let self = self else { return }
+            let newValue = alert.textFields?.first?.text ?? ""
+            if tableView == self.storeInfoTableView {
+                self.storeInfoValues[indexPath.row] = newValue
+            } else {
+                self.accountDetailsValues[indexPath.row] = newValue
+            }
+            tableView.reloadRows(at: [indexPath], with: .automatic)
+        })
+        present(alert, animated: true, completion: nil)
     }
 
-    // MARK: - Create Store Account Action
-    @IBAction func createStoreAccountButtonTapped(_ sender: UIButton) {
-        guard let storeName = storeName, !storeName.isEmpty,
-              let ownerName = ownerName, !ownerName.isEmpty,
-              let storeID = storeID, !storeID.isEmpty,
-              let category = category, !category.isEmpty,
-              let email = email, !email.isEmpty,
-              let password = password, !password.isEmpty else {
-            showAlert(title: "Error", message: "Please fill in all fields.")
+    // MARK: - Save Button Action
+    @IBAction func saveButtonTapped(_ sender: UIButton) {
+        guard !storeInfoValues.contains(""), !accountDetailsValues.contains("") else {
+            showAlert(title: "Error", message: "All fields must be filled.")
             return
         }
 
-        // Create Store Account in Firebase
-        let db = Firestore.firestore()
         let storeData: [String: Any] = [
-            "storeName": storeName,
-            "ownerName": ownerName,
-            "storeID": storeID,
-            "category": category,
-            "email": email
+            "store": storeInfoValues[0],
+            "owner": storeInfoValues[1],
+            "storeID": storeInfoValues[2],
+            "category": storeInfoValues[3],
+            "email": accountDetailsValues[0],
+            "password": accountDetailsValues[1],
+            "createdAt": FieldValue.serverTimestamp()
         ]
 
-        Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
+        db.collection("stores").document(storeInfoValues[2]).setData(storeData) { [weak self] error in
             if let error = error {
-                self.showAlert(title: "Error", message: "Failed to create account: \(error.localizedDescription)")
+                self?.showAlert(title: "Error", message: "Failed to save data: \(error.localizedDescription)")
                 return
             }
-
-            guard let userID = authResult?.user.uid else { return }
-            db.collection("stores").document(userID).setData(storeData) { error in
-                if let error = error {
-                    self.showAlert(title: "Error", message: "Failed to save store data: \(error.localizedDescription)")
-                } else {
-                    self.showAlert(title: "Success", message: "Store account created successfully!") {
-                        self.navigationController?.popViewController(animated: true)
-                    }
-                }
-            }
+            self?.showAlert(title: "Success", message: "Store account created successfully!")
         }
     }
 
-    // MARK: - Helper Methods
-    func showAlert(title: String, message: String, completion: (() -> Void)? = nil) {
+    // MARK: - Discard Button Action
+    @IBAction func discardButtonTapped(_ sender: UIButton) {
+        storeInfoValues = ["", "", "", ""]
+        accountDetailsValues = ["", ""]
+        storeInfoTableView.reloadData()
+        accountDetailsTableView.reloadData()
+    }
+
+    // MARK: - Helper Method to Show Alert
+    func showAlert(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
-            completion?()
-        }))
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         present(alert, animated: true, completion: nil)
-    }
-}
-
-// MARK: - UITextFieldDelegate
-extension CreateStoreAccountViewController: UITextFieldDelegate {
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        switch textField.tag {
-        case 0:
-            storeName = textField.text
-        case 1:
-            ownerName = textField.text
-        case 2:
-            storeID = textField.text
-        case 3:
-            category = textField.text
-        case 4:
-            email = textField.text
-        case 5:
-            password = textField.text
-        default:
-            break
-        }
     }
 }

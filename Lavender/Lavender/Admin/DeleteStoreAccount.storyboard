@@ -11,7 +11,7 @@
         <!--Delete Store Account View Controller-->
         <scene sceneID="TkQ-HJ-wgB">
             <objects>
-                <viewController id="13m-XV-ZNY" customClass="DeleteStoreAccountViewController" customModule="Lavender" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DeleteStoreAccountViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="13m-XV-ZNY" customClass="DeleteStoreAccountViewController" customModule="Lavender" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="3ks-R4-xtG">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -102,6 +102,10 @@
                                     </tableViewCell>
                                 </prototypes>
                                 <sections/>
+                                <connections>
+                                    <outlet property="dataSource" destination="13m-XV-ZNY" id="Nld-Qh-M4U"/>
+                                    <outlet property="delegate" destination="13m-XV-ZNY" id="sBO-ci-SFP"/>
+                                </connections>
                             </tableView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Delete a Store Account" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qoo-PQ-RBC">
                                 <rect key="frame" x="16" y="92" width="301" height="33"/>

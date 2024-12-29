@@ -11,7 +11,7 @@
         <!--Create Store Account View Controller-->
         <scene sceneID="SwN-Ls-Q3A">
             <objects>
-                <viewController storyboardIdentifier="CreateaStoreAccountViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Jb8-GJ-GGq" customClass="CreateStoreAccountViewController" customModule="Lavender" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController useStoryboardIdentifierAsRestorationIdentifier="YES" id="Jb8-GJ-GGq" customClass="CreateStoreAccountViewController" customModule="Lavender" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="3Tg-DI-F9P">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -128,6 +128,10 @@
                                     </tableViewCell>
                                 </prototypes>
                                 <sections/>
+                                <connections>
+                                    <outlet property="dataSource" destination="Jb8-GJ-GGq" id="Dba-7z-ZRK"/>
+                                    <outlet property="delegate" destination="Jb8-GJ-GGq" id="Qqu-Oy-C1x"/>
+                                </connections>
                             </tableView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Create a Store Account" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sZM-vw-Wpe">
                                 <rect key="frame" x="16" y="92" width="304" height="33"/>
@@ -195,6 +199,10 @@
                                         <color key="backgroundColor" red="0.058823529409999999" green="0.050980392159999999" blue="0.070588235289999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="Jb8-GJ-GGq" id="m44-1p-TkI"/>
+                                    <outlet property="delegate" destination="Jb8-GJ-GGq" id="5kh-LP-8UL"/>
+                                </connections>
                             </tableView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Store Information" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="utG-0J-iNl">
                                 <rect key="frame" x="16" y="170" width="234" height="37"/>
@@ -216,21 +224,31 @@
                                 <color key="tintColor" systemColor="systemRedColor"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Discard"/>
+                                <connections>
+                                    <action selector="discardButtonTapped:" destination="Jb8-GJ-GGq" eventType="touchUpInside" id="pbp-cX-Wx9"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ri7-uy-Ekx">
                                 <rect key="frame" x="232" y="717" width="121" height="39"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Create"/>
+                                <connections>
+                                    <action selector="saveButtonTapped:" destination="Jb8-GJ-GGq" eventType="touchUpInside" id="4eG-hX-epz"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="fwq-Pf-ePC"/>
                         <color key="backgroundColor" red="0.058823529409999999" green="0.050980392159999999" blue="0.070588235289999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     </view>
+                    <connections>
+                        <outlet property="accountDetailsTableView" destination="UVc-ob-R3i" id="Dz6-3b-B12"/>
+                        <outlet property="storeInfoTableView" destination="NWq-mr-rjf" id="MgY-uA-GvB"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FF2-ou-vEb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="132" y="40"/>
+            <point key="canvasLocation" x="-201" y="-32"/>
         </scene>
     </scenes>
     <resources>

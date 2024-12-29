@@ -28,11 +28,12 @@
 		342C46E62D1AF7280044A1E7 /* ManageProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 342C46E52D1AF7280044A1E7 /* ManageProfileViewController.swift */; };
 		342C46EB2D1AFE150044A1E7 /* AdminMenu.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 342C46EA2D1AFE150044A1E7 /* AdminMenu.storyboard */; };
 		342C46ED2D1AFEFF0044A1E7 /* AdminMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 342C46EC2D1AFEFF0044A1E7 /* AdminMenuViewController.swift */; };
-		342C46EF2D1B088D0044A1E7 /* CreateaStoreAccount.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 342C46EE2D1B088D0044A1E7 /* CreateaStoreAccount.storyboard */; };
+		342C46EF2D1B088D0044A1E7 /* CreateStoreAccount.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 342C46EE2D1B088D0044A1E7 /* CreateStoreAccount.storyboard */; };
 		345C15422D1FBB25008BEF4A /* CreateStoreAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 345C15412D1FBB25008BEF4A /* CreateStoreAccountViewController.swift */; };
-		345C15462D1FC2DE008BEF4A /* DeleteaStoreAccount.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 345C15452D1FC2DE008BEF4A /* DeleteaStoreAccount.storyboard */; };
+		345C15462D1FC2DE008BEF4A /* DeleteStoreAccount.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 345C15452D1FC2DE008BEF4A /* DeleteStoreAccount.storyboard */; };
 		345C15482D1FC8D2008BEF4A /* DeleteStoreAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 345C15472D1FC8D1008BEF4A /* DeleteStoreAccountViewController.swift */; };
 		345C154A2D1FCB26008BEF4A /* ManageStores.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 345C15492D1FCB26008BEF4A /* ManageStores.storyboard */; };
+		345C154C2D216ACF008BEF4A /* ManageStoresViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 345C154B2D216ACF008BEF4A /* ManageStoresViewController.swift */; };
 		347542B52D199B2700C903E9 /* Menu.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 347542B42D199B2700C903E9 /* Menu.storyboard */; };
 		347542B72D199C5E00C903E9 /* MenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 347542B62D199C5E00C903E9 /* MenuTableViewController.swift */; };
 		CC5CBCD32D1C4076000EE8CF /* UserTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC5CBCD22D1C4076000EE8CF /* UserTabBarController.swift */; };
@@ -91,11 +92,12 @@
 		342C46E52D1AF7280044A1E7 /* ManageProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageProfileViewController.swift; sourceTree = "<group>"; };
 		342C46EA2D1AFE150044A1E7 /* AdminMenu.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AdminMenu.storyboard; sourceTree = "<group>"; };
 		342C46EC2D1AFEFF0044A1E7 /* AdminMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminMenuViewController.swift; sourceTree = "<group>"; };
-		342C46EE2D1B088D0044A1E7 /* CreateaStoreAccount.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CreateaStoreAccount.storyboard; sourceTree = "<group>"; };
+		342C46EE2D1B088D0044A1E7 /* CreateStoreAccount.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CreateStoreAccount.storyboard; sourceTree = "<group>"; };
 		345C15412D1FBB25008BEF4A /* CreateStoreAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateStoreAccountViewController.swift; sourceTree = "<group>"; };
-		345C15452D1FC2DE008BEF4A /* DeleteaStoreAccount.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DeleteaStoreAccount.storyboard; sourceTree = "<group>"; };
+		345C15452D1FC2DE008BEF4A /* DeleteStoreAccount.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DeleteStoreAccount.storyboard; sourceTree = "<group>"; };
 		345C15472D1FC8D1008BEF4A /* DeleteStoreAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteStoreAccountViewController.swift; sourceTree = "<group>"; };
 		345C15492D1FCB26008BEF4A /* ManageStores.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ManageStores.storyboard; sourceTree = "<group>"; };
+		345C154B2D216ACF008BEF4A /* ManageStoresViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageStoresViewController.swift; sourceTree = "<group>"; };
 		347542B42D199B2700C903E9 /* Menu.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Menu.storyboard; sourceTree = "<group>"; };
 		347542B62D199C5E00C903E9 /* MenuTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableViewController.swift; sourceTree = "<group>"; };
 		CC5CBCD22D1C4076000EE8CF /* UserTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTabBarController.swift; sourceTree = "<group>"; };
@@ -155,8 +157,9 @@
 			children = (
 				342C46EA2D1AFE150044A1E7 /* AdminMenu.storyboard */,
 				342C46EC2D1AFEFF0044A1E7 /* AdminMenuViewController.swift */,
-				342C46EE2D1B088D0044A1E7 /* CreateaStoreAccount.storyboard */,
-				345C15452D1FC2DE008BEF4A /* DeleteaStoreAccount.storyboard */,
+				345C154B2D216ACF008BEF4A /* ManageStoresViewController.swift */,
+				342C46EE2D1B088D0044A1E7 /* CreateStoreAccount.storyboard */,
+				345C15452D1FC2DE008BEF4A /* DeleteStoreAccount.storyboard */,
 				345C15472D1FC8D1008BEF4A /* DeleteStoreAccountViewController.swift */,
 				345C15412D1FBB25008BEF4A /* CreateStoreAccountViewController.swift */,
 				345C15492D1FCB26008BEF4A /* ManageStores.storyboard */,
@@ -364,9 +367,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				0ECD755C2D0F652D00DA963F /* AddProduct.storyboard in Resources */,
-				345C15462D1FC2DE008BEF4A /* DeleteaStoreAccount.storyboard in Resources */,
+				345C15462D1FC2DE008BEF4A /* DeleteStoreAccount.storyboard in Resources */,
 				342C46EB2D1AFE150044A1E7 /* AdminMenu.storyboard in Resources */,
-				342C46EF2D1B088D0044A1E7 /* CreateaStoreAccount.storyboard in Resources */,
+				342C46EF2D1B088D0044A1E7 /* CreateStoreAccount.storyboard in Resources */,
 				CCF076592D1C595C00CA6872 /* Main.storyboard in Resources */,
 				CCCBDE282D1984DD009586E2 /* Cart.storyboard in Resources */,
 				D4C8E4512D00799E00B254E2 /* LaunchScreen.storyboard in Resources */,
@@ -414,6 +417,7 @@
 				342C46ED2D1AFEFF0044A1E7 /* AdminMenuViewController.swift in Sources */,
 				CCCBDE2A2D1984E1009586E2 /* HomeTableViewCell.swift in Sources */,
 				0E9907222D122C96001A42C2 /* ProductTableViewCell.swift in Sources */,
+				345C154C2D216ACF008BEF4A /* ManageStoresViewController.swift in Sources */,
 				D4C8E4452D00799C00B254E2 /* AppDelegate.swift in Sources */,
 				0E4E67E52D0B596700CC72C1 /* AuthenticationViewController.swift in Sources */,
 				CCCBDE222D1984C0009586E2 /* Product.swift in Sources */,
