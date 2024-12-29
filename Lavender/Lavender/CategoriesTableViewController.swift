@@ -2,8 +2,9 @@ import UIKit
 
 class CategoriesTableViewController: UITableViewController {
 
+    @IBOutlet var categoryTable: UITableView!
+    
     let categories = [
-        "All",
         "Bodycare",
         "Cleaning",
         "Stationary",
@@ -29,7 +30,13 @@ class CategoriesTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath)
 
         cell.textLabel?.text = categories[indexPath.row]
+        cell.backgroundColor = UIColor(red: 0.114, green: 0.106, blue: 0.161, alpha:1)
+        cell.textLabel?.textColor = UIColor.white
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "ShowCategoryProducts", sender: self)
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
