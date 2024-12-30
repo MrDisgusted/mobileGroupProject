@@ -24,6 +24,7 @@
 		0E9907222D122C96001A42C2 /* ProductTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9907212D122C96001A42C2 /* ProductTableViewCell.swift */; };
 		0EA600262D17475800FA2AF0 /* RefundRequestsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EA600252D17475800FA2AF0 /* RefundRequestsViewController.swift */; };
 		0EA600282D174A7F00FA2AF0 /* RefundRequestCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EA600272D174A7F00FA2AF0 /* RefundRequestCell.swift */; };
+		0EA8C4822D232BA300443BE6 /* ProductDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EA8C4812D232BA300443BE6 /* ProductDetailViewController.swift */; };
 		0EAF42AD2D08B95A005F04CC /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EAF42AC2D08B95A005F04CC /* SignUpViewController.swift */; };
 		0ECD755C2D0F652D00DA963F /* AddProduct.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0ECD755B2D0F652D00DA963F /* AddProduct.storyboard */; };
 		0EDDCC2A2D1EF63B00CB533E /* RefundRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDDCC292D1EF63B00CB533E /* RefundRequest.swift */; };
@@ -80,6 +81,7 @@
 		0E9907212D122C96001A42C2 /* ProductTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductTableViewCell.swift; sourceTree = "<group>"; };
 		0EA600252D17475800FA2AF0 /* RefundRequestsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefundRequestsViewController.swift; sourceTree = "<group>"; };
 		0EA600272D174A7F00FA2AF0 /* RefundRequestCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefundRequestCell.swift; sourceTree = "<group>"; };
+		0EA8C4812D232BA300443BE6 /* ProductDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailViewController.swift; sourceTree = "<group>"; };
 		0EAF42AC2D08B95A005F04CC /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		0ECD755B2D0F652D00DA963F /* AddProduct.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AddProduct.storyboard; sourceTree = "<group>"; };
 		0EDDCC292D1EF63B00CB533E /* RefundRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefundRequest.swift; sourceTree = "<group>"; };
@@ -182,6 +184,7 @@
 				0E19A51B2D0C9C05002102F7 /* AdminLoginViewController.swift */,
 				0E19A51D2D0CABA6002102F7 /* StoreLoginViewController.swift */,
 				0ECD755B2D0F652D00DA963F /* AddProduct.storyboard */,
+				0EA8C4812D232BA300443BE6 /* ProductDetailViewController.swift */,
 				0EF712282D21D96200840454 /* MyStoreViewController.swift */,
 				0E0091432D0F9DAC0017A672 /* AddProductViewController.swift */,
 				0E6C59BA2D10AAAF002E0333 /* ProductListViewController.swift */,
@@ -381,6 +384,7 @@
 				0E6C59BB2D10AAAF002E0333 /* ProductListViewController.swift in Sources */,
 				0EDDCC2A2D1EF63B00CB533E /* RefundRequest.swift in Sources */,
 				0EAF42AD2D08B95A005F04CC /* SignUpViewController.swift in Sources */,
+				0EA8C4822D232BA300443BE6 /* ProductDetailViewController.swift in Sources */,
 				0EA600282D174A7F00FA2AF0 /* RefundRequestCell.swift in Sources */,
 				CCCBDE242D1984D2009586E2 /* ProductTableView.swift in Sources */,
 			);
