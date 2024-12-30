@@ -29,6 +29,7 @@
 		0EDDCC2A2D1EF63B00CB533E /* RefundRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDDCC292D1EF63B00CB533E /* RefundRequest.swift */; };
 		0EDE91A62D18025500130FED /* RefundPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDE91A52D18025500130FED /* RefundPageViewController.swift */; };
 		0EE088852D07044700E430DA /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE088842D07044700E430DA /* LoginViewController.swift */; };
+		0EF712292D21D96200840454 /* MyStoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EF712282D21D96200840454 /* MyStoreViewController.swift */; };
 		CCCBDE202D198472009586E2 /* ProductPage.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CCCBDE1F2D198472009586E2 /* ProductPage.storyboard */; };
 		CCCBDE222D1984C0009586E2 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCBDE212D1984BF009586E2 /* Product.swift */; };
 		CCCBDE242D1984D2009586E2 /* ProductTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCBDE232D1984D2009586E2 /* ProductTableView.swift */; };
@@ -84,6 +85,7 @@
 		0EDDCC292D1EF63B00CB533E /* RefundRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefundRequest.swift; sourceTree = "<group>"; };
 		0EDE91A52D18025500130FED /* RefundPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefundPageViewController.swift; sourceTree = "<group>"; };
 		0EE088842D07044700E430DA /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		0EF712282D21D96200840454 /* MyStoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStoreViewController.swift; sourceTree = "<group>"; };
 		CCCBDE1F2D198472009586E2 /* ProductPage.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ProductPage.storyboard; sourceTree = "<group>"; };
 		CCCBDE212D1984BF009586E2 /* Product.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
 		CCCBDE232D1984D2009586E2 /* ProductTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductTableView.swift; sourceTree = "<group>"; };
@@ -180,6 +182,7 @@
 				0E19A51B2D0C9C05002102F7 /* AdminLoginViewController.swift */,
 				0E19A51D2D0CABA6002102F7 /* StoreLoginViewController.swift */,
 				0ECD755B2D0F652D00DA963F /* AddProduct.storyboard */,
+				0EF712282D21D96200840454 /* MyStoreViewController.swift */,
 				0E0091432D0F9DAC0017A672 /* AddProductViewController.swift */,
 				0E6C59BA2D10AAAF002E0333 /* ProductListViewController.swift */,
 				0E9907212D122C96001A42C2 /* ProductTableViewCell.swift */,
@@ -372,6 +375,7 @@
 				0EDE91A62D18025500130FED /* RefundPageViewController.swift in Sources */,
 				0E6A2E0A2D0B276C00C35552 /* ChangePasswordViewController.swift in Sources */,
 				D4C8E4472D00799C00B254E2 /* SceneDelegate.swift in Sources */,
+				0EF712292D21D96200840454 /* MyStoreViewController.swift in Sources */,
 				0E04FC3F2D1EA61400440B4A /* OrderTableViewCell.swift in Sources */,
 				0E04FC3D2D1EA0E200440B4A /* OrdersListViewController.swift in Sources */,
 				0E6C59BB2D10AAAF002E0333 /* ProductListViewController.swift in Sources */,
@@ -565,7 +569,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Lavender/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -592,7 +596,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Lavender/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
