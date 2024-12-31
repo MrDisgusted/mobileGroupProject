@@ -2,69 +2,40 @@ import UIKit
 import FirebaseAuth
 import FirebaseFirestore
 
-class ManageProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ManageProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
 
-    // MARK: - Outlets
-    @IBOutlet weak var personalInfoTableView: UITableView!
-    @IBOutlet weak var addressInfoTableView: UITableView!
+    @IBOutlet weak var personalInfoTableView: UITableView! // Table for personal info fields
+    @IBOutlet weak var addressInfoTableView: UITableView! // Table for address info fields
 
-    // MARK: - Data
-    let personalInfoFields = ["First Name", "Last Name", "Phone No."]
-    let personalInfoPlaceholders = ["Enter First Name", "Enter Last Name", "Enter Phone Number"]
-    let addressInfoFields = ["Country", "House", "Road", "Block", "Region"]
-    let addressInfoPlaceholders = ["Enter Country", "Enter House", "Enter Road", "Enter Block", "Enter Region"]
-    var personalInfoValues = ["", "", ""]
-    var addressInfoValues = ["", "", "", "", ""]
+    let personalInfoFields = ["First Name", "Last Name", "Phone No."] // Labels for personal info
+    let personalInfoPlaceholders = ["Enter First Name", "Enter Last Name", "Enter Phone Number"] // Placeholders for personal info
+    let addressInfoFields = ["Country", "House", "Road", "Block", "Region"] // Labels for address info
+    let addressInfoPlaceholders = ["Enter Country", "Enter House", "Enter Road", "Enter Block", "Enter Region"] // Placeholders for address info
+    var personalInfoValues = ["", "", ""] // Input values for personal info
+    var addressInfoValues = ["", "", "", "", ""] // Input values for address info
 
-    // MARK: - Firebase References
-    let db = Firestore.firestore()
+    let db = Firestore.firestore() // Firestore database reference
     var userID: String {
-        return Auth.auth().currentUser?.uid ?? "defaultUserID"
+        return Auth.auth().currentUser?.uid ?? "defaultUserID" // Get the current user's ID
     }
 
-    // MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Set up TableView background color
+        // Apply background color to both tables
         personalInfoTableView.backgroundColor = UIColor(red: 15/255, green: 13/255, blue: 18/255, alpha: 1.0)
         addressInfoTableView.backgroundColor = UIColor(red: 15/255, green: 13/255, blue: 18/255, alpha: 1.0)
 
-        // Set delegates and data sources
+        // Set delegates and data sources for both tables
         personalInfoTableView.delegate = self
         personalInfoTableView.dataSource = self
         addressInfoTableView.delegate = self
         addressInfoTableView.dataSource = self
 
-        // Clear Firebase cache (optional)
-        clearFirestoreCache()
-
-        // Fetch profile data
-        prepareForNewUser()
+        // Load user profile data from Firestore
         fetchProfileData()
     }
 
-    // MARK: - Clear Firestore Cache
-    func clearFirestoreCache() {
-        db.clearPersistence { error in
-            if let error = error {
-                print("Error clearing Firestore cache: \(error.localizedDescription)")
-            } else {
-                print("Firestore cache cleared successfully.")
-            }
-        }
-    }
-
-    // MARK: - Prepare for New User
-    func prepareForNewUser() {
-        // Reset data and reload placeholders
-        personalInfoValues = ["", "", ""]
-        addressInfoValues = ["", "", "", "", ""]
-        personalInfoTableView.reloadData()
-        addressInfoTableView.reloadData()
-    }
-
-    // MARK: - Fetch Data from Firestore
     func fetchProfileData() {
         db.collection("users").document(userID).getDocument { [weak self] document, error in
             guard let self = self else { return }
@@ -73,6 +44,7 @@ class ManageProfileViewController: UIViewController, UITableViewDelegate, UITabl
                 return
             }
             if let data = document?.data() {
+                // Map Firestore data to input values
                 self.personalInfoValues[0] = data["firstName"] as? String ?? ""
                 self.personalInfoValues[1] = data["lastName"] as? String ?? ""
                 self.personalInfoValues[2] = data["phone"] as? String ?? ""
@@ -82,20 +54,23 @@ class ManageProfileViewController: UIViewController, UITableViewDelegate, UITabl
                 self.addressInfoValues[3] = data["block"] as? String ?? ""
                 self.addressInfoValues[4] = data["region"] as? String ?? ""
 
-                // Reload table views
+                // Reload the tables to display the data
                 self.personalInfoTableView.reloadData()
                 self.addressInfoTableView.reloadData()
             }
         }
     }
 
-    // MARK: - Save Button Action
     @IBAction func saveButtonTapped(_ sender: UIButton) {
+        view.endEditing(true) // Close the keyboard to capture all inputs
+
+        // Ensure required fields are not empty
         guard !personalInfoValues[0].isEmpty, !personalInfoValues[1].isEmpty, !personalInfoValues[2].isEmpty else {
             showAlert(title: "Error", message: "First name, last name, and phone are required.")
             return
         }
 
+        // Prepare data for Firestore update
         let profileData: [String: Any] = [
             "firstName": personalInfoValues[0],
             "lastName": personalInfoValues[1],
@@ -108,93 +83,75 @@ class ManageProfileViewController: UIViewController, UITableViewDelegate, UITabl
             "updatedAt": FieldValue.serverTimestamp()
         ]
 
+        // Save the data to Firestore
         db.collection("users").document(userID).setData(profileData, merge: true) { [weak self] error in
             if let error = error {
                 self?.showAlert(title: "Error", message: "Failed to save data: \(error.localizedDescription)")
                 return
             }
-
+            // Show success message
             self?.showAlert(title: "Success", message: "Profile updated successfully!")
         }
     }
 
-    // MARK: - Discard Button Action
     @IBAction func discardButtonTapped(_ sender: UIButton) {
-        // Clear all input fields
-        prepareForNewUser()
-
-        // Reload the original user collection data
-        fetchProfileData()
+        fetchProfileData() // Reload the original data
     }
 
-    // MARK: - Table View Data Source
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == personalInfoTableView {
-            return personalInfoFields.count
+            return personalInfoFields.count // Number of rows in personal info table
         } else if tableView == addressInfoTableView {
-            return addressInfoFields.count
+            return addressInfoFields.count // Number of rows in address info table
         }
         return 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .value1, reuseIdentifier: nil) // Use `.value1` for better layout
-        cell.backgroundColor = UIColor(red: 15/255, green: 13/255, blue: 18/255, alpha: 1.0)
-        cell.textLabel?.textColor = .white
-        cell.textLabel?.font = UIFont.systemFont(ofSize: 16, weight: .bold) // Larger and bolder font for the field names
-        cell.detailTextLabel?.textColor = .gray
-        cell.detailTextLabel?.font = UIFont.systemFont(ofSize: 18) // Larger font for the values
+        let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
+        cell.backgroundColor = UIColor(red: 15/255, green: 13/255, blue: 18/255, alpha: 1.0) // Dark cell background
+
+        let label = UILabel(frame: CGRect(x: 15, y: 5, width: 120, height: 40)) // Field label
+        label.textColor = .white
+        label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+
+        let textField = UITextField(frame: CGRect(x: 140, y: 5, width: tableView.frame.width - 160, height: 40)) // Input field
+        textField.textColor = .white
+        textField.backgroundColor = .clear
+        textField.autocorrectionType = .no
+        textField.autocapitalizationType = .none
+        textField.delegate = self
 
         if tableView == personalInfoTableView {
-            cell.textLabel?.text = personalInfoFields[indexPath.row]
-            cell.detailTextLabel?.text = personalInfoValues[indexPath.row].isEmpty
-                ? personalInfoPlaceholders[indexPath.row] // Show placeholder if value is empty
-                : personalInfoValues[indexPath.row]
+            label.text = personalInfoFields[indexPath.row]
+            textField.placeholder = personalInfoPlaceholders[indexPath.row]
+            textField.text = personalInfoValues[indexPath.row]
+            textField.tag = indexPath.row // Unique tag for personal info
         } else if tableView == addressInfoTableView {
-            cell.textLabel?.text = addressInfoFields[indexPath.row]
-            cell.detailTextLabel?.text = addressInfoValues[indexPath.row].isEmpty
-                ? addressInfoPlaceholders[indexPath.row] // Show placeholder if value is empty
-                : addressInfoValues[indexPath.row]
+            label.text = addressInfoFields[indexPath.row]
+            textField.placeholder = addressInfoPlaceholders[indexPath.row]
+            textField.text = addressInfoValues[indexPath.row]
+            textField.tag = indexPath.row + personalInfoFields.count // Offset tag for address info
         }
+
+        cell.contentView.addSubview(label) // Add label to the cell
+        cell.contentView.addSubview(textField) // Add text field to the cell
+
         return cell
     }
 
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-
-        let fieldName: String
-        let currentValue: String
-        let placeholder: String
-        if tableView == personalInfoTableView {
-            fieldName = personalInfoFields[indexPath.row]
-            currentValue = personalInfoValues[indexPath.row]
-            placeholder = personalInfoPlaceholders[indexPath.row]
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        // Save input values to the respective array
+        if textField.tag < personalInfoFields.count {
+            personalInfoValues[textField.tag] = textField.text ?? ""
         } else {
-            fieldName = addressInfoFields[indexPath.row]
-            currentValue = addressInfoValues[indexPath.row]
-            placeholder = addressInfoPlaceholders[indexPath.row]
+            let index = textField.tag - personalInfoFields.count
+            addressInfoValues[index] = textField.text ?? ""
         }
-
-        let alert = UIAlertController(title: "Edit \(fieldName)", message: nil, preferredStyle: .alert)
-        alert.addTextField { textField in
-            textField.text = currentValue.isEmpty ? placeholder : currentValue
-        }
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        alert.addAction(UIAlertAction(title: "Save", style: .default) { [weak self] _ in
-            guard let self = self else { return }
-            let newValue = alert.textFields?.first?.text ?? ""
-            if tableView == self.personalInfoTableView {
-                self.personalInfoValues[indexPath.row] = newValue
-            } else {
-                self.addressInfoValues[indexPath.row] = newValue
-            }
-            tableView.reloadRows(at: [indexPath], with: .automatic)
-        })
-        present(alert, animated: true, completion: nil)
     }
 
-    // MARK: - Show Alert Helper
     func showAlert(title: String, message: String) {
+        // Display an alert with a given title and message
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         present(alert, animated: true, completion: nil)

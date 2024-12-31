@@ -2,82 +2,79 @@ import UIKit
 import FirebaseAuth
 
 class AdminMenuViewController: UITableViewController {
-    
-    // MARK: - Menu Items
+
+    // List of menu items for the admin menu
     let menuItems = [
         "Create Store Account",
         "Delete Store Account",
         "Manage Stores",
         "Sign Out"
     ]
-    
-    // MARK: - View Lifecycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Set the table view background color
+        // Setting the screen title for the navigation bar
+        self.title = "Admin Menu"
+        
+        // Applying a custom background color to the table view
         tableView.backgroundColor = UIColor(red: 15/255, green: 13/255, blue: 18/255, alpha: 1.0)
+        
+        // Registering the default UITableViewCell class for reuse
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "AdminMenuCell")
     }
-    
-    // MARK: - Table View Data Source
+
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // Returning the total number of menu items
         return menuItems.count
     }
-    
+
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // Create a simple cell
-        let cell = UITableViewCell(style: .default, reuseIdentifier: "AdminMenuCell")
+        // Creating and configuring a table view cell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "AdminMenuCell", for: indexPath)
         cell.textLabel?.text = menuItems[indexPath.row]
         cell.textLabel?.textColor = .white
         cell.backgroundColor = UIColor(red: 15/255, green: 13/255, blue: 18/255, alpha: 1.0)
         cell.accessoryType = .disclosureIndicator
         return cell
     }
-    
-    // MARK: - Table View Delegate
+
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // Deselecting the tapped cell
         tableView.deselectRow(at: indexPath, animated: true)
         
+        // Handling the selection based on the menu item
         let selectedItem = menuItems[indexPath.row]
-        
         switch selectedItem {
         case "Create Store Account":
-            navigateToCreateStoreAccount()
+            performSegue(withIdentifier: "CreateStoreAccountSegue", sender: self)
         case "Delete Store Account":
-            navigateToDeleteStoreAccount()
+            performSegue(withIdentifier: "DeleteStoreAccountSegue", sender: self)
         case "Manage Stores":
-            navigateToManageStores()
+            performSegue(withIdentifier: "ManageStoresSegue", sender: self)
         case "Sign Out":
             presentSignOutAlert()
         default:
             print("Feature for \(selectedItem) is not implemented.")
         }
     }
-    
-    // MARK: - Navigation Methods
-    private func navigateToCreateStoreAccount() {
-        let storyboard = UIStoryboard(name: "CreateStoreAccount", bundle: nil)
-        if let createStoreAccountVC = storyboard.instantiateViewController(withIdentifier: "CreateStoreAccountViewController") as? CreateStoreAccountViewController {
-            navigationController?.pushViewController(createStoreAccountVC, animated: true)
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Setting the title of the destination view controller based on the segue
+        if segue.identifier == "CreateStoreAccountSegue",
+           let destinationVC = segue.destination as? CreateStoreAccountViewController {
+            destinationVC.title = "Create Store Account"
+        } else if segue.identifier == "DeleteStoreAccountSegue",
+                  let destinationVC = segue.destination as? DeleteStoreAccountViewController {
+            destinationVC.title = "Delete Store Account"
+        } else if segue.identifier == "ManageStoresSegue",
+                  let destinationVC = segue.destination as? ManageStoresViewController {
+            destinationVC.title = "Manage Stores"
         }
     }
-    
-    private func navigateToDeleteStoreAccount() {
-        let storyboard = UIStoryboard(name: "DeleteStoreAccount", bundle: nil)
-        if let deleteStoreAccountVC = storyboard.instantiateViewController(withIdentifier: "DeleteStoreAccountViewController") as? DeleteStoreAccountViewController {
-            navigationController?.pushViewController(deleteStoreAccountVC, animated: true)
-        }
-    }
-    
-    private func navigateToManageStores() {
-        let storyboard = UIStoryboard(name: "ManageStores", bundle: nil)
-        if let manageStoresVC = storyboard.instantiateViewController(withIdentifier: "ManageStoresViewController") as? ManageStoresViewController {
-            navigationController?.pushViewController(manageStoresVC, animated: true)
-        }
-    }
-    
-    // MARK: - Sign Out Alert
+
     private func presentSignOutAlert() {
+        // Displaying a confirmation alert for signing out
         let alert = UIAlertController(
             title: "Sign Out",
             message: "Are you sure you want to sign out?",
@@ -89,26 +86,29 @@ class AdminMenuViewController: UITableViewController {
         })
         present(alert, animated: true, completion: nil)
     }
-    
+
     private func signOutUser() {
+        // Attempting to sign out the user using FirebaseAuth
         do {
             try Auth.auth().signOut()
             navigateToLoginScreen()
         } catch {
+            // Showing an error alert if signing out fails
             showAlert(title: "Sign Out Failed", message: error.localizedDescription)
         }
     }
-    
+
     private func navigateToLoginScreen() {
+        // Navigating to the login screen after signing out
         let storyboard = UIStoryboard(name: "AUTH", bundle: nil)
-        if let loginVC = storyboard.instantiateViewController(withIdentifier: "LoginView") as? LoginViewController {
+        if let loginVC = storyboard.instantiateViewController(withIdentifier: "Login") as? LoginViewController {
             loginVC.modalPresentationStyle = .fullScreen
             present(loginVC, animated: true, completion: nil)
         }
     }
-    
-    // MARK: - Helper Methods
+
     private func showAlert(title: String, message: String) {
+        // Displaying an alert with a title and message
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         present(alert, animated: true, completion: nil)

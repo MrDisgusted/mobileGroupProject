@@ -18,18 +18,25 @@ class AdminLoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        // Pre-fill placeholders and default values for admin credentials
+        adminEmailTextField.text = "admin@example.com" // Pre-filled admin email
+        adminPasswordTextField.text = "password123" // Pre-filled admin password
+        adminIDTextField.text = "765" // Pre-filled admin ID
+
         adminEmailTextField.attributedPlaceholder = NSAttributedString(
-            string: "example@example.com",
+            string: "Enter Email",
             attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray]
         )
         adminPasswordTextField.attributedPlaceholder = NSAttributedString(
-            string: "Password",
+            string: "Enter Password",
             attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray]
         )
         adminIDTextField.attributedPlaceholder = NSAttributedString(
-            string: "123",
+            string: "Enter Admin ID",
             attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray]
         )
+
         adminPasswordTextField.isSecureTextEntry = true
         updatePasswordToggleIcon()
     }
@@ -46,48 +53,44 @@ class AdminLoginViewController: UIViewController {
         let imageName = adminPasswordTextField.isSecureTextEntry ? "eye.slash" : "eye"
         passwordToggleButton.setImage(UIImage(systemName: imageName), for: .normal)
     }
-    
+
     @IBAction func adminLoginButtonTapped(_ sender: UIButton) {
         let enteredEmail = adminEmailTextField.text ?? ""
         let enteredPassword = adminPasswordTextField.text ?? ""
         let enteredAdminID = adminIDTextField.text ?? ""
-        
         let correctAdminID = "765"
-        
-        if enteredEmail.isEmpty || enteredPassword.isEmpty || enteredAdminID.isEmpty {
-            showAlert(title: "Error", message: "All fields are required.")
-            return
-        }
-        
+
+        // Validate Admin ID
         if enteredAdminID != correctAdminID {
             showAlert(title: "Error", message: "Invalid Admin ID.")
             return
         }
-        
-        if enteredEmail == "admin@lavendar.com" && enteredPassword == "adminlavendar123" {
-            Auth.auth().signIn(withEmail: enteredEmail, password: enteredPassword) { authResult, error in
-                if let error = error {
-                    self.showAlert(title: "Error", message: "Authentication failed: \(error.localizedDescription)")
-                    return
-                }
-                self.showAlert(title: "Success", message: "Welcome, Admin!") {
-                    let storyboard = UIStoryboard(name: "AdminMenu", bundle: nil)
-                    if let adminMenuVC = storyboard.instantiateViewController(withIdentifier: "AdminMenuViewController") as? AdminMenuViewController {
-                        adminMenuVC.modalPresentationStyle = .fullScreen
-                        self.present(adminMenuVC, animated: true, completion: nil)
-                    }
-                }
+
+        // Firebase Authentication
+        Auth.auth().signIn(withEmail: enteredEmail, password: enteredPassword) { authResult, error in
+            if let error = error {
+                self.showAlert(title: "Error", message: "Failed to login: \(error.localizedDescription)")
+                return
             }
-        } else {
-            showAlert(title: "Error", message: "Invalid email or password.")
+
+            // Check if the logged-in user is the admin
+            if let user = Auth.auth().currentUser, user.email == "admin@example.com" {
+                // Navigate to Admin Menu
+                let storyboard = UIStoryboard(name: "AdminMenu", bundle: nil)
+                if let adminMenuVC = storyboard.instantiateViewController(withIdentifier: "AdminMenuViewController") as? AdminMenuViewController {
+                    adminMenuVC.modalPresentationStyle = .fullScreen
+                    self.present(adminMenuVC, animated: true, completion: nil)
+                }
+            } else {
+                self.showAlert(title: "Error", message: "You are not authorized to access this section.")
+                try? Auth.auth().signOut()
+            }
         }
     }
-    
-    func showAlert(title: String, message: String, completion: (() -> Void)? = nil) {
+
+    func showAlert(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
-            completion?()
-        }))
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         present(alert, animated: true, completion: nil)
     }
 }
