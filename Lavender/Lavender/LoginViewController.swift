@@ -69,7 +69,7 @@ class LoginViewController: UIViewController {
             }
 
             Auth.auth().signIn(withEmail: enteredEmail, password: enteredPassword) { [weak self] authResult, error in
-                if let error = error {
+                if error != nil {
                     self?.failedLoginAttempts += 1
                     if self?.failedLoginAttempts ?? 0 >= 5 {
                         self?.showCaptcha()

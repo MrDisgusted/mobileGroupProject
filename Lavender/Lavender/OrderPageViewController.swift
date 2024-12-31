@@ -54,7 +54,7 @@ class OrderPageViewController: UIViewController {
     @IBAction func processOrderButtonTapped(_ sender: Any) {
         guard let orderId = order?.id else { return }
                db.collection("orders").whereField("id", isEqualTo: orderId).getDocuments { snapshot, error in
-                   if let error = error {
+                   if error != nil {
                        return
                    }
                    guard let document = snapshot?.documents.first else { return }

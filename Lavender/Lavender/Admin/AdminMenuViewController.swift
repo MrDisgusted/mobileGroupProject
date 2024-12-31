@@ -101,7 +101,7 @@ class AdminMenuViewController: UITableViewController {
     private func navigateToLoginScreen() {
         // Navigating to the login screen after signing out
         let storyboard = UIStoryboard(name: "AUTH", bundle: nil)
-        if let loginVC = storyboard.instantiateViewController(withIdentifier: "Login") as? LoginViewController {
+        if let loginVC = storyboard.instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController {
             loginVC.modalPresentationStyle = .fullScreen
             present(loginVC, animated: true, completion: nil)
         }

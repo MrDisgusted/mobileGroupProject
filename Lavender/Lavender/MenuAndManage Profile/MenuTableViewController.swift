@@ -97,7 +97,7 @@ class MenuTableViewController: UITableViewController {
     private func navigateToLoginScreen() {
         // Navigating to the login screen after signing out
         let storyboard = UIStoryboard(name: "AUTH", bundle: nil)
-        let loginVC = storyboard.instantiateViewController(withIdentifier: "Login")
+        let loginVC = storyboard.instantiateViewController(withIdentifier: "LoginViewController")
         loginVC.modalPresentationStyle = .fullScreen // Presenting login screen in full screen
         present(loginVC, animated: true, completion: nil)
     }
