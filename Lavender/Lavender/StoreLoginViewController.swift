@@ -6,11 +6,32 @@
 //
 
 import UIKit
-import FirebaseAuth
+import FirebaseFirestore
 
 class StoreLoginViewController: UIViewController {
-    
     @IBOutlet weak var passwordToggleButton: UIButton!
+    @IBOutlet weak var storeEmailTextField: UITextField!
+    @IBOutlet weak var storePasswordTextField: UITextField!
+    @IBOutlet weak var storeIDTextField: UITextField!
+    @IBOutlet weak var loginButton: UIButton!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        storeEmailTextField.attributedPlaceholder = NSAttributedString(
+            string: "example@example.com",
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray]
+        )
+        storePasswordTextField.attributedPlaceholder = NSAttributedString(
+            string: "Password",
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray]
+        )
+        storeIDTextField.attributedPlaceholder = NSAttributedString(
+            string: "123",
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray]
+        )
+        storePasswordTextField.isSecureTextEntry = true
+        updatePasswordToggleIcon()
+    }
     
     @IBAction func passwordToggleButtonTapped(_ sender: Any) {
         storePasswordTextField.isSecureTextEntry.toggle()
@@ -25,65 +46,56 @@ class StoreLoginViewController: UIViewController {
         passwordToggleButton.setImage(UIImage(systemName: imageName), for: .normal)
     }
     
-    @IBOutlet weak var storeEmailTextField: UITextField!
-    @IBOutlet weak var storePasswordTextField: UITextField!
-    @IBOutlet weak var storeIDTextField: UITextField!
-    @IBOutlet weak var loginButton: UIButton!
-    override func viewDidLoad() {
-        super.viewDidLoad()
-               storeEmailTextField.attributedPlaceholder = NSAttributedString(
-                   string: "example@example.com",
-                   attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
-               storePasswordTextField.attributedPlaceholder = NSAttributedString(
-                   string: "Password",
-                   attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
-               storeIDTextField.attributedPlaceholder = NSAttributedString(
-                   string: "123",
-                   attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
-               storePasswordTextField.isSecureTextEntry = true
-               updatePasswordToggleIcon()
-    }
-    
     @IBAction func storeLoginButtonTapped(_ sender: UIButton) {
         let enteredEmail = storeEmailTextField.text ?? ""
-                let enteredPassword = storePasswordTextField.text ?? ""
-                let enteredStoreID = storeIDTextField.text ?? ""
-                let correctStoreID = "456"
+           let enteredPassword = storePasswordTextField.text ?? ""
+           let enteredStoreID = storeIDTextField.text ?? ""
 
-                if enteredEmail.isEmpty || enteredPassword.isEmpty || enteredStoreID.isEmpty {
-                    showAlert(title: "Error", message: "All fields are required.")
-                    return
-                }
+           if enteredEmail.isEmpty || enteredPassword.isEmpty || enteredStoreID.isEmpty {
+               showAlert(title: "Error", message: "All fields are required.")
+               return
+           }
 
-                if enteredStoreID != correctStoreID {
-                    showAlert(title: "Error", message: "Invalid Store ID.")
-                    return
-                }
+           let db = Firestore.firestore()
+           let storesRef = db.collection("stores")
 
-                Auth.auth().signIn(withEmail: enteredEmail, password: enteredPassword) { authResult, error in
-                    if let error = error {
-                        self.showAlert(title: "Error", message: "Authentication failed: \(error.localizedDescription)")
-                        return
-                    }
+           storesRef.whereField("email", isEqualTo: enteredEmail)
+               .whereField("password", isEqualTo: enteredPassword)
+               .whereField("store id", isEqualTo: enteredStoreID)
+               .getDocuments { [weak self] snapshot, error in
+                   guard let self = self else { return }
 
-                    self.showAlert(title: "Success", message: "Welcome, Store Owner!") {
-                        let storyboard = UIStoryboard(name: "AddProduct", bundle: nil)
-                        if let addProductVC = storyboard.instantiateInitialViewController() {
-                            addProductVC.modalPresentationStyle = .fullScreen
-                            self.present(addProductVC, animated: true, completion: nil)
-                        }
-                    }
-                }
+                   if let error = error {
+                       self.showAlert(title: "Error", message: "An error occurred: \(error.localizedDescription)")
+                       return
+                   }
+
+                   if let documents = snapshot?.documents, !documents.isEmpty {
+                       if let storeData = documents.first?.data(),
+                          let storeName = storeData["store name"] as? String {
+                           UserDefaults.standard.setValue(storeName, forKey: "loggedInStoreName")
+                       }
+
+                       self.showAlert(title: "Success", message: "Welcome, Store Owner!") {
+                           let storyboard = UIStoryboard(name: "AddProduct", bundle: nil)
+                           let myStoreVC = storyboard.instantiateViewController(withIdentifier: "StoreOwnerLogin")
+                           myStoreVC.modalPresentationStyle = .fullScreen
+                           self.present(myStoreVC, animated: true, completion: nil)
+                       }
+                   } else {
+                       self.showAlert(title: "Error", message: "Invalid email, password, or store ID.")
+                   }
+               }
     }
-
     
     func showAlert(title: String, message: String, completion: (() -> Void)? = nil) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
-                    completion?()
-                }))
-                present(alert, animated: true, completion: nil)
-            }
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
+            completion?()
+        }))
+        present(alert, animated: true, completion: nil)
+    }
+
     
     
     

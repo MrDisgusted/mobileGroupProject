@@ -8,23 +8,6 @@
 import Foundation
 import UIKit
 
-//func saveProducts(products: [Product]) {
-//    let encoder = JSONEncoder()
-//    if let encoded = try? encoder.encode(products) {
-//        UserDefaults.standard.set(encoded, forKey: "SavedProducts")
-//    }
-//}
-
-//func loadProducts() -> [Product]? {
-//    if let savedData = UserDefaults.standard.data(forKey: "SavedProducts") {
-//        let decoder = JSONDecoder()
-//        if let loadedProducts = try? decoder.decode([Product].self, from: savedData) {
-//            return loadedProducts
-//        }
-//    }
-//    return nil
-//}
-
 enum Category {
     case bodycare
     case cleaning
@@ -35,6 +18,20 @@ enum Category {
     case food
     case hygiene
     case electronics
+    
+    var toString: String {
+        switch self {
+        case .bodycare: return "Bodycare"
+        case .cleaning: return "Cleaning"
+        case .stationary: return "Stationary"
+        case .gardening: return "Gardening"
+        case .supplements: return "Supplements"
+        case .accessories: return "Accessories"
+        case .food: return "Food"
+        case .hygiene: return "Hygiene"
+        case .electronics: return "Electronics"
+        }
+    }
 }
 
 struct Ecobar {
@@ -43,8 +40,6 @@ struct Ecobar {
     let sustainability: Double
     let recyclability: Double
     let longjevity: Double
-    
-    // salem add the equation here so that it calculates the lavender rating
     let lavenderRating = 0
 }
 
@@ -59,7 +54,5 @@ struct Product {
     let lavender : Ecobar
     let isAvailable : Bool
     let arrivalDay : Int
-    
 }
-
 

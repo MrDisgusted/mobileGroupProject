@@ -6,10 +6,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Login-->
+        <!--LoginViewController-->
         <scene sceneID="PXc-8v-R43">
             <objects>
-                <viewControllerPlaceholder storyboardName="AUTH" referencedIdentifier="Login" id="6Xc-t9-ypN" sceneMemberID="viewController">
+                <viewControllerPlaceholder storyboardName="AUTH" referencedIdentifier="LoginViewController" id="6Xc-t9-ypN" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="g9y-qT-FZb"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cRa-kL-UaB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

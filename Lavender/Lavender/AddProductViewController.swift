@@ -2,48 +2,43 @@ import UIKit
 import FirebaseFirestore
 
 protocol AddProductDelegate: AnyObject {
-    func didAddProduct(_ product: Product)
+    func didAddProduct(_ product: [String: Any])
 }
 
 class AddProductViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate {
-    
+
     @IBOutlet weak var productImageView: UIImageView!
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var descriptionTextView: UITextView!
     @IBOutlet weak var priceTextField: UITextField!
     @IBOutlet weak var stockTextField: UITextField!
-    
     @IBOutlet weak var categoryButton: UIButton!
-    
+    @IBOutlet weak var storeIDTextField: UITextField!
+    weak var delegate: AddProductDelegate?
+    var uploadedImageUrl: String?
+    let db = Firestore.firestore()
+    private var hasSelectedImage = false
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        descriptionTextView.text = "Product Description"
+        descriptionTextView.textColor = .gray
+        descriptionTextView.delegate = self
+        categoryButton.setTitle("Select Category", for: .normal)
+    }
+
     @IBAction func categoryButtonTapped(_ sender: Any) {
-        
-        
         let categoryAlert = UIAlertController(title: "Select Category", message: nil, preferredStyle: .actionSheet)
-        
-        let categories: [String] = ["Bodycare", "Cleaning", "Stationary", "Gardening", "Supplements", "Accessories", "Food", "Hygiene"]
-        
+        let categories = ["Bodycare", "Cleaning", "Stationary", "Gardening", "Supplements", "Accessories", "Food", "Hygiene"]
         for category in categories {
             categoryAlert.addAction(UIAlertAction(title: category, style: .default, handler: { [weak self] _ in
                 self?.categoryButton.setTitle(category, for: .normal)
             }))
         }
-        
         categoryAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        present(categoryAlert, animated: true)}
-    weak var delegate: AddProductDelegate?
-    var uploadedImageUrl: String?
-    let db = Firestore.firestore()
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        descriptionTextView.text = "Product Description"
-        descriptionTextView.textColor = .gray
-        descriptionTextView.delegate = self
-        
-        categoryButton.setTitle("Select Category", for: .normal)
+        present(categoryAlert, animated: true)
     }
-    
+
     @IBAction func addPhotoButtonTapped(_ sender: UIButton) {
         let picker = UIImagePickerController()
         picker.sourceType = .photoLibrary
@@ -51,67 +46,127 @@ class AddProductViewController: UIViewController, UIImagePickerControllerDelegat
         picker.allowsEditing = true
         present(picker, animated: true)
     }
-    
+
     @IBAction func confirmButtonTapped(_ sender: UIButton) {
-        guard let name = nameTextField.text, !name.isEmpty,
-                 let description = descriptionTextView.text, description != "Product Description",
-                 let priceString = priceTextField.text, !priceString.isEmpty,
-                 let stockString = stockTextField.text, !stockString.isEmpty,
-                 let price = Double(priceString),
-                 let stock = Int(stockString),
-                 let imageUrl = uploadedImageUrl, !imageUrl.isEmpty, 
-                 let categoryName = categoryButton.titleLabel?.text, categoryName != "Select Category" else {
-               showErrorAlert("Please fill in all fields and upload an image.")
-               return
-           }
+        guard let name = nameTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines), !name.isEmpty else {
+            showErrorAlert("Please enter a product name")
+            return
+        }
 
-           let productData: [String: Any] = [
-               "ID": Int.random(in: 1...99999),
-               "name": name,
-               "imageUrl": imageUrl,
-               "category": categoryName,
-               "description": description,
-               "price": price,
-               "quantity": stock,
-               "isAvailable": true,
-               "arrivalDay": 1
-           ]
+        guard let description = descriptionTextView.text, description != "Product Description",
+              !description.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            showErrorAlert("Please enter a product description")
+            return
+        }
 
-           db.collection("storeProducts").addDocument(data: productData) { error in
-               if let error = error {
-                   self.showErrorAlert("Failed to save product: \(error.localizedDescription)")
-               } else {
-                   self.dismiss(animated: true, completion: nil)
-               }
-           }
-        
+        guard let priceString = priceTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines),
+              !priceString.isEmpty, let price = Double(priceString) else {
+            showErrorAlert("Please enter a valid price")
+            return
+        }
+
+        guard let stockString = stockTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines),
+              !stockString.isEmpty, let stock = Int(stockString) else {
+            showErrorAlert("Please enter a valid stock quantity")
+            return
+        }
+
+        guard let categoryName = categoryButton.titleLabel?.text, categoryName != "Select Category" else {
+            showErrorAlert("Please select a category")
+            return
+        }
+
+        guard let storeID = storeIDTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines), !storeID.isEmpty else {
+            showErrorAlert("Please enter a valid store ID")
+            return
+        }
+
+        if hasSelectedImage && uploadedImageUrl == nil {
+            showErrorAlert("Please wait for the image to finish uploading")
+            return
+        }
+
+        guard hasSelectedImage else {
+            showErrorAlert("Please select a product image")
+            return
+        }
+
+        guard let imageUrl = uploadedImageUrl else {
+            showErrorAlert("Image upload failed. Please try uploading the image again")
+            return
+        }
+
+        let productData: [String: Any] = [
+            "ID": Int.random(in: 1...99999),
+            "name": name,
+            "imageUrl": imageUrl,
+            "category": categoryName,
+            "description": description,
+            "price": price,
+            "quantity": stock,
+            "isAvailable": true,
+            "storeID": storeID,
+            "arrivalDay": 1
+        ]
+
+        let loadingAlert = UIAlertController(title: nil, message: "Saving product...", preferredStyle: .alert)
+        let loadingIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 50, height: 50))
+        loadingIndicator.hidesWhenStopped = true
+        loadingIndicator.style = .medium
+        loadingIndicator.startAnimating()
+        loadingAlert.view.addSubview(loadingIndicator)
+        present(loadingAlert, animated: true)
+
+        db.collection("storeProducts").addDocument(data: productData) { [weak self] error in
+            DispatchQueue.main.async {
+                loadingAlert.dismiss(animated: true) {
+                    if let error = error {
+                        self?.showErrorAlert("Failed to save product: \(error.localizedDescription)")
+                    } else {
+                        self?.delegate?.didAddProduct(productData)
+                        self?.dismiss(animated: true, completion: nil)
+                    }
+                }
+            }
+        }
     }
-    
-    
+
     func textViewDidBeginEditing(_ textView: UITextView) {
         if textView.text == "Product Description" {
             textView.text = ""
             textView.textColor = .white
-        }}
-    
+        }
+    }
+
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text.isEmpty {
             textView.text = "Product Description"
             textView.textColor = .gray
         }
     }
-    
+
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         if let selectedImage = info[.editedImage] as? UIImage ?? info[.originalImage] as? UIImage {
             productImageView.image = selectedImage
+            hasSelectedImage = true
+            uploadedImageUrl = nil
+
+            let loadingAlert = UIAlertController(title: nil, message: "Uploading image...", preferredStyle: .alert)
+            let loadingIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 50, height: 50))
+            loadingIndicator.hidesWhenStopped = true
+            loadingIndicator.style = .medium
+            loadingIndicator.startAnimating()
+            loadingAlert.view.addSubview(loadingIndicator)
+            present(loadingAlert, animated: true)
 
             uploadImageToCloudinary(selectedImage) { [weak self] imageUrl in
                 DispatchQueue.main.async {
-                    if let imageUrl = imageUrl {
-                        self?.uploadedImageUrl = imageUrl
-                        print("Image uploaded successfully: \(imageUrl)")
-                    } else {
-                        self?.showErrorAlert("Image upload failed. Please try again.")
+                    loadingAlert.dismiss(animated: true) {
+                        if let imageUrl = imageUrl {
+                            self?.uploadedImageUrl = imageUrl
+                        } else {
+                            self?.showErrorAlert("Image upload failed. Please try again.")
+                        }
                     }
                 }
             }
@@ -119,11 +174,6 @@ class AddProductViewController: UIViewController, UIImagePickerControllerDelegat
         picker.dismiss(animated: true, completion: nil)
     }
 
-    
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        dismiss(animated: true, completion: nil)
-    }
-    
     func uploadImageToCloudinary(_ image: UIImage, completion: @escaping (String?) -> Void) {
         let cloudName = "dya8ndfhj"
         let uploadPreset = "ml_default"
@@ -155,7 +205,6 @@ class AddProductViewController: UIViewController, UIImagePickerControllerDelegat
 
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
-                print("Error uploading image: \(error.localizedDescription)")
                 completion(nil)
                 return
             }
@@ -167,12 +216,10 @@ class AddProductViewController: UIViewController, UIImagePickerControllerDelegat
                 return
             }
 
-            print("Uploaded Image URL: \(secureUrl)")
             completion(secureUrl)
         }.resume()
     }
 
-    
     func showErrorAlert(_ message: String) {
         let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default))

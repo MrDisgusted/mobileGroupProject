@@ -2,6 +2,10 @@ import FirebaseFirestore
 import UIKit
 
 class ProductListViewController: UIViewController, AddProductDelegate {
+    func didAddProduct(_ product: [String : Any]) {
+        
+    }
+    
     
     
     
@@ -25,7 +29,6 @@ class ProductListViewController: UIViewController, AddProductDelegate {
         tableView.dataSource = self
         tableView.delegate = self
         fetchProducts()
-       
     }
 
     func didAddProduct(_ product: Product) {
@@ -168,4 +171,3 @@ extension ProductListViewController: UITableViewDataSource, UITableViewDelegate 
     }
 
 }
-

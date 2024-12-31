@@ -6,62 +6,70 @@
 //
 
 import UIKit
+import FirebaseFirestore
 
-extension UIImageView {
-    func loadImage(from url: String) {
-        guard let imageUrl = URL(string: url) else { return }
-        
-        DispatchQueue.global().async { [weak self] in
-            if let data = try? Data(contentsOf: imageUrl), let image = UIImage(data: data) {
-                DispatchQueue.main.async {
-                    self?.image = image
-                }
+class RefundRequestsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    @IBOutlet weak var tableView: UITableView!
+    let db = Firestore.firestore()
+    var refundRequests: [RefundRequest] = []
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.estimatedRowHeight = 200
+            tableView.rowHeight = UITableView.automaticDimension
+        fetchRefundRequests()
+    }
+
+    func fetchRefundRequests() {
+        db.collection("refundRequests").getDocuments { snapshot, error in
+            if let error = error {
+                print("Error fetching refund requests: \(error.localizedDescription)")
+                return
+            }
+
+            guard let documents = snapshot?.documents else { return }
+            self.refundRequests = documents.compactMap { doc -> RefundRequest? in
+                let data = doc.data()
+                return RefundRequest(
+                    id: data["id"] as? String ?? "",
+                    customerName: data["customerName"] as? String ?? "",
+                    description: data["description"] as? String ?? "",
+                    productName: data["productName"] as? String ?? "",
+                    category: data["category"] as? String ?? "",
+                    imageUrl: data["imageUrl"] as? String ?? ""
+                )
+            }
+
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
             }
         }
     }
-}
 
-
-class RefundRequestsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    
-    @IBOutlet weak var tableView: UITableView!
-    
-    var refundRequests = [
-        ["imageUrl": "https://res.cloudinary.com/dya8ndfhj/image/upload/v1734481228/Seedball_Wildlife_Collection_kxcwor.jpg",
-         "title": "Seedball Wildlife Collection",
-         "category": "Gardening",
-         "refundID": "#8932"]
-    ]
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.rowHeight = 120
-    }
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return refundRequests.count
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "RefundRequestCell", for: indexPath) as! RefundRequestCell
-        
-        let refund = refundRequests[indexPath.row]
-        cell.titleLabel.text = refund["title"]
-        cell.categoryLabel.text = refund["category"]
-        cell.refundIDLabel.text = "Refund \(refund["refundID"] ?? "")"
-        cell.refundImageView.loadImage(from: refund["imageUrl"] ?? "")
-
+        cell.configure(with: refundRequests[indexPath.row])
         return cell
     }
-    
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedRequest = refundRequests[indexPath.row]
+        let storyboard = UIStoryboard(name: "AddProduct", bundle: nil)
+        if let refundPageVC = storyboard.instantiateViewController(withIdentifier: "RefundPageViewController") as? RefundPageViewController {
+            refundPageVC.refundRequest = selectedRequest
+            navigationController?.pushViewController(refundPageVC, animated: true)
+        }
+    }
 
 
 
 
-    
     
     
     
