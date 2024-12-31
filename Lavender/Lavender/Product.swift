@@ -8,23 +8,6 @@
 import Foundation
 import UIKit
 
-//func saveProducts(products: [Product]) {
-//    let encoder = JSONEncoder()
-//    if let encoded = try? encoder.encode(products) {
-//        UserDefaults.standard.set(encoded, forKey: "SavedProducts")
-//    }
-//}
-
-//func loadProducts() -> [Product]? {
-//    if let savedData = UserDefaults.standard.data(forKey: "SavedProducts") {
-//        let decoder = JSONDecoder()
-//        if let loadedProducts = try? decoder.decode([Product].self, from: savedData) {
-//            return loadedProducts
-//        }
-//    }
-//    return nil
-//}
-
 enum Category {
     case bodycare
     case cleaning
@@ -71,6 +54,5 @@ struct Product {
     let lavender : Ecobar
     let isAvailable : Bool
     let arrivalDay : Int
-    
 }
 

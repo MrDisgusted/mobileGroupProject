@@ -1,25 +1,29 @@
-//
-//  HomeViewController.swift
-//  Lavender
-//
-//  Created by BP-36-201-07 on 11/12/2024.
-//
-
 import UIKit
 import FirebaseFirestore
 
-class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
 
     @IBOutlet weak var recommendedTable: UITableView!
     var productArray: [Product] = []
     
+    let searchBar = UISearchBar()
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         recommendedTable.delegate = self
         recommendedTable.dataSource = self
-        
+
+        setupSearchBar()
         fetchRecommendedProducts()
+    }
+
+    func setupSearchBar() {
+        searchBar.delegate = self
+        searchBar.placeholder = "Search for products"
+        searchBar.returnKeyType = .search
+
+        navigationItem.titleView = searchBar
     }
 
     func fetchRecommendedProducts() {
@@ -122,6 +126,18 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
            let destinationVC = segue.destination as? ProductViewController,
            let indexPath = recommendedTable.indexPathForSelectedRow {
             destinationVC.product = productArray[indexPath.row]
+        } else if segue.identifier == "ShowSearchResults",
+                  let destinationVC = segue.destination as? SearchResultsTableViewController,
+                  let searchQuery = sender as? String {
+            destinationVC.searchQuery = searchQuery
         }
     }
+
+    // MARK: - Search Bar Delegate
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let query = searchBar.text, !query.isEmpty else { return }
+        searchBar.resignFirstResponder() // Dismiss keyboard
+        performSegue(withIdentifier: "ShowSearchResults", sender: query)
+    }
 }
+
