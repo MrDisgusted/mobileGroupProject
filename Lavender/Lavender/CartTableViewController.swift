@@ -2,19 +2,15 @@ import UIKit
 
 class CartTableViewController: UITableViewController {
 
-    @IBOutlet weak var totalPriceLabel: UILabel!
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.dataSource = self
-        tableView.delegate = self
 
-        tableView.register(UINib(nibName: "CartTableViewCell", bundle: nil), forCellReuseIdentifier: "CartCell")
+        // Register the custom cell
+        tableView.register(CartTableViewCell.self, forCellReuseIdentifier: "CartCell")
 
-        updateTotalPrice()
+        tableView.reloadData()
     }
 
-    // MARK: - TableView Data Source
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return CartManager.shared.cartItems.count
     }
@@ -30,21 +26,11 @@ class CartTableViewController: UITableViewController {
             quantity: quantity,
             stepperAction: { [weak self] newQuantity in
                 guard let self = self else { return }
-                self.updateQuantity(for: product, quantity: newQuantity)
+                CartManager.shared.updateQuantity(for: product, quantity: newQuantity)
+                self.tableView.reloadData()
             }
         )
         return cell
-    }
-
-    private func updateQuantity(for product: Product, quantity: Int) {
-        CartManager.shared.updateQuantity(for: product, quantity: quantity)
-        tableView.reloadData()
-        updateTotalPrice()
-    }
-
-    private func updateTotalPrice() {
-        let totalPrice = CartManager.shared.calculateTotalPrice()
-        totalPriceLabel.text = String(format: "Total: $%.2f", totalPrice)
     }
 }
 
